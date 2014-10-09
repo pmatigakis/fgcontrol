@@ -79,4 +79,43 @@ public class SensorData {
 		
 		simulationTime = 0.0;
 	}
+	
+	public void copyTo(SensorData sensorData){
+		sensorData.longitude = longitude;
+		sensorData.latitude = latitude;
+		sensorData.gpsAltitude = gpsAltitude;
+		sensorData.gpsAirspeed = gpsAirspeed; 
+		sensorData.gpsHeading = gpsHeading;
+		
+		sensorData.xAcceleration = xAcceleration;
+		sensorData.yAcceleration = yAcceleration;
+		sensorData.zAcceleration = zAcceleration;
+		
+		sensorData.xRotation = xRotation;
+		sensorData.yRotation = yRotation;
+		sensorData.zRotation = zRotation;
+		
+		sensorData.dynamicPressure = dynamicPressure;
+		sensorData.staticPressure = staticPressure;
+		
+		sensorData.temperature = temperature;
+		
+		sensorData.xMagn = xMagn;
+		sensorData.yMagn = yMagn;
+		sensorData.zMagn = zMagn;
+		
+		sensorData.roll = roll;
+		sensorData.pitch = pitch;
+		
+		sensorData.altitude = altitude;
+		sensorData.airspeed = airspeed; 
+		sensorData.heading = heading;
+		
+		sensorData.elevator = elevator;
+		sensorData.aileron = aileron;
+		sensorData.rudder = rudder;
+		sensorData.throttle = throttle;
+		
+		sensorData.simulationTime = simulationTime;
+	}
 }
