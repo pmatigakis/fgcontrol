@@ -30,6 +30,9 @@ public class SensorDataHandler extends SimpleChannelInboundHandler<DatagramPacke
 		sensorDataFactory = new SensorDataFactory();
 	}
 	
+	/**
+	 * Handle the telemetry string that was received
+	 */
 	@Override
 	protected void channelRead0(ChannelHandlerContext arg0, DatagramPacket msg){
 		//System.out.println(msg.content().toString(CharsetUtil.US_ASCII));

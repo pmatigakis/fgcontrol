@@ -17,6 +17,10 @@ import io.netty.util.CharsetUtil;
 
 import com.matigakis.fgcontrol.controls.Controls;;
 
+/**
+ * The ControlsClient class is responsible to transmit the state of an aircraft's
+ * controls to Flightgear.
+ */
 public class ControlsClient {
 	private static final Logger logger = LoggerFactory.getLogger(ControlsClient.class);
 	private final InetSocketAddress address;
@@ -27,6 +31,19 @@ public class ControlsClient {
 		address = new InetSocketAddress(host, port);
 	}
 	
+	public String getHost(){
+		return address.getHostString();
+	}
+	
+	public int getPort(){
+		return address.getPort();
+	}
+	
+	/**
+	 * Open a UDP connection to Flightgear
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void openConnection() throws InterruptedException{
 		logger.info("Opening connection to server");
 		
@@ -37,17 +54,25 @@ public class ControlsClient {
 		bootstrap.group(group)
 		.channel(NioDatagramChannel.class)
 		.option(ChannelOption.SO_BROADCAST, true)
-		.handler(new ControlsHandler()); //TODO: Check if this is required for transmition only operation
+		.handler(new ControlsHandler()); //TODO: Check if this is required when only transmitting data
 		
 		channel = bootstrap.bind(0).sync().channel();
 	}
 	
+	/**
+	 * Close the connection
+	 */
 	public void closeConnection(){
 		logger.info("Closing connection to server");
 		
 		group.shutdownGracefully();
 	}
 	
+	/**
+	 * Transmit the aircraft controls state to Flightgear
+	 * 
+	 * @param controls the aircraft controls
+	 */
 	public void transmitControls(Controls controls){
 		String controlsString = controls.getElevator() + "\t" + controls.getAileron() + "\t" + controls.getRudder() + "\t" + controls.getThrottle() + "\n";
 		
