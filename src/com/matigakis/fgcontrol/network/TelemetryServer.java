@@ -1,4 +1,7 @@
-package com.matigakis.fgcontrol;
+package com.matigakis.fgcontrol.network;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,17 +16,21 @@ import io.netty.channel.ChannelFuture;
 /**
  * The SensorServer object is used to receive telemetry data from Flightgear
  */
-public class SensorServer extends Thread{
-	private static final Logger logger = LoggerFactory.getLogger(SensorServer.class);
+public class TelemetryServer extends Thread{
+	private static final Logger logger = LoggerFactory.getLogger(TelemetryServer.class);
 	private final int port;
 	private EventLoopGroup group;
-	private final SensorDataHandler sensorDataHandler;
+	private final TelemetryStringHandler telemetryHandler;
+	private Telemetry telemetry;
+	private List<TelemetryListener> telemetryListeners;
 	
-	public SensorServer(int port){
+	public TelemetryServer(int port){
 		super();
 		
 		this.port = port;
-		this.sensorDataHandler = new SensorDataHandler();
+		this.telemetryHandler = new TelemetryStringHandler(this);
+		
+		telemetryListeners = new LinkedList<TelemetryListener>();
 	}
 	
 	public void run(){
@@ -36,7 +43,7 @@ public class SensorServer extends Thread{
 		bootstrap.group(group)
 		.channel(NioDatagramChannel.class)
 		.option(ChannelOption.SO_BROADCAST, true)
-		.handler(sensorDataHandler);
+		.handler(telemetryHandler);
 		
 		try{
 			ChannelFuture channelFuture = bootstrap.bind(port).sync();
@@ -51,17 +58,33 @@ public class SensorServer extends Thread{
 		logger.info("The sensor server has stopped");
 	}
 	
+	public void startServer(){
+		start();
+	}
+	
 	public void stopServer(){
 		logger.info("Shutting down the sensor server");
 		
 		group.shutdownGracefully();
 	}
 	
-	public void addSensorDataListener(SensorDataListener sensorDataListener){
-		sensorDataHandler.addSensorDataListener(sensorDataListener);
+	public void addTelemetryListener(TelemetryListener telemetryListener){
+		telemetryListeners.add(telemetryListener);
 	}
 	
-	public void removeSensorDataListener(SensorDataListener sensorDataListener){
-		sensorDataHandler.removeSensorDataListener(sensorDataListener);
+	public void removeTelemetryListener(TelemetryListener telemetryListener){
+		telemetryListeners.remove(telemetryListener);
+	}
+	
+	public void setTelemetry(Telemetry telemetry){
+		this.telemetry = telemetry;
+		
+		notifyTelemetryListeners();
+	}
+	
+	private void notifyTelemetryListeners(){
+		for(TelemetryListener telemetryListener: telemetryListeners){
+			telemetryListener.handleTelemetry(telemetry);
+		}
 	}
 }

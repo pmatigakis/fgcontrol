@@ -1,9 +1,9 @@
 package com.matigakis.fgcontrol.tests.sensors;
 
-import com.matigakis.fgcontrol.sensors.SensorData;
+import com.matigakis.fgcontrol.network.Telemetry;
 
-public class DummySensorData extends SensorData{
-	public DummySensorData(){
+public class DummyTelemetry extends Telemetry{
+	public DummyTelemetry(){
 		super();
 		
 		xAcceleration = 0.5; 

@@ -1,4 +1,4 @@
-package com.matigakis.fgcontrol;
+package com.matigakis.fgcontrol.network;
 
 import java.net.InetSocketAddress;
 
@@ -15,7 +15,7 @@ import io.netty.channel.socket.DatagramPacket;
 import io.netty.buffer.Unpooled;
 import io.netty.util.CharsetUtil;
 
-import com.matigakis.fgcontrol.controls.Controls;;
+import com.matigakis.fgcontrol.fdm.Controls;
 
 /**
  * The ControlsClient class is responsible to transmit the state of an aircraft's

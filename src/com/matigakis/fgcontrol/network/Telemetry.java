@@ -1,9 +1,9 @@
-package com.matigakis.fgcontrol.sensors;
+package com.matigakis.fgcontrol.network;
 
 /**
  * The SensorData object holds the data that were received from the sensors.
  */
-public class SensorData {
+public class Telemetry {
 	public double longitude;
 	public double latitude;
 	public double gpsAltitude;
@@ -41,7 +41,7 @@ public class SensorData {
 	
 	public double simulationTime;
 	
-	public SensorData(){
+	public Telemetry(){
 		longitude = 0.0;
 		latitude = 0.0;
 		gpsAltitude = 0.0;
@@ -80,42 +80,42 @@ public class SensorData {
 		simulationTime = 0.0;
 	}
 	
-	public void copyTo(SensorData sensorData){
-		sensorData.longitude = longitude;
-		sensorData.latitude = latitude;
-		sensorData.gpsAltitude = gpsAltitude;
-		sensorData.gpsAirspeed = gpsAirspeed; 
-		sensorData.gpsHeading = gpsHeading;
+	public void copyTo(Telemetry telemetry){
+		telemetry.longitude = longitude;
+		telemetry.latitude = latitude;
+		telemetry.gpsAltitude = gpsAltitude;
+		telemetry.gpsAirspeed = gpsAirspeed; 
+		telemetry.gpsHeading = gpsHeading;
 		
-		sensorData.xAcceleration = xAcceleration;
-		sensorData.yAcceleration = yAcceleration;
-		sensorData.zAcceleration = zAcceleration;
+		telemetry.xAcceleration = xAcceleration;
+		telemetry.yAcceleration = yAcceleration;
+		telemetry.zAcceleration = zAcceleration;
 		
-		sensorData.xRotation = xRotation;
-		sensorData.yRotation = yRotation;
-		sensorData.zRotation = zRotation;
+		telemetry.xRotation = xRotation;
+		telemetry.yRotation = yRotation;
+		telemetry.zRotation = zRotation;
 		
-		sensorData.dynamicPressure = dynamicPressure;
-		sensorData.staticPressure = staticPressure;
+		telemetry.dynamicPressure = dynamicPressure;
+		telemetry.staticPressure = staticPressure;
 		
-		sensorData.temperature = temperature;
+		telemetry.temperature = temperature;
 		
-		sensorData.xMagn = xMagn;
-		sensorData.yMagn = yMagn;
-		sensorData.zMagn = zMagn;
+		telemetry.xMagn = xMagn;
+		telemetry.yMagn = yMagn;
+		telemetry.zMagn = zMagn;
 		
-		sensorData.roll = roll;
-		sensorData.pitch = pitch;
+		telemetry.roll = roll;
+		telemetry.pitch = pitch;
 		
-		sensorData.altitude = altitude;
-		sensorData.airspeed = airspeed; 
-		sensorData.heading = heading;
+		telemetry.altitude = altitude;
+		telemetry.airspeed = airspeed; 
+		telemetry.heading = heading;
 		
-		sensorData.elevator = elevator;
-		sensorData.aileron = aileron;
-		sensorData.rudder = rudder;
-		sensorData.throttle = throttle;
+		telemetry.elevator = elevator;
+		telemetry.aileron = aileron;
+		telemetry.rudder = rudder;
+		telemetry.throttle = throttle;
 		
-		sensorData.simulationTime = simulationTime;
+		telemetry.simulationTime = simulationTime;
 	}
 }

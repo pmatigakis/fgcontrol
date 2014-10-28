@@ -1,4 +1,4 @@
-package com.matigakis.fgcontrol;
+package com.matigakis.fgcontrol.network;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

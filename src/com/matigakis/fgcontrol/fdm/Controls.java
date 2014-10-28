@@ -1,4 +1,4 @@
-package com.matigakis.fgcontrol.controls;
+package com.matigakis.fgcontrol.fdm;
 
 //import com.matigakis.fgcontrol.sensors.SensorData;
 
