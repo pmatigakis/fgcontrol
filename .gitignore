@@ -1,6 +1,8 @@
 bin
 dist
 build
+javadoc
+reports
 *.class
 .project
 .classpath
