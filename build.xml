@@ -5,6 +5,7 @@
 	<property name="build" location="build" />
 	<property name="dist" location="dist" />
 	<property name="lib" location="lib" />
+	<property file="project.properties" />
 	
 	<target name="init">
 		<mkdir dir="${build}" />
@@ -27,6 +28,12 @@
 	</target>
 	
 	<target name="dist" depends="compile">
-		<jar jarfile="${dist}/fgcontrol.jar" basedir="${build}"/>
+		<jar jarfile="${dist}/fgcontrol-${version.major}.${version.minor}.${version.patch}.jar" basedir="${build}">
+			<manifest>
+				<attribute name="Implementation-Vendor" value="Panagiotis Matigakis"/>
+				<attribute name="Implementation-Title" value="FgControl"/>
+				<attribute name="Implementation-Version" value="${version.major}.${version.minor}.${version.patch}"/>
+			</manifest>
+		</jar>
 	</target>
 </project>
