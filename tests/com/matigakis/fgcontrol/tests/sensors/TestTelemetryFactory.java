@@ -15,59 +15,41 @@ public class TestTelemetryFactory {
 	public void testCreateTelemetryFromString(){
 		DummyTelemetry dummyTelemetry = new DummyTelemetry();
 		
-		String telemetryString =  
-				dummyTelemetry.gpsAltitude + "\t" +
-				dummyTelemetry.gpsAirspeed + "\t" +
-				dummyTelemetry.latitude + "\t" +
-				dummyTelemetry.longitude + "\t" +
-				dummyTelemetry.gpsHeading + "\t" +
-				dummyTelemetry.xAcceleration + "\t" +
-				dummyTelemetry.yAcceleration + "\t" +
-				dummyTelemetry.zAcceleration + "\t" +
-				dummyTelemetry.xRotation + "\t" +
-				dummyTelemetry.yRotation + "\t" +
-				dummyTelemetry.zRotation + "\t" +
-				dummyTelemetry.staticPressure + "\t" +
-				dummyTelemetry.dynamicPressure + "\t" +
-				dummyTelemetry.temperature + "\t" +
-				dummyTelemetry.roll + "\t" + 
-				dummyTelemetry.pitch + "\t" +
-				dummyTelemetry.altitude + "\t" +
-				dummyTelemetry.airspeed + "\t" +
-				dummyTelemetry.heading + "\t" +
-				dummyTelemetry.simulationTime + "\t" +
-				dummyTelemetry.elevator + "\t" + 
-				dummyTelemetry.aileron + "\t" +
-				dummyTelemetry.rudder + "\t" +
-				dummyTelemetry.throttle;
+		String telemetryString = dummyTelemetry.toString(); 
 		
-		TelemetryFactory telemetryFactory = new TelemetryFactory();
+		Telemetry sensorData = TelemetryFactory.fromString(telemetryString);
 		
-		Telemetry sensorData = telemetryFactory.fromString(telemetryString);
+		assertEquals(dummyTelemetry.simulationTime, sensorData.simulationTime, 0.0);
 		
-		assertEquals(dummyTelemetry.gpsAltitude, sensorData.gpsAltitude, 0.0);
-		assertEquals(dummyTelemetry.gpsAirspeed, sensorData.gpsAirspeed, 0.0);
 		assertEquals(dummyTelemetry.latitude, sensorData.latitude, 0.0);
 		assertEquals(dummyTelemetry.longitude, sensorData.longitude, 0.0);
-		assertEquals(dummyTelemetry.gpsHeading, sensorData.gpsHeading, 0.0);
+		assertEquals(dummyTelemetry.altitude, sensorData.altitude, 0.0);
+		assertEquals(dummyTelemetry.altitudeAgl, sensorData.altitudeAgl, 0.0);
+		
+		assertEquals(dummyTelemetry.roll, sensorData.roll, 0.0);
+		assertEquals(dummyTelemetry.pitch, sensorData.pitch, 0.0);
+		assertEquals(dummyTelemetry.heading, sensorData.heading, 0.0);
+		assertEquals(dummyTelemetry.angleOfAttack, sensorData.angleOfAttack, 0.0);
+		assertEquals(dummyTelemetry.sideSlipAngle, sensorData.sideSlipAngle, 0.0);
+		
+		assertEquals(dummyTelemetry.rollRate, sensorData.rollRate, 0.0);
+		assertEquals(dummyTelemetry.pitchRate, sensorData.pitchRate, 0.0);
+		assertEquals(dummyTelemetry.yawRate, sensorData.yawRate, 0.0);
+		assertEquals(dummyTelemetry.airspeed, sensorData.airspeed, 0.0);
+		assertEquals(dummyTelemetry.climbRate, sensorData.climbRate, 0.0);
+		assertEquals(dummyTelemetry.northVelocity, sensorData.northVelocity, 0.0);
+		assertEquals(dummyTelemetry.eastVelocity, sensorData.eastVelocity, 0.0);
+		assertEquals(dummyTelemetry.verticalVelocity, sensorData.verticalVelocity, 0.0);
+		assertEquals(dummyTelemetry.u, sensorData.u, 0.0);
+		assertEquals(dummyTelemetry.v, sensorData.v, 0.0);
+		assertEquals(dummyTelemetry.w, sensorData.w, 0.0);
+		
 		assertEquals(dummyTelemetry.xAcceleration, sensorData.xAcceleration, 0.0);
 		assertEquals(dummyTelemetry.yAcceleration, sensorData.yAcceleration, 0.0);
 		assertEquals(dummyTelemetry.zAcceleration, sensorData.zAcceleration, 0.0);
-		assertEquals(dummyTelemetry.xRotation, sensorData.xRotation, 0.0);
-		assertEquals(dummyTelemetry.yRotation, sensorData.yRotation, 0.0);
-		assertEquals(dummyTelemetry.zRotation, sensorData.zRotation, 0.0);
+		
 		assertEquals(dummyTelemetry.staticPressure, sensorData.staticPressure, 0.0);
-		assertEquals(dummyTelemetry.dynamicPressure, sensorData.dynamicPressure, 0.0);
+		assertEquals(dummyTelemetry.totalPressure, sensorData.totalPressure, 0.0);
 		assertEquals(dummyTelemetry.temperature, sensorData.temperature, 0.0);
-		assertEquals(dummyTelemetry.roll, sensorData.roll, 0.0);
-		assertEquals(dummyTelemetry.pitch, sensorData.pitch, 0.0);
-		assertEquals(dummyTelemetry.altitude, sensorData.altitude, 0.0);
-		assertEquals(dummyTelemetry.airspeed, sensorData.airspeed, 0.0);
-		assertEquals(dummyTelemetry.heading, sensorData.heading, 0.0);
-		assertEquals(dummyTelemetry.simulationTime, sensorData.simulationTime, 0.0);
-		assertEquals(dummyTelemetry.elevator, sensorData.elevator, 0.0);
-		assertEquals(dummyTelemetry.aileron, sensorData.aileron, 0.0);
-		assertEquals(dummyTelemetry.rudder, sensorData.rudder, 0.0);
-		assertEquals(dummyTelemetry.throttle, sensorData.throttle, 0.0);
 	}
 }

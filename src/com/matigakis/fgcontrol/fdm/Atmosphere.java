@@ -2,23 +2,38 @@ package com.matigakis.fgcontrol.fdm;
 
 public class Atmosphere {
 	private double staticPressure;
-	private double pitotTubePressure;
+	private double totalPressure;
 	private double temperature;
 	
 	public Atmosphere(){
 		staticPressure = 0.0;
-		pitotTubePressure = 0.0;
+		totalPressure = 0.0;
 		temperature = 0.0;
 	}
 	
+	/**
+	 * Get static pressure in inhg
+	 * 
+	 * @return
+	 */
 	public double getStaticPressure(){
 		return staticPressure;
 	}
-	
-	public double getPitotTubePressure(){
-		return pitotTubePressure;
+
+	/**
+	 * Get total pressure in inhg
+	 * 
+	 * @return
+	 */
+	public double getTotalPressure(){
+		return totalPressure;
 	}
 	
+	/**
+	 * Get temperature in celsius
+	 * 
+	 * @return
+	 */
 	public double getTemperature(){
 		return temperature;
 	}
@@ -27,8 +42,8 @@ public class Atmosphere {
 		this.staticPressure = staticPressure;
 	}
 	
-	public void setPitotTubePressure(double pitotTubePressure){
-		this.pitotTubePressure = pitotTubePressure;
+	public void setTotalPressure(double totalPressure){
+		this.totalPressure = totalPressure;
 	}
 	
 	public void setTemperature(double temperature){

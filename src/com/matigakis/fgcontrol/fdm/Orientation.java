@@ -1,14 +1,21 @@
 package com.matigakis.fgcontrol.fdm;
 
+/**
+ * Contains the orientations returned by the fdm
+ * 
+ * All attributes are in degrees
+ */
 public class Orientation {
-	private double roll;
-	private double pitch;
-	private double yaw;
+	private double roll; //phi
+	private double pitch; //theta
+	private double heading; // yaw psi
+	private double angleOfAttack; //alpha
+	private double sideSlipAngle; // beta
 	
 	public Orientation(){
 		roll = 0.0;
 		pitch = 0.0;
-		yaw = 0.0;
+		heading = 0.0;
 	}
 	
 	public double getRoll(){
@@ -19,8 +26,20 @@ public class Orientation {
 		return pitch;
 	}
 	
-	public double getYaw(){
-		return yaw;
+	public double getAngleOfAttack(){
+		return angleOfAttack;
+	}
+	
+	public double getSideSlipAngle(){
+		return sideSlipAngle;
+	}
+	
+	public double getHeading(){
+		return heading;
+	}
+	
+	public void setHeading(double heading){
+		this.heading = heading;
 	}
 	
 	public void setRoll(double roll){
@@ -31,7 +50,11 @@ public class Orientation {
 		this.pitch = pitch;
 	}
 	
-	public void setYaw(double yaw){
-		this.yaw = yaw;
+	public void setAngleOfAttach(double angleOfAttack){
+		this.angleOfAttack = angleOfAttack;
+	}
+	
+	public void setSideSlipAngle(double sideSlipAngle){
+		this.sideSlipAngle = sideSlipAngle;
 	}
 }

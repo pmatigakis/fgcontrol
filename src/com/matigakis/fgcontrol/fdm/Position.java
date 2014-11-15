@@ -1,40 +1,56 @@
 package com.matigakis.fgcontrol.fdm;
 
-public class Location {
+/**
+ * Contains position information
+ */
+public class Position {
 	private double longitude;
 	private double latitude;
 	private double altitude;
-	private double heading;
-	private double airspeed;
+	private double agl;
 	
-	public Location(){
+	public Position(){
 		longitude = 0.0;
 		latitude = 0.0;
 		altitude = 0.0;
-		heading = 0.0;
-		airspeed = 0.0;
+		agl = 0.0;
 	}
 	
+	/**
+	 * Get longitude in degrees
+	 * @return longitude
+	 */
 	public double getLongitude(){
 		return longitude;
 	}
 	
+	/**
+	 * Get latitude in degrees
+	 * 
+	 * @return latitude
+	 */
 	public double getLatitude(){
 		return latitude;
 	}
 	
+	/**
+	 * Get altitude in feet
+	 * 
+	 * @return altitude
+	 */
 	public double getAltitude(){
 		return altitude;
 	}
 	
-	public double getHeading(){
-		return heading;
+	/**
+	 * Get altitude above ground in feet
+	 * 
+	 * @return altitude above ground
+	 */
+	public double getAGL(){
+		return agl;
 	}
-	
-	public double getAirspeed(){
-		return airspeed;
-	}
-	
+		
 	public void setLongitude(double longitude){
 		this.longitude = longitude;
 	}
@@ -47,11 +63,7 @@ public class Location {
 		this.altitude = altitude;
 	}
 	
-	public void setAirspeed(double airspeed){
-		this.airspeed = airspeed;
-	}
-	
-	public void setHeading(double heading){
-		this.heading = heading;
+	public void setAGL(double agl){
+		this.agl = agl;
 	}
 }

@@ -3,9 +3,10 @@ package com.matigakis.fgcontrol.examples;
 import com.matigakis.fgcontrol.fdm.Controls;
 import com.matigakis.fgcontrol.fdm.FDMData;
 import com.matigakis.fgcontrol.fdm.NetworkFDM;
-import com.matigakis.fgcontrol.fdm.NetworkFDMStateListener;
+import com.matigakis.fgcontrol.fdm.RemoteFDM;
+import com.matigakis.fgcontrol.fdm.RemoteFDMStateListener;
 
-public class NetworkFDMExample implements NetworkFDMStateListener{
+public class NetworkFDMExample implements RemoteFDMStateListener{
 	private Controls controls;
 	
 	public NetworkFDMExample() {
@@ -13,10 +14,10 @@ public class NetworkFDMExample implements NetworkFDMStateListener{
 	}
 	
 	@Override
-	public void FDMStateUpdated(NetworkFDM fdm, FDMData fdmData) {
-		System.out.println("Altitude: " + fdmData.getLocation().getAltitude() + "\t" +
-				   		   "Heading: " + fdmData.getLocation().getHeading() + "\t" +
-		                   "Airspeed: " + fdmData.getLocation().getAirspeed());
+	public void fdmUpdated(RemoteFDM fdm, FDMData fdmData) {
+		System.out.println("Altitude: " + fdmData.getPosition().getAltitude() + "\t" +
+				   		   "Heading: " + fdmData.getOrientation().getHeading() + "\t" +
+		                   "Airspeed: " + fdmData.getVelocities().getCalibratedAirspeed());
 		
 		controls.setThrottle(1.0);
 		
@@ -32,7 +33,7 @@ public class NetworkFDMExample implements NetworkFDMStateListener{
 		
 		NetworkFDM networkFDM = new NetworkFDM(flightgearHost, telemetryPort, controlsPort);
 
-		networkFDM.addFDMStateListener(networkFDMExample);
+		networkFDM.addRemoteFDMStateListener(networkFDMExample);
 		
 		networkFDM.connect();
 	}
