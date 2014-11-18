@@ -1,5 +1,7 @@
 package com.matigakis.fgcontrol.examples;
 
+import org.apache.log4j.BasicConfigurator;
+
 import com.matigakis.fgcontrol.fdm.Controls;
 import com.matigakis.fgcontrol.fdm.FDMData;
 import com.matigakis.fgcontrol.fdm.NetworkFDM;
@@ -25,6 +27,8 @@ public class NetworkFDMExample implements RemoteFDMStateListener{
 	}
 	
 	public static void main(String[] args) throws Exception{
+		BasicConfigurator.configure();
+		
 		String flightgearHost = "localhost";
 		int telemetryPort = 10500;
 		int controlsPort = 10501;

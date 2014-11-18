@@ -6,4 +6,5 @@ public interface RemoteFDM {
 	void transmitControls(Controls controls);
 	void addRemoteFDMStateListener(RemoteFDMStateListener listener);
 	void removeRemoteFDMStateListener(RemoteFDMStateListener listener);
+	FDMData getFDMData();
 }
