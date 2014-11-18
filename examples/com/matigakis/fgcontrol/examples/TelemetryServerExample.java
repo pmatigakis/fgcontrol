@@ -1,8 +1,9 @@
 package com.matigakis.fgcontrol.examples;
 
 import com.matigakis.fgcontrol.network.Telemetry;
-import com.matigakis.fgcontrol.network.TelemetryServer;
 import com.matigakis.fgcontrol.network.TelemetryListener;
+import com.matigakis.fgcontrol.network.TelemetryServer;
+import com.matigakis.fgcontrol.network.UDPTelemetryServer;
 
 public class TelemetryServerExample implements TelemetryListener{
 	@Override
@@ -17,7 +18,7 @@ public class TelemetryServerExample implements TelemetryListener{
 		
 		TelemetryServerExample telemetryServerExample = new TelemetryServerExample();
 		
-		TelemetryServer telemetryServer = new TelemetryServer(telemetryPort);
+		TelemetryServer telemetryServer = new UDPTelemetryServer(telemetryPort);
 		
 		telemetryServer.addTelemetryListener(telemetryServerExample);
 		

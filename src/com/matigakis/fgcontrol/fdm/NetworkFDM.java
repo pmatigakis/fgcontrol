@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.matigakis.fgcontrol.network.ControlsClient;
 import com.matigakis.fgcontrol.network.Telemetry;
 import com.matigakis.fgcontrol.network.TelemetryListener;
+import com.matigakis.fgcontrol.network.UDPTelemetryServer;
 import com.matigakis.fgcontrol.network.TelemetryServer;
 
 /**
@@ -31,7 +32,7 @@ public class NetworkFDM implements RemoteFDM, TelemetryListener{
 		
 		stateListeners = new LinkedList<RemoteFDMStateListener>();
 		
-		telemetryServer = new TelemetryServer(telemetryPort);
+		telemetryServer = new UDPTelemetryServer(telemetryPort);
 		telemetryServer.addTelemetryListener(this);
 		
 		controlsClient = new ControlsClient(host, controlsPort);
@@ -47,6 +48,9 @@ public class NetworkFDM implements RemoteFDM, TelemetryListener{
 		stateListeners.remove(client);
 	}
 	
+	/**
+	 * Connect to FlightGear
+	 */
 	@Override
 	public void connect() throws InterruptedException{
 		LOGGER.info("Connecting to the network FDM");
@@ -63,6 +67,9 @@ public class NetworkFDM implements RemoteFDM, TelemetryListener{
 		}
 	}
 	
+	/**
+	 * Disconnect from flightgear
+	 */
 	@Override
 	public void disconnect(){
 		LOGGER.info("Disconnecting from the network FDM");
@@ -83,6 +90,9 @@ public class NetworkFDM implements RemoteFDM, TelemetryListener{
 		controlsClient.transmitControls(controls);
 	}
 	
+	/**
+	 * Notify the FDM listeners
+	 */
 	private void notifyFDMStateListeners(){
 		for(RemoteFDMStateListener stateListener: stateListeners){
 			stateListener.fdmUpdated(this, fdmData);
