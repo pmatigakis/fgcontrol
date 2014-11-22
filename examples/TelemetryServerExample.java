@@ -1,4 +1,4 @@
-package com.matigakis.fgcontrol.examples;
+
 
 import com.matigakis.fgcontrol.network.Telemetry;
 import com.matigakis.fgcontrol.network.TelemetryListener;

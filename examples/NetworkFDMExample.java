@@ -1,4 +1,4 @@
-package com.matigakis.fgcontrol.examples;
+
 
 import org.apache.log4j.BasicConfigurator;
 
@@ -16,7 +16,7 @@ public class NetworkFDMExample implements RemoteFDMStateListener{
 	}
 	
 	@Override
-	public void fdmUpdated(RemoteFDM fdm, FDMData fdmData) {
+	public void fdmDataReceived(RemoteFDM fdm, FDMData fdmData) {
 		System.out.println("Altitude: " + fdmData.getPosition().getAltitude() + "\t" +
 				   		   "Heading: " + fdmData.getOrientation().getHeading() + "\t" +
 		                   "Airspeed: " + fdmData.getVelocities().getCalibratedAirspeed());
@@ -40,5 +40,15 @@ public class NetworkFDMExample implements RemoteFDMStateListener{
 		networkFDM.addRemoteFDMStateListener(networkFDMExample);
 		
 		networkFDM.connect();
+	}
+
+	@Override
+	public void connectedToRemoteFDM(RemoteFDM fdm) {
+		System.out.println("Connected to the remote FDM");
+	}
+
+	@Override
+	public void disconnectedFromRemoteFDM(RemoteFDM fdm) {
+		System.out.println("Discconnected from the remote FDM");
 	}
 }

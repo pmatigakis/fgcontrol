@@ -1,8 +1,5 @@
 package com.matigakis.fgcontrol.fdm;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,35 +14,22 @@ import com.matigakis.fgcontrol.network.TelemetryServer;
  * from Flightgear. It can also be used to modify the state of the aircraft
  * controls.
  */
-public class NetworkFDM implements RemoteFDM, TelemetryListener{
+public class NetworkFDM extends AbstractRemoteFDM implements TelemetryListener{
 	private static Logger LOGGER = LoggerFactory.getLogger(NetworkFDM.class);
 	
-	private FDMData fdmData;
-	private List<RemoteFDMStateListener> stateListeners;
 	private TelemetryServer telemetryServer;
 	private ControlsClient controlsClient;
 	private boolean connected;
 	
 	public NetworkFDM(String host, int telemetryPort, int controlsPort){
-		fdmData = new FDMData();
+		super();
+
 		connected = false;
-		
-		stateListeners = new LinkedList<RemoteFDMStateListener>();
 		
 		telemetryServer = new UDPTelemetryServer(telemetryPort);
 		telemetryServer.addTelemetryListener(this);
 		
 		controlsClient = new ControlsClient(host, controlsPort);
-	}
-	
-	@Override
-	public void addRemoteFDMStateListener(RemoteFDMStateListener client){
-		stateListeners.add(client);
-	}
-	
-	@Override
-	public void removeRemoteFDMStateListener(RemoteFDMStateListener client){
-		stateListeners.remove(client);
 	}
 	
 	/**
@@ -58,6 +42,8 @@ public class NetworkFDM implements RemoteFDM, TelemetryListener{
 		if(!connected){
 			telemetryServer.startServer();
 			controlsClient.openConnection();
+			
+			notifyConnectedToFDM(this);
 			
 			connected = true;
 			
@@ -78,6 +64,8 @@ public class NetworkFDM implements RemoteFDM, TelemetryListener{
 			telemetryServer.stopServer();
 			controlsClient.closeConnection();
 			
+			notifyDisconnectedFromFDM(this);
+			
 			connected = false;
 			LOGGER.info("Disconnected from the network FDM");
 		}else{
@@ -85,34 +73,25 @@ public class NetworkFDM implements RemoteFDM, TelemetryListener{
 		}
 	}
 	
+	/**
+	 * Transmit the controls state to Flightgear
+	 * 
+	 * @param controls
+	 */
 	@Override
 	public void transmitControls(Controls controls){
 		controlsClient.transmitControls(controls);
 	}
 	
-	/**
-	 * Notify the FDM listeners
-	 */
-	private void notifyFDMStateListeners(){
-		for(RemoteFDMStateListener stateListener: stateListeners){
-			stateListener.fdmUpdated(this, fdmData);
-		}
-	}
-
 	@Override
 	public void handleTelemetry(Telemetry telemetry) {
 		fdmData = FDMDataFactory.fromTelemetry(telemetry);
 		
-		notifyFDMStateListeners();
+		notifyFDMDataReceived();
 	}
 
-	@Override
-	public FDMData getFDMData() {
-		return fdmData;
-	}
-	
 	/**
-	 * Return true is the NetworkFDM has connected to Flightgear
+	 * Return true if the NetworkFDM has connected to Flightgear
 	 * 
 	 * @return the state of the connection
 	 */
