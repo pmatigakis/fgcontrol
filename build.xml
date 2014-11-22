@@ -33,7 +33,7 @@
 	</target>
 	
 	<target name="compile" depends="init">
-		<javac srcdir="${src}" destdir="${build.classes}">
+		<javac debug="true" srcdir="${src}" destdir="${build.classes}">
 			<classpath>
 				<fileset dir="${lib}">
         			<include name="**/*.jar"/>
