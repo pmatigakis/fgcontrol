@@ -44,6 +44,12 @@ public class FDMDataFactory {
 		atmosphere.setTotalPressure(telemetry.totalPressure);
 		atmosphere.setTemperature(telemetry.temperature);
 		
+		Controls controls = fdmData.getControls();
+		controls.setElevator(telemetry.elevator);
+		controls.setAileron(telemetry.aileron);
+		controls.setRudder(telemetry.rudder);
+		controls.setThrottle(telemetry.throttle);
+		
 		return fdmData;
 	}
 }

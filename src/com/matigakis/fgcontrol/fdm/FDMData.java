@@ -7,6 +7,7 @@ public class FDMData{
 	private Position position;
 	private Orientation orientation;
 	private Atmosphere atmosphere;
+	private Controls controls;
 	
 	public FDMData(){
 		simulationTime = 0.0;
@@ -15,6 +16,7 @@ public class FDMData{
 		position = new Position();
 		orientation = new Orientation();
 		atmosphere = new Atmosphere();
+		controls = new Controls();
 	}
 	
 	public Accelerations getAccelerations(){
@@ -39,6 +41,10 @@ public class FDMData{
 	
 	public double getSimulationTime(){
 		return simulationTime;
+	}
+	
+	public Controls getControls(){
+		return controls;
 	}
 	
 	public void setSimulationTime(double simulationTime){
