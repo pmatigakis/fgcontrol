@@ -40,6 +40,11 @@ public class Telemetry {
 	public double totalPressure;
 	public double temperature;
 	
+	public double elevator;
+	public double aileron;
+	public double rudder;
+	public double throttle;
+	
 	public Telemetry(){
 		simulationTime = 0.0;
 		
@@ -73,6 +78,11 @@ public class Telemetry {
 		staticPressure = 0.0;
 		totalPressure = 0.0;
 		temperature = 0.0;
+		
+		elevator = 0.0;
+		aileron = 0.0;
+		rudder = 0.0;
+		throttle = 0.0;
 	}
 	
 	public void copyTo(Telemetry telemetry){
@@ -139,6 +149,10 @@ public class Telemetry {
 				staticPressure,
 				totalPressure,
 				temperature,
+				elevator,
+				aileron,
+				rudder,
+				throttle
 		};
 		
 		return fdmData;

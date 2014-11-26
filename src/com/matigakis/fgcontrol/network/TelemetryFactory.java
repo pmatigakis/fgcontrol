@@ -56,6 +56,12 @@ public class TelemetryFactory {
 		telemetry.totalPressure = Double.parseDouble(values[25]);
 		telemetry.temperature = Double.parseDouble(values[26]);
 		
+		//controls
+		telemetry.elevator = Double.parseDouble(values[27]);
+		telemetry.aileron= Double.parseDouble(values[28]);
+		telemetry.rudder = Double.parseDouble(values[29]);
+		telemetry.throttle = Double.parseDouble(values[30]);
+		
 		return telemetry;
 	}
 }

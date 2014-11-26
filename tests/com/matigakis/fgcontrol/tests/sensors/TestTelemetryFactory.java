@@ -51,5 +51,10 @@ public class TestTelemetryFactory {
 		assertEquals(dummyTelemetry.staticPressure, sensorData.staticPressure, 0.0);
 		assertEquals(dummyTelemetry.totalPressure, sensorData.totalPressure, 0.0);
 		assertEquals(dummyTelemetry.temperature, sensorData.temperature, 0.0);
+		
+		assertEquals(dummyTelemetry.elevator, sensorData.elevator, 0.0);
+		assertEquals(dummyTelemetry.aileron, sensorData.aileron, 0.0);
+		assertEquals(dummyTelemetry.rudder, sensorData.rudder, 0.0);
+		assertEquals(dummyTelemetry.throttle, sensorData.throttle, 0.0);
 	}
 }

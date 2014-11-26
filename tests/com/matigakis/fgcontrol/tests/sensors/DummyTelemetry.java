@@ -37,5 +37,10 @@ public class DummyTelemetry extends Telemetry{
 		staticPressure = 29.8;
 		totalPressure = 31.5;
 		temperature = 26.5;
+		
+		elevator = 0.6;
+		aileron = 0.3;
+		rudder = 0.01;
+		throttle = 0.9;
 	}
 }
