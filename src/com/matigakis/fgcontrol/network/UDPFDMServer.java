@@ -4,13 +4,13 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 
-public class UDPTelemetryServer extends BaseTelemetryServer{
-	private UDPTelemetryStringHandler telemetryHandler;
+public class UDPFDMServer extends BaseFDMServer{
+	private FDMStringHandler telemetryHandler;
 	
-	public UDPTelemetryServer(int port) {
+	public UDPFDMServer(int port) {
 		super(port);
 		
-		telemetryHandler = new UDPTelemetryStringHandler();
+		telemetryHandler = new FDMStringHandler();
 	}
 
 	@Override
@@ -21,12 +21,12 @@ public class UDPTelemetryServer extends BaseTelemetryServer{
 	}
 
 	@Override
-	public void addTelemetryListener(TelemetryListener telemetryListener) {
+	public void addFDMDataListener(FDMDataListener telemetryListener) {
 		telemetryHandler.addTelemetryListener(telemetryListener);
 	}
 
 	@Override
-	public void removeTelemetryListener(TelemetryListener telemetryListener) {
+	public void removeFDMDataListener(FDMDataListener telemetryListener) {
 		telemetryHandler.removeTelemetryListener(telemetryListener);
 	}
 }

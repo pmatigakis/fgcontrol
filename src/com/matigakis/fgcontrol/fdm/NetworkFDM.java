@@ -4,20 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.matigakis.fgcontrol.network.ControlsClient;
-import com.matigakis.fgcontrol.network.Telemetry;
-import com.matigakis.fgcontrol.network.TelemetryListener;
-import com.matigakis.fgcontrol.network.UDPTelemetryServer;
-import com.matigakis.fgcontrol.network.TelemetryServer;
+import com.matigakis.fgcontrol.network.FDMDataListener;
+import com.matigakis.fgcontrol.network.UDPFDMServer;
+import com.matigakis.fgcontrol.network.FDMDataServer;
 
 /**
  * The NetworkFDM class is used to receive data about the aircraft state
  * from Flightgear. It can also be used to modify the state of the aircraft
  * controls.
  */
-public class NetworkFDM extends AbstractRemoteFDM implements TelemetryListener{
+public class NetworkFDM extends AbstractRemoteFDM implements FDMDataListener{
 	private static Logger LOGGER = LoggerFactory.getLogger(NetworkFDM.class);
 	
-	private TelemetryServer telemetryServer;
+	private FDMDataServer fdmDataServer;
 	private ControlsClient controlsClient;
 	private boolean connected;
 	
@@ -26,8 +25,8 @@ public class NetworkFDM extends AbstractRemoteFDM implements TelemetryListener{
 
 		connected = false;
 		
-		telemetryServer = new UDPTelemetryServer(telemetryPort);
-		telemetryServer.addTelemetryListener(this);
+		fdmDataServer = new UDPFDMServer(telemetryPort);
+		fdmDataServer.addFDMDataListener(this);
 		
 		controlsClient = new ControlsClient(host, controlsPort);
 	}
@@ -40,7 +39,7 @@ public class NetworkFDM extends AbstractRemoteFDM implements TelemetryListener{
 		LOGGER.info("Connecting to the network FDM");
 		
 		if(!connected){
-			telemetryServer.startServer();
+			fdmDataServer.startServer();
 			controlsClient.openConnection();
 			
 			notifyConnectedToFDM(this);
@@ -61,7 +60,7 @@ public class NetworkFDM extends AbstractRemoteFDM implements TelemetryListener{
 		LOGGER.info("Disconnecting from the network FDM");
 		
 		if(connected){
-			telemetryServer.stopServer();
+			fdmDataServer.stopServer();
 			controlsClient.closeConnection();
 			
 			notifyDisconnectedFromFDM(this);
@@ -84,8 +83,8 @@ public class NetworkFDM extends AbstractRemoteFDM implements TelemetryListener{
 	}
 	
 	@Override
-	public void handleTelemetry(Telemetry telemetry) {
-		fdmData = FDMDataFactory.fromTelemetry(telemetry);
+	public void handleFDMData(FDMData fdmData) {
+		this.fdmData = fdmData;
 		
 		notifyFDMDataReceived();
 	}

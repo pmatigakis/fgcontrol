@@ -8,7 +8,6 @@ public class ControlsHandler extends SimpleChannelInboundHandler<DatagramPacket>
 	@Override
 	protected void channelRead0(ChannelHandlerContext arg0, DatagramPacket arg1)
 			throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 }

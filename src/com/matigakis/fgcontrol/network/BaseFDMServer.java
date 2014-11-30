@@ -9,18 +9,18 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 
 /**
- * The BaseTelemetryServer object is the base object for all servers that can
+ * The BaseFDMServer object is the base object for all servers that can
  * connect to flightgear and receive telemetry data
  */
-public abstract class BaseTelemetryServer extends Thread implements TelemetryServer{
-	private static final Logger logger = LoggerFactory.getLogger(BaseTelemetryServer.class);
+public abstract class BaseFDMServer extends Thread implements FDMDataServer{
+	private static final Logger logger = LoggerFactory.getLogger(BaseFDMServer.class);
 	
 	private final int port;
 	private EventLoopGroup group;
 	
 	protected abstract void setupBootstrap(Bootstrap bootstrap);
 	
-	public BaseTelemetryServer(int port){
+	public BaseFDMServer(int port){
 		super();
 		
 		this.port = port;
