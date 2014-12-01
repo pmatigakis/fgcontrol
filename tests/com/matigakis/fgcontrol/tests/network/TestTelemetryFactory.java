@@ -1,4 +1,4 @@
-package com.matigakis.fgcontrol.tests.sensors;
+package com.matigakis.fgcontrol.tests.network;
 
 import static org.junit.Assert.*;
 
