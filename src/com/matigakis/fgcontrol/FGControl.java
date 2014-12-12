@@ -2,7 +2,8 @@ package com.matigakis.fgcontrol;
 
 import java.net.InetSocketAddress;
 
-import org.apache.log4j.BasicConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.matigakis.fgcontrol.console.ConsoleClient;
 
@@ -12,6 +13,7 @@ import com.matigakis.fgcontrol.console.ConsoleClient;
  * At the moment it can only pause and reset Flightgear
  */
 public class FGControl {
+	private static final Logger LOGGER = LoggerFactory.getLogger(FGControl.class);
 	private ConsoleClient consoleClient;
 	
 	public FGControl(InetSocketAddress address){
@@ -24,6 +26,8 @@ public class FGControl {
 	 * @throws InterruptedException
 	 */
 	public void connect() throws InterruptedException{
+		LOGGER.info("Connecting to Flightgear's console");
+		
 		consoleClient.connect();
 	}
 	
@@ -31,6 +35,8 @@ public class FGControl {
 	 * Disconnect from Flightgear
 	 */
 	public void disconnect(){
+		LOGGER.info("Disconnecting from Flightgear's console");
+		
 		consoleClient.disconnect();
 	}
 	
@@ -38,6 +44,8 @@ public class FGControl {
 	 * Pause/unpause Flightgear
 	 */
 	public void pause(){
+		LOGGER.info("Pausing/unpausing Flightgear");
+		
 		consoleClient.runCommand("pause");
 	}
 	
@@ -45,6 +53,8 @@ public class FGControl {
 	 * Reset Flightgear
 	 */
 	public void reset(){
+		LOGGER.info("Reseting Flightgear");
+		
 		consoleClient.runCommand("reset");
 	}
 }
