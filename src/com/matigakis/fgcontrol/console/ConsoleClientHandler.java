@@ -14,7 +14,7 @@ public class ConsoleClientHandler extends ChannelInboundHandlerAdapter{
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		String line = (String) msg;
 		
-		LOGGER.debug("Received " + msg);
+		LOGGER.debug("Flightgear console response: " + line);
 		
 		ReferenceCountUtil.release(msg);
 	}

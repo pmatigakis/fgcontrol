@@ -8,13 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
- * The ConsoleClient class is used to execute commands of Flightgear's
+ * The ConsoleClient class is used to execute commands on Flightgear's
  * telnet console
  */
 public class ConsoleClient {
@@ -23,7 +22,6 @@ public class ConsoleClient {
 	private InetSocketAddress address;
 	private Channel channel;
 	private EventLoopGroup group;
-	private ConsoleClientHandler handler;
 	
 	public ConsoleClient(InetSocketAddress address){
 		this.address = address;
@@ -39,22 +37,20 @@ public class ConsoleClient {
 		
 		group = new NioEventLoopGroup();
 		
-		try{
-			Bootstrap bootstrap = new Bootstrap();
-			
-			handler = new ConsoleClientHandler();
-			
-			bootstrap.group(group)
+		Bootstrap bootstrap = new Bootstrap();
+		
+		bootstrap.group(group)
 			.channel(NioSocketChannel.class)
-			.handler(new ConsoleClientInitializer(handler));
-			
+			.handler(new ConsoleClientInitializer());
+		
+		try{
 			channel = bootstrap.connect(address).sync().channel();
+			
+			LOGGER.info("Connected to Flightgear's console");
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			LOGGER.error("Failed to connect to Flightgear's console", e);
 			throw e;
 		}
-		
-		LOGGER.info("Connected to Flightgear's console");
 	}
 	
 	/**

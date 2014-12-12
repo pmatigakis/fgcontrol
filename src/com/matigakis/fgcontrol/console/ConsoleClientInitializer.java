@@ -9,11 +9,6 @@ import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 
 public class ConsoleClientInitializer extends ChannelInitializer<SocketChannel>{
-	private ConsoleClientHandler handler;
-	
-	public ConsoleClientInitializer(ConsoleClientHandler handler){
-		this.handler = handler;
-	}
 	
 	@Override
 	protected void initChannel(SocketChannel channel) throws Exception {
@@ -22,6 +17,6 @@ public class ConsoleClientInitializer extends ChannelInitializer<SocketChannel>{
 		pipeline.addLast(new LineBasedFrameDecoder(1024));
 		pipeline.addLast(new StringDecoder(CharsetUtil.US_ASCII));
 		pipeline.addLast(new StringEncoder(CharsetUtil.US_ASCII));
-		pipeline.addLast(handler);
+		pipeline.addLast(new ConsoleClientHandler());
 	}
 }
