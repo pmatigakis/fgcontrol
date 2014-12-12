@@ -35,21 +35,25 @@ public class ConsoleClient {
 	public void connect() throws InterruptedException{
 		LOGGER.info("Connecting to Flightgear's console");
 		
-		group = new NioEventLoopGroup();
-		
-		Bootstrap bootstrap = new Bootstrap();
-		
-		bootstrap.group(group)
-			.channel(NioSocketChannel.class)
-			.handler(new ConsoleClientInitializer());
-		
-		try{
-			channel = bootstrap.connect(address).sync().channel();
+		if(!isConnected()){
+			group = new NioEventLoopGroup();
 			
-			LOGGER.info("Connected to Flightgear's console");
-		} catch (InterruptedException e) {
-			LOGGER.error("Failed to connect to Flightgear's console", e);
-			throw e;
+			Bootstrap bootstrap = new Bootstrap();
+			
+			bootstrap.group(group)
+				.channel(NioSocketChannel.class)
+				.handler(new ConsoleClientInitializer());
+			
+			try{
+				channel = bootstrap.connect(address).sync().channel();
+				
+				LOGGER.info("Connected to Flightgear's console");
+			} catch (InterruptedException e) {
+				LOGGER.error("Failed to connect to Flightgear's console", e);
+				throw e;
+			}
+		}else{
+			LOGGER.warn("Already connected to Flightgear's console");
 		}
 	}
 	
@@ -59,9 +63,13 @@ public class ConsoleClient {
 	public void disconnect(){
 		LOGGER.info("Disconnecting from Flightgear's console");
 		
-		group.shutdownGracefully();
+		if(isConnected()){
+			group.shutdownGracefully();
 		
-		LOGGER.info("Disconnected from Flightgear's console");
+			LOGGER.info("Disconnected from Flightgear's console");
+		}else{
+			LOGGER.warn("Not connected to Flightgear's console");
+		}
 	}
 	
 	protected String createSetPropertyMessage(Property property){
@@ -86,5 +94,18 @@ public class ConsoleClient {
 	 */
 	public void runCommand(String command){
 		channel.writeAndFlush("run " + command + "\r\n");
+	}
+	
+	/**
+	 * Check if the console client is connected to Flightgear
+	 * 
+	 * @return true if connected
+	 */
+	public boolean isConnected(){
+		if(channel == null){
+			return false;
+		}else{
+			return channel.isActive();
+		}
 	}
 }

@@ -28,7 +28,13 @@ public class FGControl {
 	public void connect() throws InterruptedException{
 		LOGGER.info("Connecting to Flightgear's console");
 		
-		consoleClient.connect();
+		if(!isConnected()){
+			consoleClient.connect();
+		
+			LOGGER.info("Connected to Flightgear's console");
+		}else{
+			LOGGER.warn("Already connected to Flightgear's console");
+		}
 	}
 	
 	/**
@@ -37,7 +43,13 @@ public class FGControl {
 	public void disconnect(){
 		LOGGER.info("Disconnecting from Flightgear's console");
 		
-		consoleClient.disconnect();
+		if(isConnected()){
+			consoleClient.disconnect();
+			
+			LOGGER.info("Disconnected from Flightgear's console");
+		}else{
+			LOGGER.warn("Not connected to Flightgear's console");
+		}
 	}
 	
 	/**
@@ -56,5 +68,9 @@ public class FGControl {
 		LOGGER.info("Reseting Flightgear");
 		
 		consoleClient.runCommand("reset");
+	}
+	
+	public boolean isConnected(){
+		return consoleClient.isConnected();
 	}
 }
