@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.matigakis.fgcontrol.console.ConsoleClient;
+import com.matigakis.fgcontrol.console.ConsoleConnectionException;
 
 /**
  * The FGControl class is used to control Flightgear remotely.
@@ -23,15 +24,15 @@ public class FGControl {
 	/**
 	 * Connect to Flightgear
 	 * 
-	 * @throws InterruptedException
+	 * @throws ConsoleConnectionException
 	 */
-	public void connect() throws InterruptedException{
-		LOGGER.info("Connecting to Flightgear's console");
-		
+	public void connect() throws ConsoleConnectionException{
 		if(!isConnected()){
+			LOGGER.debug("Connecting to Flightgear's console");
+			
 			consoleClient.connect();
 		
-			LOGGER.info("Connected to Flightgear's console");
+			LOGGER.debug("Connected to Flightgear's console");
 		}else{
 			LOGGER.warn("Already connected to Flightgear's console");
 		}
@@ -41,22 +42,18 @@ public class FGControl {
 	 * Disconnect from Flightgear
 	 */
 	public void disconnect(){
-		LOGGER.info("Disconnecting from Flightgear's console");
+		LOGGER.debug("Disconnecting from Flightgear's console");
 		
-		if(isConnected()){
-			consoleClient.disconnect();
+		consoleClient.disconnect();
 			
-			LOGGER.info("Disconnected from Flightgear's console");
-		}else{
-			LOGGER.warn("Not connected to Flightgear's console");
-		}
+		LOGGER.debug("Disconnected from Flightgear's console");
 	}
 	
 	/**
 	 * Pause/unpause Flightgear
 	 */
 	public void pause(){
-		LOGGER.info("Pausing/unpausing Flightgear");
+		LOGGER.debug("Pausing/unpausing Flightgear");
 		
 		consoleClient.runCommand("pause");
 	}
@@ -65,7 +62,7 @@ public class FGControl {
 	 * Reset Flightgear
 	 */
 	public void reset(){
-		LOGGER.info("Reseting Flightgear");
+		LOGGER.debug("Reseting Flightgear");
 		
 		consoleClient.runCommand("reset");
 	}

@@ -2,6 +2,8 @@
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,8 +12,11 @@ import java.net.InetSocketAddress;
 import org.apache.log4j.BasicConfigurator;
 
 import com.matigakis.fgcontrol.FGControl;
+import com.matigakis.fgcontrol.console.ConsoleConnectionException;
 
 public class FlightgearControl extends JFrame{
+	private static final long serialVersionUID = 1L;
+	
 	protected FGControl fgControl;
 	
 	public FlightgearControl(FGControl fgControl){
@@ -47,7 +52,9 @@ public class FlightgearControl extends JFrame{
 		
 		pack();
 		setResizable(false);
-		
+	}
+	
+	public void run(){
 		setVisible(true);
 	}
 	
@@ -59,16 +66,23 @@ public class FlightgearControl extends JFrame{
 		fgControl.reset();
 	}
 	
-	public static void main(String[] args) throws Exception{
+	public static void main(String[] args) {
 		BasicConfigurator.configure();
 		
 		InetSocketAddress address = new InetSocketAddress("localhost", 10503);
 		
 		final FGControl fgControl = new FGControl(address);
 		
-		fgControl.connect();
-		
+		try{
+			fgControl.connect();
+		}catch(ConsoleConnectionException e){
+			JOptionPane.showMessageDialog(null, "Failed to connect to Flightgear's console", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+			
 		FlightgearControl app = new FlightgearControl(fgControl);
+		
+		app.run();
 		
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override

@@ -6,6 +6,7 @@ import com.matigakis.fgcontrol.flightgear.Property;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -25,35 +26,35 @@ public class ConsoleClient {
 	
 	public ConsoleClient(InetSocketAddress address){
 		this.address = address;
+		group = new NioEventLoopGroup();
 	}
 	
 	/**
 	 * Connect to flightgear's telnet console
 	 * 
-	 * @throws InterruptedException
+	 * @throws ConsoleConnectionException
 	 */
-	public void connect() throws InterruptedException{
-		LOGGER.info("Connecting to Flightgear's console");
+	public void connect() throws ConsoleConnectionException{
+		LOGGER.debug("Connecting to Flightgear's console");
 		
 		if(!isConnected()){
-			group = new NioEventLoopGroup();
-			
-			Bootstrap bootstrap = new Bootstrap();
-			
-			bootstrap.group(group)
-				.channel(NioSocketChannel.class)
-				.handler(new ConsoleClientInitializer());
-			
 			try{
+				Bootstrap bootstrap = new Bootstrap();
+				
+				bootstrap.group(group)
+					.channel(NioSocketChannel.class)
+					.handler(new ConsoleClientInitializer());
+				
 				channel = bootstrap.connect(address).sync().channel();
 				
-				LOGGER.info("Connected to Flightgear's console");
-			} catch (InterruptedException e) {
+				LOGGER.debug("Connected to Flightgear's console");
+			} catch (Exception e) {
 				LOGGER.error("Failed to connect to Flightgear's console", e);
-				throw e;
+				disconnect();
+				throw new ConsoleConnectionException("Failed to connect to Flightgear's console", e);
 			}
 		}else{
-			LOGGER.warn("Already connected to Flightgear's console");
+			LOGGER.debug("Already connected to Flightgear's console");
 		}
 	}
 	
@@ -61,15 +62,11 @@ public class ConsoleClient {
 	 * Disconnect from Flightgear's telnet console
 	 */
 	public void disconnect(){
-		LOGGER.info("Disconnecting from Flightgear's console");
+		LOGGER.debug("Disconnecting from Flightgear's console");
 		
-		if(isConnected()){
-			group.shutdownGracefully();
+		group.shutdownGracefully();
 		
-			LOGGER.info("Disconnected from Flightgear's console");
-		}else{
-			LOGGER.warn("Not connected to Flightgear's console");
-		}
+		LOGGER.debug("Disconnected from Flightgear's console");
 	}
 	
 	protected String createSetPropertyMessage(Property property){
