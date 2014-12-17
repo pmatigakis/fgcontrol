@@ -18,4 +18,11 @@ public class ConsoleClientHandler extends ChannelInboundHandlerAdapter{
 		
 		ReferenceCountUtil.release(msg);
 	}
+	
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
+			throws Exception {
+		LOGGER.error("Exception raised in Flightgear's telnet console", cause);
+		ctx.close();
+	}
 }

@@ -35,16 +35,16 @@ public class ConsoleClient {
 	 * @throws ConsoleConnectionException
 	 */
 	public void connect() throws ConsoleConnectionException{
-		LOGGER.debug("Connecting to Flightgear's console");
-		
 		if(!isConnected()){
-			try{
-				Bootstrap bootstrap = new Bootstrap();
-				
-				bootstrap.group(group)
-					.channel(NioSocketChannel.class)
-					.handler(new ConsoleClientInitializer());
-				
+			LOGGER.debug("Connecting to Flightgear's console");
+			
+			Bootstrap bootstrap = new Bootstrap();
+			
+			bootstrap.group(group)
+				.channel(NioSocketChannel.class)
+				.handler(new ConsoleClientInitializer());
+			
+			try{	
 				channel = bootstrap.connect(address).sync().channel();
 				
 				LOGGER.debug("Connected to Flightgear's console");
@@ -89,7 +89,7 @@ public class ConsoleClient {
 	 * 
 	 * @param command
 	 */
-	public void runCommand(String command){
+	public void run(String command){
 		channel.writeAndFlush("run " + command + "\r\n");
 	}
 	

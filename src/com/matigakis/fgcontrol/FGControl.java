@@ -55,7 +55,7 @@ public class FGControl {
 	public void pause(){
 		LOGGER.debug("Pausing/unpausing Flightgear");
 		
-		consoleClient.runCommand("pause");
+		consoleClient.run("pause");
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class FGControl {
 	public void reset(){
 		LOGGER.debug("Reseting Flightgear");
 		
-		consoleClient.runCommand("reset");
+		consoleClient.run("reset");
 	}
 	
 	public boolean isConnected(){
