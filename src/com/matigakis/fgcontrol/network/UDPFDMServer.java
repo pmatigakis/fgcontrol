@@ -1,7 +1,7 @@
 package com.matigakis.fgcontrol.network;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 
 public class UDPFDMServer extends BaseFDMServer{
@@ -14,13 +14,6 @@ public class UDPFDMServer extends BaseFDMServer{
 	}
 
 	@Override
-	protected void setupBootstrap(Bootstrap bootstrap) {
-		bootstrap.channel(NioDatagramChannel.class)
-		         .option(ChannelOption.SO_BROADCAST, true)
-		         .handler(telemetryHandler);
-	}
-
-	@Override
 	public void addFDMDataListener(FDMDataListener telemetryListener) {
 		telemetryHandler.addTelemetryListener(telemetryListener);
 	}
@@ -28,5 +21,17 @@ public class UDPFDMServer extends BaseFDMServer{
 	@Override
 	public void removeFDMDataListener(FDMDataListener telemetryListener) {
 		telemetryHandler.removeTelemetryListener(telemetryListener);
+	}
+
+	@Override
+	protected Bootstrap createBootstrap(EventLoopGroup group) {
+		Bootstrap bootstrap = new Bootstrap();
+		
+		bootstrap.group(group)
+			.channel(NioDatagramChannel.class)
+			//.option(ChannelOption.SO_BROADCAST, true)
+			.handler(telemetryHandler);
+		
+		return bootstrap;
 	}
 }

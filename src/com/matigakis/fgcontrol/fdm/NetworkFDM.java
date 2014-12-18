@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.matigakis.fgcontrol.network.ControlsClient;
 import com.matigakis.fgcontrol.network.FDMDataListener;
+import com.matigakis.fgcontrol.network.FDMServerException;
 import com.matigakis.fgcontrol.network.UDPFDMServer;
 import com.matigakis.fgcontrol.network.FDMDataServer;
 
@@ -13,7 +14,7 @@ import com.matigakis.fgcontrol.network.FDMDataServer;
  * from Flightgear. It can also be used to modify the state of the aircraft
  * controls.
  */
-public class NetworkFDM extends AbstractRemoteFDM implements FDMDataListener{
+public class NetworkFDM extends AbstractRemoteFDM{
 	private static Logger LOGGER = LoggerFactory.getLogger(NetworkFDM.class);
 	
 	private FDMDataServer fdmDataServer;
@@ -26,7 +27,13 @@ public class NetworkFDM extends AbstractRemoteFDM implements FDMDataListener{
 		connected = false;
 		
 		fdmDataServer = new UDPFDMServer(telemetryPort);
-		fdmDataServer.addFDMDataListener(this);
+		fdmDataServer.addFDMDataListener(new FDMDataListener() {
+			
+			@Override
+			public void handleFDMData(FDMData fdmData) {
+				setFDMData(fdmData);
+			}
+		});
 		
 		controlsClient = new ControlsClient(host, controlsPort);
 	}
@@ -35,18 +42,25 @@ public class NetworkFDM extends AbstractRemoteFDM implements FDMDataListener{
 	 * Connect to FlightGear
 	 */
 	@Override
-	public void connect() throws InterruptedException{
-		LOGGER.info("Connecting to the network FDM");
-		
-		if(!connected){
-			fdmDataServer.startServer();
-			controlsClient.openConnection();
+	public void connect() throws RemoteFDMConnectionException{
+		if(!isConnected()){
+			LOGGER.debug("Connecting to the network FDM");
+			try{
+				fdmDataServer.startServer();
+				controlsClient.openConnection();
+			}catch(FDMServerException e){
+				LOGGER.error("Failed to connect to the FDM server", e);
+				throw new RemoteFDMConnectionException("Failed to connect to the FDM server", e);
+			} catch (InterruptedException e) {
+				LOGGER.error("Failed to connect to the controls server", e);
+				throw new RemoteFDMConnectionException("Failed to connect to the controls server", e);
+			}
 			
 			notifyConnectedToFDM(this);
 			
 			connected = true;
 			
-			LOGGER.info("Connected to the network fdm");
+			LOGGER.debug("Connected to the network fdm");
 		}else{
 			LOGGER.debug("Have already connected to the FDM");
 		}
@@ -57,18 +71,18 @@ public class NetworkFDM extends AbstractRemoteFDM implements FDMDataListener{
 	 */
 	@Override
 	public void disconnect(){
-		LOGGER.info("Disconnecting from the network FDM");
-		
-		if(connected){
+		if(isConnected()){
+			LOGGER.debug("Disconnecting from the network FDM");
+			
 			fdmDataServer.stopServer();
 			controlsClient.closeConnection();
 			
 			notifyDisconnectedFromFDM(this);
 			
 			connected = false;
-			LOGGER.info("Disconnected from the network FDM");
+			LOGGER.debug("Disconnected from the network FDM");
 		}else{
-			LOGGER.debug("Already disconnected");
+			LOGGER.debug("Not connected");
 		}
 	}
 	
@@ -82,8 +96,7 @@ public class NetworkFDM extends AbstractRemoteFDM implements FDMDataListener{
 		controlsClient.transmitControls(controls);
 	}
 	
-	@Override
-	public void handleFDMData(FDMData fdmData) {
+	private void setFDMData(FDMData fdmData) {
 		this.fdmData = fdmData;
 		
 		notifyFDMDataReceived();

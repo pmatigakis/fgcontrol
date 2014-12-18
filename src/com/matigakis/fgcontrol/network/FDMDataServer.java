@@ -8,7 +8,7 @@ public interface FDMDataServer {
 	/**
 	 * Start the server
 	 */
-	void startServer();
+	void startServer() throws FDMServerException;
 	
 	/**
 	 * Stop the server

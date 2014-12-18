@@ -10,7 +10,7 @@ public interface RemoteFDM {
 	 * 
 	 * @throws InterruptedException
 	 */
-	void connect() throws InterruptedException;
+	void connect() throws RemoteFDMConnectionException;
 	
 	/**
 	 * Disconnect from the FDM
