@@ -5,7 +5,7 @@ import java.util.List;
 
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 
 import org.slf4j.Logger;
@@ -15,14 +15,14 @@ import com.matigakis.fgcontrol.fdm.FDMData;
 import com.matigakis.fgcontrol.fdm.FDMDataFactory;
 
 /**
- * The FDMStringHandler object processes the data received from Flightgear
+ * The FDMDataHandler object processes the data received from Flightgear
  */
-public class FDMStringHandler extends SimpleChannelInboundHandler<DatagramPacket>{
-	private static final Logger logger = LoggerFactory.getLogger(FDMStringHandler.class);
+public class FDMDataHandler extends ChannelInboundHandlerAdapter{
+	private static final Logger logger = LoggerFactory.getLogger(FDMDataHandler.class);
 
 	private List<FDMDataListener> fdmListeners;
 	
-	public FDMStringHandler(){
+	public FDMDataHandler(){
 		super();
 	
 		fdmListeners = new LinkedList<FDMDataListener>();
@@ -32,19 +32,23 @@ public class FDMStringHandler extends SimpleChannelInboundHandler<DatagramPacket
 	 * Handle the telemetry string that was received
 	 */
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg){
-		String data = msg.content().toString(CharsetUtil.US_ASCII);
+	public void channelRead(ChannelHandlerContext ctx, Object msg){
+		DatagramPacket packet = (DatagramPacket) msg;
 		
-		Telemetry telemetry = TelemetryFactory.fromString(data);
+		String fdmMessage = packet.content().toString(CharsetUtil.US_ASCII);
 		
-		FDMData fdmData = FDMDataFactory.fromTelemetry(telemetry);
+		GenericProtocolData genericProtocolData = GenericProtocolDataFactory.fromString(fdmMessage);
+		
+		FDMData fdmData = FDMDataFactory.fromGenericProtocolData(genericProtocolData);
 		
 		notifyFDMListeners(fdmData);
+		
+		packet.release();
 	}
 	
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause){
-		logger.error("Exception raised in TelemetryHandler", cause);
+		logger.error("Exception raised in FDMDataHandler", cause);
 		ctx.close();
 	}
 	

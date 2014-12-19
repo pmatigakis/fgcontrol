@@ -3,10 +3,10 @@ package com.matigakis.fgcontrol.network;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * The Telemetry object holds the data that were received from the
+ * The GenericProtocolData object holds the data that were received from the
  * flight dynamics model.
  */
-public class Telemetry {
+public class GenericProtocolData {
 	public double simulationTime;
 	
 	public double longitude;
@@ -45,7 +45,7 @@ public class Telemetry {
 	public double rudder;
 	public double throttle;
 	
-	public Telemetry(){
+	public GenericProtocolData(){
 		simulationTime = 0.0;
 		
 		latitude = 0.0;
@@ -85,39 +85,39 @@ public class Telemetry {
 		throttle = 0.0;
 	}
 	
-	public void copyTo(Telemetry telemetry){
-		telemetry.simulationTime = simulationTime;
+	public void copyTo(GenericProtocolData genericProtocolData){
+		genericProtocolData.simulationTime = simulationTime;
 		
-		telemetry.latitude = latitude;
-		telemetry.longitude = longitude;
-		telemetry.altitude = altitude;
-		telemetry.altitudeAgl = altitudeAgl;
+		genericProtocolData.latitude = latitude;
+		genericProtocolData.longitude = longitude;
+		genericProtocolData.altitude = altitude;
+		genericProtocolData.altitudeAgl = altitudeAgl;
 		
-		telemetry.roll = roll;
-		telemetry.pitch = pitch;
-		telemetry.heading = heading;
-		telemetry.angleOfAttack = angleOfAttack;
-		telemetry.sideSlipAngle = sideSlipAngle;
+		genericProtocolData.roll = roll;
+		genericProtocolData.pitch = pitch;
+		genericProtocolData.heading = heading;
+		genericProtocolData.angleOfAttack = angleOfAttack;
+		genericProtocolData.sideSlipAngle = sideSlipAngle;
 		
-		telemetry.rollRate = rollRate;
-		telemetry.pitchRate = pitchRate;
-		telemetry.yawRate = yawRate;
-		telemetry.airspeed = airspeed; 
-		telemetry.climbRate = climbRate;
-		telemetry.northVelocity = northVelocity;
-		telemetry.eastVelocity = eastVelocity;
-		telemetry.verticalVelocity = verticalVelocity;
-		telemetry.u = u;
-		telemetry.v = v;
-		telemetry.w = w;
+		genericProtocolData.rollRate = rollRate;
+		genericProtocolData.pitchRate = pitchRate;
+		genericProtocolData.yawRate = yawRate;
+		genericProtocolData.airspeed = airspeed; 
+		genericProtocolData.climbRate = climbRate;
+		genericProtocolData.northVelocity = northVelocity;
+		genericProtocolData.eastVelocity = eastVelocity;
+		genericProtocolData.verticalVelocity = verticalVelocity;
+		genericProtocolData.u = u;
+		genericProtocolData.v = v;
+		genericProtocolData.w = w;
 		
-		telemetry.xAcceleration = xAcceleration;
-		telemetry.yAcceleration = yAcceleration;
-		telemetry.zAcceleration = zAcceleration;
+		genericProtocolData.xAcceleration = xAcceleration;
+		genericProtocolData.yAcceleration = yAcceleration;
+		genericProtocolData.zAcceleration = zAcceleration;
 		
-		telemetry.staticPressure = staticPressure;
-		telemetry.totalPressure = totalPressure;
-		telemetry.temperature = temperature;
+		genericProtocolData.staticPressure = staticPressure;
+		genericProtocolData.totalPressure = totalPressure;
+		genericProtocolData.temperature = temperature;
 	}
 	
 	public double[] toArray(){

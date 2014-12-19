@@ -1,54 +1,54 @@
 package com.matigakis.fgcontrol.fdm;
 
-import com.matigakis.fgcontrol.network.Telemetry;
+import com.matigakis.fgcontrol.network.GenericProtocolData;
 
 public class FDMDataFactory {
-	public static FDMData fromTelemetry(Telemetry telemetry){
+	public static FDMData fromGenericProtocolData(GenericProtocolData genericProtocolData){
 		FDMData fdmData = new FDMData();
 		
-		fdmData.setSimulationTime(telemetry.simulationTime);
+		fdmData.setSimulationTime(genericProtocolData.simulationTime);
 		
 		Position position = fdmData.getPosition();
-		position.setLongitude(telemetry.longitude);
-		position.setLatitude(telemetry.latitude);
-		position.setAltitude(telemetry.altitude);
-		position.setAGL(telemetry.altitudeAgl);
+		position.setLongitude(genericProtocolData.longitude);
+		position.setLatitude(genericProtocolData.latitude);
+		position.setAltitude(genericProtocolData.altitude);
+		position.setAGL(genericProtocolData.altitudeAgl);
 
 		Orientation orientation = fdmData.getOrientation();
-		orientation.setRoll(telemetry.roll);
-		orientation.setPitch(telemetry.pitch);
-		orientation.setHeading(telemetry.heading);
-		orientation.setAngleOfAttach(telemetry.angleOfAttack);
-		orientation.setSideSlipAngle(telemetry.sideSlipAngle);
+		orientation.setRoll(genericProtocolData.roll);
+		orientation.setPitch(genericProtocolData.pitch);
+		orientation.setHeading(genericProtocolData.heading);
+		orientation.setAngleOfAttach(genericProtocolData.angleOfAttack);
+		orientation.setSideSlipAngle(genericProtocolData.sideSlipAngle);
 
 		Velocities velocities = fdmData.getVelocities();
-		velocities.setRollRate(telemetry.rollRate);
-		velocities.setPitchRate(telemetry.pitchRate);
-		velocities.setYawRate(telemetry.yawRate);
-		velocities.setCalibratedAirspeed(telemetry.airspeed);
-		velocities.setClimbRate(telemetry.climbRate);
-		velocities.setNorthVelocity(telemetry.northVelocity);
-		velocities.setEastVelocity(telemetry.eastVelocity);
-		velocities.setVerticalVelocity(telemetry.verticalVelocity);
-		velocities.setU(telemetry.u);
-		velocities.setV(telemetry.v);
-		velocities.setW(telemetry.w);
+		velocities.setRollRate(genericProtocolData.rollRate);
+		velocities.setPitchRate(genericProtocolData.pitchRate);
+		velocities.setYawRate(genericProtocolData.yawRate);
+		velocities.setCalibratedAirspeed(genericProtocolData.airspeed);
+		velocities.setClimbRate(genericProtocolData.climbRate);
+		velocities.setNorthVelocity(genericProtocolData.northVelocity);
+		velocities.setEastVelocity(genericProtocolData.eastVelocity);
+		velocities.setVerticalVelocity(genericProtocolData.verticalVelocity);
+		velocities.setU(genericProtocolData.u);
+		velocities.setV(genericProtocolData.v);
+		velocities.setW(genericProtocolData.w);
 		
 		Accelerations accelerations = fdmData.getAccelerations();
-		accelerations.setXAcceleration(telemetry.xAcceleration);
-		accelerations.setYAcceleration(telemetry.yAcceleration);
-		accelerations.setZAcceleration(telemetry.zAcceleration);
+		accelerations.setXAcceleration(genericProtocolData.xAcceleration);
+		accelerations.setYAcceleration(genericProtocolData.yAcceleration);
+		accelerations.setZAcceleration(genericProtocolData.zAcceleration);
 		
 		Atmosphere atmosphere = fdmData.getAtmosphere();
-		atmosphere.setStaticPressure(telemetry.staticPressure);
-		atmosphere.setTotalPressure(telemetry.totalPressure);
-		atmosphere.setTemperature(telemetry.temperature);
+		atmosphere.setStaticPressure(genericProtocolData.staticPressure);
+		atmosphere.setTotalPressure(genericProtocolData.totalPressure);
+		atmosphere.setTemperature(genericProtocolData.temperature);
 		
 		Controls controls = fdmData.getControls();
-		controls.setElevator(telemetry.elevator);
-		controls.setAileron(telemetry.aileron);
-		controls.setRudder(telemetry.rudder);
-		controls.setThrottle(telemetry.throttle);
+		controls.setElevator(genericProtocolData.elevator);
+		controls.setAileron(genericProtocolData.aileron);
+		controls.setRudder(genericProtocolData.rudder);
+		controls.setThrottle(genericProtocolData.throttle);
 		
 		return fdmData;
 	}

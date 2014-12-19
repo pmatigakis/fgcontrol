@@ -1,9 +1,9 @@
 package com.matigakis.fgcontrol.tests.network;
 
-import com.matigakis.fgcontrol.network.Telemetry;
+import com.matigakis.fgcontrol.network.GenericProtocolData;
 
-public class DummyTelemetry extends Telemetry{
-	public DummyTelemetry(){
+public class DummyGenericProtocolData extends GenericProtocolData{
+	public DummyGenericProtocolData(){
 		super();
 		simulationTime = 120.67;
 

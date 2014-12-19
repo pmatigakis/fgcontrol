@@ -20,18 +20,16 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	private EventLoopGroup group;
 	private Channel channel;
 	
-	private FDMStringHandler telemetryHandler;
+	private FDMDataHandler telemetryHandler;
 	
 	protected abstract Bootstrap createBootstrap(EventLoopGroup group, ChannelHandler channelHandler);
 	
 	public BaseFDMServer(int port){
-		super();
-		
 		this.port = port;
 		
 		group = new NioEventLoopGroup();
 		
-		telemetryHandler = new FDMStringHandler();
+		telemetryHandler = new FDMDataHandler();
 	}
 	
 	@Override
@@ -57,7 +55,7 @@ public abstract class BaseFDMServer implements FDMDataServer{
 				logger.error("The FDM server has failed to start", e);
 				throw new FDMServerException("The FDM server has failed to start");
 			}
-				
+			
 			logger.debug("The FDM server has started successfully");
 		}else{
 			logger.debug("The FDM server is already running");	
