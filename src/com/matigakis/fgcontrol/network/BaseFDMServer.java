@@ -4,13 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.bootstrap.Bootstrap;
 
 /**
  * The BaseFDMServer object is the base object for all servers that can
- * connect to flightgear and receive telemetry data
+ * connect to flightgear and receive FDM data
  */
 public abstract class BaseFDMServer implements FDMDataServer{
 	private static final Logger logger = LoggerFactory.getLogger(BaseFDMServer.class);
@@ -19,7 +20,9 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	private EventLoopGroup group;
 	private Channel channel;
 	
-	protected abstract Bootstrap createBootstrap(EventLoopGroup group);
+	private FDMStringHandler telemetryHandler;
+	
+	protected abstract Bootstrap createBootstrap(EventLoopGroup group, ChannelHandler channelHandler);
 	
 	public BaseFDMServer(int port){
 		super();
@@ -27,6 +30,18 @@ public abstract class BaseFDMServer implements FDMDataServer{
 		this.port = port;
 		
 		group = new NioEventLoopGroup();
+		
+		telemetryHandler = new FDMStringHandler();
+	}
+	
+	@Override
+	public void addFDMDataListener(FDMDataListener telemetryListener) {
+		telemetryHandler.addTelemetryListener(telemetryListener);
+	}
+
+	@Override
+	public void removeFDMDataListener(FDMDataListener telemetryListener) {
+		telemetryHandler.removeTelemetryListener(telemetryListener);
 	}
 	
 	@Override
@@ -34,8 +49,7 @@ public abstract class BaseFDMServer implements FDMDataServer{
 		if(!isRunning()){
 			logger.debug("Starting the FDM server");
 			
-			Bootstrap bootstrap = createBootstrap(group);
-			
+			Bootstrap bootstrap = createBootstrap(group, telemetryHandler);
 			
 			try {
 				channel = bootstrap.bind(port).sync().channel();
@@ -66,14 +80,10 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	}
 	
 	public boolean isRunning(){
-		boolean running;
-		
 		if(channel == null){
-			running = false;
+			return false;
 		}else{
-			running = channel.isActive();
+			return channel.isActive();
 		}
-		
-		return running;
 	}
 }
