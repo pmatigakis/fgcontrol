@@ -26,7 +26,6 @@ public class ConsoleClient {
 	
 	public ConsoleClient(InetSocketAddress address){
 		this.address = address;
-		group = new NioEventLoopGroup();
 	}
 	
 	/**
@@ -37,6 +36,8 @@ public class ConsoleClient {
 	public void connect() throws ConsoleConnectionException{
 		if(!isConnected()){
 			LOGGER.debug("Connecting to Flightgear's console");
+			
+			group = new NioEventLoopGroup();
 			
 			Bootstrap bootstrap = new Bootstrap();
 			
@@ -50,7 +51,7 @@ public class ConsoleClient {
 				LOGGER.debug("Connected to Flightgear's console");
 			} catch (Exception e) {
 				LOGGER.error("Failed to connect to Flightgear's console", e);
-				disconnect();
+				group.shutdownGracefully();
 				throw new ConsoleConnectionException("Failed to connect to Flightgear's console", e);
 			}
 		}else{
@@ -62,11 +63,15 @@ public class ConsoleClient {
 	 * Disconnect from Flightgear's telnet console
 	 */
 	public void disconnect(){
-		LOGGER.debug("Disconnecting from Flightgear's console");
+		if(isConnected()){
+			LOGGER.debug("Disconnecting from Flightgear's console");
 		
-		group.shutdownGracefully();
+			group.shutdownGracefully();
 		
-		LOGGER.debug("Disconnected from Flightgear's console");
+			LOGGER.debug("Disconnected from Flightgear's console");
+		}else{
+			LOGGER.debug("Not connected to Flightgear's console");
+		}
 	}
 	
 	protected String createSetPropertyMessage(Property property){

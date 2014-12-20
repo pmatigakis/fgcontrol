@@ -29,7 +29,7 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 	}
 	
 	/**
-	 * Handle the telemetry string that was received
+	 * Handle the fdm data string that was received
 	 */
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg){
@@ -58,7 +58,7 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 	 * 
 	 * @param fdmDataListener
 	 */
-	public void addTelemetryListener(FDMDataListener fdmDataListener){
+	public void addFDMDataListener(FDMDataListener fdmDataListener){
 		fdmListeners.add(fdmDataListener);
 	}
 	
@@ -67,7 +67,7 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 	 * 
 	 * @param fdmDataListener
 	 */
-	public void removeTelemetryListener(FDMDataListener fdmDataListener){
+	public void removeFDMDataListener(FDMDataListener fdmDataListener){
 		fdmListeners.remove(fdmDataListener);
 	}
 	

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.matigakis.fgcontrol.network.ControlsClient;
+import com.matigakis.fgcontrol.network.ControlsClientConnectionException;
 import com.matigakis.fgcontrol.network.FDMDataListener;
 import com.matigakis.fgcontrol.network.FDMServerException;
 import com.matigakis.fgcontrol.network.UDPFDMServer;
@@ -47,11 +48,11 @@ public class NetworkFDM extends AbstractRemoteFDM{
 			LOGGER.debug("Connecting to the network FDM");
 			try{
 				fdmDataServer.startServer();
-				controlsClient.openConnection();
+				controlsClient.connect();
 			}catch(FDMServerException e){
 				LOGGER.error("Failed to connect to the FDM server", e);
 				throw new RemoteFDMConnectionException("Failed to connect to the FDM server", e);
-			} catch (InterruptedException e) {
+			} catch (ControlsClientConnectionException e) {
 				LOGGER.error("Failed to connect to the controls server", e);
 				throw new RemoteFDMConnectionException("Failed to connect to the controls server", e);
 			}
@@ -75,7 +76,7 @@ public class NetworkFDM extends AbstractRemoteFDM{
 			LOGGER.debug("Disconnecting from the network FDM");
 			
 			fdmDataServer.stopServer();
-			controlsClient.closeConnection();
+			controlsClient.disconnect();
 			
 			notifyDisconnectedFromFDM(this);
 			

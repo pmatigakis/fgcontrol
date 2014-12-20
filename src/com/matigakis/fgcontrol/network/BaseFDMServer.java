@@ -27,19 +27,17 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	public BaseFDMServer(int port){
 		this.port = port;
 		
-		group = new NioEventLoopGroup();
-		
 		telemetryHandler = new FDMDataHandler();
 	}
 	
 	@Override
 	public void addFDMDataListener(FDMDataListener telemetryListener) {
-		telemetryHandler.addTelemetryListener(telemetryListener);
+		telemetryHandler.addFDMDataListener(telemetryListener);
 	}
 
 	@Override
 	public void removeFDMDataListener(FDMDataListener telemetryListener) {
-		telemetryHandler.removeTelemetryListener(telemetryListener);
+		telemetryHandler.removeFDMDataListener(telemetryListener);
 	}
 	
 	@Override
@@ -47,12 +45,15 @@ public abstract class BaseFDMServer implements FDMDataServer{
 		if(!isRunning()){
 			logger.debug("Starting the FDM server");
 			
+			group = new NioEventLoopGroup();
+			
 			Bootstrap bootstrap = createBootstrap(group, telemetryHandler);
 			
 			try {
 				channel = bootstrap.bind(port).sync().channel();
 			} catch (InterruptedException e) {
 				logger.error("The FDM server has failed to start", e);
+				group.shutdownGracefully();
 				throw new FDMServerException("The FDM server has failed to start");
 			}
 			
@@ -66,8 +67,6 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	public void stopServer(){
 		if (isRunning()){
 			logger.debug("Shutting down the FDM server");
-		
-			channel.close();
 		
 			group.shutdownGracefully();
 			
