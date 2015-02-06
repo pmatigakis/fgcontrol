@@ -13,5 +13,6 @@ public class ConsoleClientInitializer extends ChannelInitializer<SocketChannel>{
 		ChannelPipeline pipeline = channel.pipeline();
 		
 		pipeline.addLast(new StringEncoder(CharsetUtil.US_ASCII));
+		pipeline.addLast(new ConsoleClientHandler());
 	}
 }

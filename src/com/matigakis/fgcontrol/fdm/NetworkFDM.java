@@ -28,11 +28,11 @@ public class NetworkFDM extends AbstractRemoteFDM{
 		connected = false;
 		
 		fdmDataServer = new UDPFDMServer(telemetryPort);
+		
 		fdmDataServer.addFDMDataListener(new FDMDataListener() {
-			
 			@Override
 			public void handleFDMData(FDMData fdmData) {
-				setFDMData(fdmData);
+				notifyFDMDataReceived(fdmData);
 			}
 		});
 		
@@ -95,12 +95,6 @@ public class NetworkFDM extends AbstractRemoteFDM{
 	@Override
 	public void transmitControls(Controls controls){
 		controlsClient.transmitControls(controls);
-	}
-	
-	private void setFDMData(FDMData fdmData) {
-		this.fdmData = fdmData;
-		
-		notifyFDMDataReceived();
 	}
 
 	/**

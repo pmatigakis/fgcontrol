@@ -1,7 +1,19 @@
 fgfs --geometry=480x360 \
 --aircraft=c172p \
 --timeofday=noon \
+--disable-random-objects \
+--disable-random-vegetation \
+--disable-random-buildings \
+--disable-ai-models \
+--disable-ai-traffic \
+--fog-disable \
+--disable-enhanced-lighting \
+--disable-distance-attenuation \
+--disable-specular-highlight \
+--disable-clouds \
+--disable-clouds3d \
 --disable-real-weather-fetch \
+--disable-horizon-effect \
 --generic=socket,out,2,localhost,10500,udp,fgcontrol \
 --generic=socket,in,2,localhost,10501,udp,fgcontrol \
 --telnet=10503 \

@@ -38,10 +38,4 @@ public interface RemoteFDM {
 	 * @param listener
 	 */
 	void removeRemoteFDMStateListener(RemoteFDMStateListener listener);
-	
-	/**
-	 * Get tha latest FDM data received
-	 * @return
-	 */
-	FDMData getFDMData();
 }

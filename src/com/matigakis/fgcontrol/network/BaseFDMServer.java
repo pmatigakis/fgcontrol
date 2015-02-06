@@ -53,7 +53,9 @@ public abstract class BaseFDMServer implements FDMDataServer{
 				channel = bootstrap.bind(port).sync().channel();
 			} catch (InterruptedException e) {
 				logger.error("The FDM server has failed to start", e);
+				
 				group.shutdownGracefully();
+				
 				throw new FDMServerException("The FDM server has failed to start");
 			}
 			

@@ -7,6 +7,7 @@ import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
+import io.netty.util.ReferenceCountUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,17 +34,19 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 	 */
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg){
-		DatagramPacket packet = (DatagramPacket) msg;
+		try{
+			DatagramPacket packet = (DatagramPacket) msg;
 		
-		String fdmMessage = packet.content().toString(CharsetUtil.US_ASCII);
+			String fdmMessage = packet.content().toString(CharsetUtil.US_ASCII);
 		
-		GenericProtocolData genericProtocolData = GenericProtocolDataFactory.fromString(fdmMessage);
+			GenericProtocolData genericProtocolData = GenericProtocolDataFactory.fromString(fdmMessage);
 		
-		FDMData fdmData = FDMDataFactory.fromGenericProtocolData(genericProtocolData);
+			FDMData fdmData = FDMDataFactory.fromGenericProtocolData(genericProtocolData);
 		
-		notifyFDMListeners(fdmData);
-		
-		packet.release();
+			notifyFDMListeners(fdmData);
+		}finally{
+			ReferenceCountUtil.release(msg);
+		}
 	}
 	
 	@Override

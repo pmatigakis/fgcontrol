@@ -51,7 +51,9 @@ public class ConsoleClient {
 				LOGGER.debug("Connected to Flightgear's console");
 			} catch (Exception e) {
 				LOGGER.error("Failed to connect to Flightgear's console", e);
+				
 				group.shutdownGracefully();
+				
 				throw new ConsoleConnectionException("Failed to connect to Flightgear's console", e);
 			}
 		}else{

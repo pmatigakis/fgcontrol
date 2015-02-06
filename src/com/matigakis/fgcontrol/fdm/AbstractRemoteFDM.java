@@ -8,10 +8,8 @@ import java.util.List;
  */
 public abstract class AbstractRemoteFDM implements RemoteFDM{
 	protected List<RemoteFDMStateListener> stateListeners;
-	protected FDMData fdmData;
 	
 	public AbstractRemoteFDM(){
-		fdmData = new FDMData();
 		stateListeners = new LinkedList<RemoteFDMStateListener>();
 	}
 	
@@ -23,11 +21,6 @@ public abstract class AbstractRemoteFDM implements RemoteFDM{
 	@Override
 	public void removeRemoteFDMStateListener(RemoteFDMStateListener client) {
 		stateListeners.remove(client);
-	}
-
-	@Override
-	public FDMData getFDMData() {
-		return fdmData;
 	}
 	
 	protected void notifyConnectedToFDM(RemoteFDM fdm){
@@ -45,7 +38,7 @@ public abstract class AbstractRemoteFDM implements RemoteFDM{
 	/**
 	 * Notify the FDM listeners that new fdm data have been received
 	 */
-	protected void notifyFDMDataReceived(){
+	protected void notifyFDMDataReceived(FDMData fdmData){
 		for(RemoteFDMStateListener stateListener: stateListeners){
 			stateListener.fdmDataReceived(this, fdmData);
 		}
