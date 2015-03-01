@@ -16,17 +16,17 @@ public interface FDMDataServer {
 	void stopServer();
 	
 	/**
-	 * Add an object that will be notified when new fdm data
-	 * have been received
+	 * Add an object that will be notified when an event from the
+	 * fdm server has been raised
 	 * 
-	 * @param fdmDataListener
+	 * @param serverEventListener
 	 */
-	void addFDMDataListener(FDMDataListener fdmDataListener);
+	void addFDMDataServerEventListener(FDMDataServerEventListener serverEventListener);
 	
 	/**
-	 * Remove an FDMDataListener
+	 * Remove an FDMDataServerEventListener
 	 * 
-	 * @param fdmDataListener
+	 * @param serverEventListener
 	 */
-	void removeFDMDataListener(FDMDataListener fdmDataListener);
+	void removeFDMDataServerEventListener(FDMDataServerEventListener serverEventListener);
 }

@@ -1,8 +1,8 @@
 import org.apache.log4j.BasicConfigurator;
 
 import com.matigakis.fgcontrol.fdm.FDMData;
-import com.matigakis.fgcontrol.network.FDMDataListener;
 import com.matigakis.fgcontrol.network.FDMDataServer;
+import com.matigakis.fgcontrol.network.FDMDataServerEventListenerAdapter;
 import com.matigakis.fgcontrol.network.UDPFDMServer;
 
 public class FDMServerExample{
@@ -13,14 +13,13 @@ public class FDMServerExample{
 		
 		final FDMDataServer fdmDataServer = new UDPFDMServer(telemetryPort);
 		
-		fdmDataServer.addFDMDataListener(new FDMDataListener() {
-			
+		fdmDataServer.addFDMDataServerEventListener(new FDMDataServerEventListenerAdapter() {
 			@Override
-			public void handleFDMData(FDMData fdmData) {
+			public void FDMDataReceived(FDMDataServer fdmDataServer, FDMData fdmData) {
 				System.out.println(
 						"Altitude: " + fdmData.getPosition().getAltitude() + "\t" +
 						"Heading: " + fdmData.getOrientation().getHeading() + "\t" +
-						"Airspeed: " + fdmData.getVelocities().getCalibratedAirspeed());			
+						"Airspeed: " + fdmData.getVelocities().getCalibratedAirspeed());	
 			}
 		});
 		

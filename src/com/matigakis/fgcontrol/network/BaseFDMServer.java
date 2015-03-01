@@ -1,5 +1,8 @@
 package com.matigakis.fgcontrol.network;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,9 +19,11 @@ import io.netty.bootstrap.Bootstrap;
 public abstract class BaseFDMServer implements FDMDataServer{
 	private static final Logger logger = LoggerFactory.getLogger(BaseFDMServer.class);
 	
-	private final int port;
+	private int port;
 	private EventLoopGroup group;
 	private Channel channel;
+	
+	private List<FDMDataServerEventListener> serverEventListeners;
 	
 	private FDMDataHandler telemetryHandler;
 	
@@ -27,17 +32,9 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	public BaseFDMServer(int port){
 		this.port = port;
 		
-		telemetryHandler = new FDMDataHandler();
-	}
-	
-	@Override
-	public void addFDMDataListener(FDMDataListener telemetryListener) {
-		telemetryHandler.addFDMDataListener(telemetryListener);
-	}
-
-	@Override
-	public void removeFDMDataListener(FDMDataListener telemetryListener) {
-		telemetryHandler.removeFDMDataListener(telemetryListener);
+		serverEventListeners = new LinkedList<FDMDataServerEventListener>();
+		
+		telemetryHandler = new FDMDataHandler(this);
 	}
 	
 	@Override
@@ -59,6 +56,10 @@ public abstract class BaseFDMServer implements FDMDataServer{
 				throw new FDMServerException("The FDM server has failed to start");
 			}
 			
+			for(FDMDataServerEventListener serverDataListener: serverEventListeners){
+				serverDataListener.FDMDataServerStarted(this);
+			}
+			
 			logger.debug("The FDM server has started successfully");
 		}else{
 			logger.debug("The FDM server is already running");	
@@ -72,6 +73,10 @@ public abstract class BaseFDMServer implements FDMDataServer{
 		
 			group.shutdownGracefully();
 			
+			for(FDMDataServerEventListener serverDataListener: serverEventListeners){
+				serverDataListener.FDMDataServerShutdown(this);
+			}
+			
 			logger.debug("The FDM server has stopped");
 		}else{
 			logger.debug("The FDM server if not running");
@@ -84,5 +89,17 @@ public abstract class BaseFDMServer implements FDMDataServer{
 		}else{
 			return channel.isActive();
 		}
+	}
+	
+	@Override
+	public void addFDMDataServerEventListener(FDMDataServerEventListener serverEventListener){
+		serverEventListeners.add(serverEventListener);
+		telemetryHandler.addFDMDataServerEventListener(serverEventListener);
+	}
+	
+	@Override
+	public void removeFDMDataServerEventListener(FDMDataServerEventListener serverEventListener){
+		serverEventListeners.remove(serverEventListener);
+		telemetryHandler.removeFDMDataServerEventListener(serverEventListener);
 	}
 }

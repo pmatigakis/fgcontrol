@@ -21,12 +21,15 @@ import com.matigakis.fgcontrol.fdm.FDMDataFactory;
 public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 	private static final Logger logger = LoggerFactory.getLogger(FDMDataHandler.class);
 
-	private List<FDMDataListener> fdmListeners;
+	private FDMDataServer fdmDataServer;
+	private List<FDMDataServerEventListener> fdmDataListeners;
 	
-	public FDMDataHandler(){
+	public FDMDataHandler(FDMDataServer fdmDataServer){
 		super();
 	
-		fdmListeners = new LinkedList<FDMDataListener>();
+		
+		this.fdmDataServer = fdmDataServer;
+		fdmDataListeners = new LinkedList<FDMDataServerEventListener>();
 	}
 	
 	/**
@@ -56,27 +59,27 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 	}
 	
 	/**
-	 * Add an FDMDataListener that will be notified when new fdm data
+	 * Add an FDMDataServerEventListener that will be notified when new fdm data
 	 * have been received
 	 * 
-	 * @param fdmDataListener
+	 * @param FDMDataServerEventListener
 	 */
-	public void addFDMDataListener(FDMDataListener fdmDataListener){
-		fdmListeners.add(fdmDataListener);
+	public void addFDMDataServerEventListener(FDMDataServerEventListener serverDataListener){
+		fdmDataListeners.add(serverDataListener);
 	}
 	
 	/**
-	 * Remove an FDMDataListener
+	 * Remove an FDMDataServerEventListener
 	 * 
-	 * @param fdmDataListener
+	 * @param FDMDataServerEventListener
 	 */
-	public void removeFDMDataListener(FDMDataListener fdmDataListener){
-		fdmListeners.remove(fdmDataListener);
+	public void removeFDMDataServerEventListener(FDMDataServerEventListener serverDataListener){
+		fdmDataListeners.remove(serverDataListener);
 	}
 	
 	private void notifyFDMListeners(FDMData fdmData){
-		for(FDMDataListener fdmListener: fdmListeners){
-			fdmListener.handleFDMData(fdmData);
+		for(FDMDataServerEventListener fdmDataListener: fdmDataListeners){
+			fdmDataListener.FDMDataReceived(fdmDataServer, fdmData);
 		}
 	}
 }
