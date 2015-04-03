@@ -4,51 +4,47 @@ import com.matigakis.fgcontrol.network.GenericProtocolData;
 
 public class FDMDataFactory {
 	public static FDMData fromGenericProtocolData(GenericProtocolData genericProtocolData){
-		FDMData fdmData = new FDMData();
-		
-		fdmData.setSimulationTime(genericProtocolData.simulationTime);
-		
-		Position position = fdmData.getPosition();
-		position.setLongitude(genericProtocolData.longitude);
-		position.setLatitude(genericProtocolData.latitude);
-		position.setAltitude(genericProtocolData.altitude);
-		position.setAGL(genericProtocolData.altitudeAgl);
+		Position position = new Position(genericProtocolData.longitude,
+				genericProtocolData.latitude,
+				genericProtocolData.altitude,
+				genericProtocolData.altitudeAgl);
 
-		Orientation orientation = fdmData.getOrientation();
-		orientation.setRoll(genericProtocolData.roll);
-		orientation.setPitch(genericProtocolData.pitch);
-		orientation.setHeading(genericProtocolData.heading);
-		orientation.setAngleOfAttach(genericProtocolData.angleOfAttack);
-		orientation.setSideSlipAngle(genericProtocolData.sideSlipAngle);
+		Orientation orientation = new Orientation(genericProtocolData.roll,
+				genericProtocolData.pitch,
+				genericProtocolData.heading,
+				genericProtocolData.angleOfAttack,
+				genericProtocolData.sideSlipAngle);
 
-		Velocities velocities = fdmData.getVelocities();
-		velocities.setRollRate(genericProtocolData.rollRate);
-		velocities.setPitchRate(genericProtocolData.pitchRate);
-		velocities.setYawRate(genericProtocolData.yawRate);
-		velocities.setCalibratedAirspeed(genericProtocolData.airspeed);
-		velocities.setClimbRate(genericProtocolData.climbRate);
-		velocities.setNorthVelocity(genericProtocolData.northVelocity);
-		velocities.setEastVelocity(genericProtocolData.eastVelocity);
-		velocities.setVerticalVelocity(genericProtocolData.verticalVelocity);
-		velocities.setU(genericProtocolData.u);
-		velocities.setV(genericProtocolData.v);
-		velocities.setW(genericProtocolData.w);
+		Velocities velocities = new Velocities(genericProtocolData.rollRate,
+				genericProtocolData.pitchRate,
+				genericProtocolData.yawRate,
+				genericProtocolData.airspeed,
+				genericProtocolData.climbRate,
+				genericProtocolData.northVelocity,
+				genericProtocolData.eastVelocity,
+				genericProtocolData.verticalVelocity,
+				genericProtocolData.u,
+				genericProtocolData.v,
+				genericProtocolData.w);
 		
-		Accelerations accelerations = fdmData.getAccelerations();
-		accelerations.setXAcceleration(genericProtocolData.xAcceleration);
-		accelerations.setYAcceleration(genericProtocolData.yAcceleration);
-		accelerations.setZAcceleration(genericProtocolData.zAcceleration);
+		Accelerations accelerations = new Accelerations(
+				genericProtocolData.xAcceleration,
+				genericProtocolData.yAcceleration,
+				genericProtocolData.zAcceleration);
 		
-		Atmosphere atmosphere = fdmData.getAtmosphere();
-		atmosphere.setStaticPressure(genericProtocolData.staticPressure);
-		atmosphere.setTotalPressure(genericProtocolData.totalPressure);
-		atmosphere.setTemperature(genericProtocolData.temperature);
+		Atmosphere atmosphere = new Atmosphere(
+				genericProtocolData.staticPressure,
+				genericProtocolData.totalPressure,
+				genericProtocolData.temperature);
 		
-		Controls controls = fdmData.getControls();
-		controls.setElevator(genericProtocolData.elevator);
-		controls.setAileron(genericProtocolData.aileron);
-		controls.setRudder(genericProtocolData.rudder);
-		controls.setThrottle(genericProtocolData.throttle);
+		Controls controls = new Controls(genericProtocolData.aileron,
+				genericProtocolData.elevator,
+				genericProtocolData.rudder,
+				genericProtocolData.throttle);
+		
+		FDMData fdmData = new FDMData(genericProtocolData.simulationTime, 
+				accelerations, velocities, position, orientation, atmosphere,
+				controls);
 		
 		return fdmData;
 	}

@@ -11,6 +11,13 @@ public class Controls {
 	protected double rudder;
 	protected double throttle;
 	
+	public Controls(double aileron, double elevator, double rudder, double throttle){
+		this.aileron = aileron;
+		this.elevator = elevator;
+		this.rudder = rudder;
+		this.throttle = throttle;
+	}
+	
 	/**
 	 * Get the aileron state. 
 	 * 
@@ -54,73 +61,4 @@ public class Controls {
 	public double getThrottle(){
 		return throttle;
 	}
-	
-	/**
-	 * Set the aileron state
-	 * 
-	 * valid values are between -1.0 and 1.0;
-	 * 
-	 * @param aileron
-	 */
-	public void setAileron(double aileron){
-		if (aileron > 1.0 || aileron < -1.0){
-			throw new IllegalArgumentException("Aileron value was " + aileron);
-		}
-		
-		this.aileron = aileron; 
-	}
-	
-	/**
-	 * Set elevator state.
-	 * 
-	 * valid values are between -1.0 and 1.0.
-	 * 
-	 * @param elevator
-	 */
-	public void setElevator(double elevator){
-		if (elevator > 1.0 || elevator < -1.0){
-			throw new IllegalArgumentException("Elevator was " + elevator);
-		}
-		
-		this.elevator = elevator;
-	}
-	
-	/**
-	 * Set the rudder state. 
-	 * 
-	 * Valid values are between -1.0 and 1.0.
-	 * 
-	 * @param rudder
-	 */
-	public void setRudder(double rudder){
-		if (rudder > 1.0 || rudder < -1.0){
-			throw new IllegalArgumentException("Rudder was " + rudder);
-		}
-		
-		this.rudder = rudder;
-	}
-	
-	/**
-	 * Set the throttle state
-	 * 
-	 * Valid values a re between 0.0 and 1.0.
-	 * 
-	 * @param throttle
-	 */
-	public void setThrottle(double throttle){
-		if (throttle > 1.0 || throttle < 0.0){
-			throw new IllegalArgumentException("Throttle was " + throttle);
-		}
-		
-		this.throttle = throttle;
-	}
-	
-	/*
-	public void updateFromSensorData(SensorData sensorData){
-		setElevator(sensorData.elevator);
-		setAileron(sensorData.aileron);
-		setRudder(sensorData.rudder);
-		setThrottle(sensorData.throttle);
-	}
-	*/
 }

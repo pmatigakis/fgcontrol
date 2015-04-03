@@ -10,10 +10,10 @@ public class Accelerations {
 	private double yAcc;
 	private double zAcc;
 	
-	public Accelerations(){
-		xAcc = 0.0;
-		yAcc = 0.0;
-		zAcc = 0.0;
+	public Accelerations(double xAcc, double yAcc, double zAcc){
+		this.xAcc = xAcc;
+		this.yAcc = yAcc;
+		this.zAcc = zAcc;
 	}
 	
 	public double getXAcceleration(){
@@ -26,17 +26,5 @@ public class Accelerations {
 	
 	public double getZAcceleration(){
 		return zAcc;
-	}
-	
-	public void setXAcceleration(double acceleration){
-		xAcc = acceleration;
-	}
-	
-	public void setYAcceleration(double acceleration){
-		yAcc = acceleration;
-	}
-	
-	public void setZAcceleration(double acceleration){
-		zAcc = acceleration;
 	}
 }

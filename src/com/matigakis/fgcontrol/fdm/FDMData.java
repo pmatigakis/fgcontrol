@@ -9,14 +9,17 @@ public class FDMData{
 	private Atmosphere atmosphere;
 	private Controls controls;
 	
-	public FDMData(){
-		simulationTime = 0.0;
-		accelerations = new Accelerations();
-		velocities = new Velocities();
-		position = new Position();
-		orientation = new Orientation();
-		atmosphere = new Atmosphere();
-		controls = new Controls();
+	public FDMData(double simulationTime, Accelerations accelerations,
+			       Velocities velocities, Position position,
+			       Orientation orientation, Atmosphere atmosphere,
+			       Controls controls){
+		this.simulationTime = simulationTime;
+		this.accelerations = accelerations;
+		this.velocities = velocities;
+		this.position = position;
+		this.orientation = orientation;
+		this.atmosphere = atmosphere;
+		this.controls = controls;
 	}
 	
 	public Accelerations getAccelerations(){
@@ -45,9 +48,5 @@ public class FDMData{
 	
 	public Controls getControls(){
 		return controls;
-	}
-	
-	public void setSimulationTime(double simulationTime){
-		this.simulationTime = simulationTime;
 	}
 }

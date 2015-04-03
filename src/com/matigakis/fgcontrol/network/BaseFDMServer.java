@@ -53,7 +53,7 @@ public abstract class BaseFDMServer implements FDMDataServer{
 				
 				group.shutdownGracefully();
 				
-				throw new FDMServerException("The FDM server has failed to start");
+				throw new FDMServerException("The FDM server has failed to start", e);
 			}
 			
 			for(FDMDataServerEventListener serverDataListener: serverEventListeners){

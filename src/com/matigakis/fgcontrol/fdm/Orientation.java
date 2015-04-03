@@ -12,10 +12,13 @@ public class Orientation {
 	private double angleOfAttack; //alpha
 	private double sideSlipAngle; // beta
 	
-	public Orientation(){
-		roll = 0.0;
-		pitch = 0.0;
-		heading = 0.0;
+	public Orientation(double roll, double pitch, double heading, 
+					   double angleOfAttack, double sideslipAngle){
+		this.roll = roll;
+		this.pitch = pitch;
+		this.heading = heading;
+		this.angleOfAttack = angleOfAttack;
+		this.sideSlipAngle = sideslipAngle;
 	}
 	
 	public double getRoll(){
@@ -36,25 +39,5 @@ public class Orientation {
 	
 	public double getHeading(){
 		return heading;
-	}
-	
-	public void setHeading(double heading){
-		this.heading = heading;
-	}
-	
-	public void setRoll(double roll){
-		this.roll = roll;
-	}
-	
-	public void setPitch(double pitch){
-		this.pitch = pitch;
-	}
-	
-	public void setAngleOfAttach(double angleOfAttack){
-		this.angleOfAttack = angleOfAttack;
-	}
-	
-	public void setSideSlipAngle(double sideSlipAngle){
-		this.sideSlipAngle = sideSlipAngle;
 	}
 }

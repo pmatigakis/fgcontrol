@@ -17,18 +17,21 @@ public class Velocities {
 	private double v;
 	private double w;
 	
-	public Velocities(){		
-		rollRate = 0.0;
-		pitchRate = 0.0;
-		yawRate = 0.0;
-		calibratedAirspeed = 0.0;
-		climbRate = 0.0;
-		northVelocity = 0.0;
-		eastVelocity = 0.0;
-		verticalVelocity = 0.0;
-		u = 0.0;
-		v = 0.0;
-		w = 0.0;
+	public Velocities(double rollRate, double pitchRate, double yawRate,
+			double calibratedAirspeed, double climbRate,
+			double northVelocity, double eastVelocity, double verticalVelocity,
+			double u, double v, double w){		
+		this.rollRate = rollRate;
+		this.pitchRate = pitchRate;
+		this.yawRate = yawRate;
+		this.calibratedAirspeed = calibratedAirspeed;
+		this.climbRate = climbRate;
+		this.northVelocity = northVelocity;
+		this.eastVelocity = eastVelocity;
+		this.verticalVelocity = verticalVelocity;
+		this.u = u;
+		this.v = v;
+		this.w = w;
 	}
 	
 	/**
@@ -98,49 +101,5 @@ public class Velocities {
 	
 	public double getW(){
 		return w;
-	}
-	
-	public void setRollRate(double rollRate){
-		this.rollRate = rollRate;
-	}
-	
-	public void setPitchRate(double pitchRate){
-		this.pitchRate = pitchRate;
-	}
-	
-	public void setYawRate(double yawRate){
-		this.yawRate = yawRate;
-	}
-	
-	public void setCalibratedAirspeed(double calibratedAirspeed){
-		this.calibratedAirspeed = calibratedAirspeed;
-	}
-	
-	public void setClimbRate(double climbRate){
-		this.climbRate = climbRate;
-	}
-	
-	public void setNorthVelocity(double northVelocity){
-		this.northVelocity = northVelocity;
-	}
-	
-	public void setEastVelocity(double eastVelocity){
-		this.eastVelocity = eastVelocity;
-	}
-	
-	public void setVerticalVelocity(double verticalVelocity){
-		this.verticalVelocity = verticalVelocity;
-	}
-	
-	public void setU(double u){
-		this.u = u;
-	}
-	
-	public void setV(double v){
-		this.v = v;
-	}
-	
-	public void setW(double w){
-		this.w = w;
 	}
 }

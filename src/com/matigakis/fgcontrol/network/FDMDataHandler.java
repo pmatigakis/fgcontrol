@@ -46,7 +46,7 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 		
 			FDMData fdmData = FDMDataFactory.fromGenericProtocolData(genericProtocolData);
 		
-			notifyFDMListeners(fdmData);
+			sendFDMDataToListeners(fdmData);
 		}finally{
 			ReferenceCountUtil.release(msg);
 		}
@@ -77,7 +77,7 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 		fdmDataListeners.remove(serverDataListener);
 	}
 	
-	private void notifyFDMListeners(FDMData fdmData){
+	private void sendFDMDataToListeners(FDMData fdmData){
 		for(FDMDataServerEventListener fdmDataListener: fdmDataListeners){
 			fdmDataListener.FDMDataReceived(fdmDataServer, fdmData);
 		}

@@ -5,10 +5,10 @@ public class Atmosphere {
 	private double totalPressure;
 	private double temperature;
 	
-	public Atmosphere(){
-		staticPressure = 0.0;
-		totalPressure = 0.0;
-		temperature = 0.0;
+	public Atmosphere(double staticPressure, double totalPressure, double temperature){
+		this.staticPressure = staticPressure;
+		this.totalPressure =totalPressure;
+		this.temperature = temperature;
 	}
 	
 	/**
@@ -36,17 +36,5 @@ public class Atmosphere {
 	 */
 	public double getTemperature(){
 		return temperature;
-	}
-	
-	public void setStaticPressure(double staticPressure){
-		this.staticPressure = staticPressure;
-	}
-	
-	public void setTotalPressure(double totalPressure){
-		this.totalPressure = totalPressure;
-	}
-	
-	public void setTemperature(double temperature){
-		this.temperature = temperature;
 	}
 }

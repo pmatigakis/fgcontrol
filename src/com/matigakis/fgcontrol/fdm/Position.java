@@ -9,11 +9,11 @@ public class Position {
 	private double altitude;
 	private double agl;
 	
-	public Position(){
-		longitude = 0.0;
-		latitude = 0.0;
-		altitude = 0.0;
-		agl = 0.0;
+	public Position(double longitude, double latitude, double altitude, double agl){
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.altitude = altitude;
+		this.agl = agl;
 	}
 	
 	/**
@@ -49,21 +49,5 @@ public class Position {
 	 */
 	public double getAGL(){
 		return agl;
-	}
-		
-	public void setLongitude(double longitude){
-		this.longitude = longitude;
-	}
-	
-	public void setLatitude(double latitude){
-		this.latitude = latitude;
-	}
-	
-	public void setAltitude(double altitude){
-		this.altitude = altitude;
-	}
-	
-	public void setAGL(double agl){
-		this.agl = agl;
 	}
 }
