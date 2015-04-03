@@ -1,8 +1,5 @@
 package com.matigakis.fgcontrol.network;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +20,6 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	private EventLoopGroup group;
 	private Channel channel;
 	
-	private List<FDMDataServerEventListener> serverEventListeners;
-	
 	private FDMDataHandler telemetryHandler;
 	
 	protected abstract Bootstrap createBootstrap(EventLoopGroup group, ChannelHandler channelHandler);
@@ -32,15 +27,17 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	public BaseFDMServer(int port){
 		this.port = port;
 		
-		serverEventListeners = new LinkedList<FDMDataServerEventListener>();
-		
 		telemetryHandler = new FDMDataHandler(this);
+	}
+	
+	public int getPort(){
+		return port;
 	}
 	
 	@Override
 	public void startServer() throws FDMServerException{
 		if(!isRunning()){
-			logger.debug("Starting the FDM server");
+			logger.debug("Starting the FDM server on port " + getPort());
 			
 			group = new NioEventLoopGroup();
 			
@@ -49,20 +46,16 @@ public abstract class BaseFDMServer implements FDMDataServer{
 			try {
 				channel = bootstrap.bind(port).sync().channel();
 			} catch (InterruptedException e) {
-				logger.error("The FDM server has failed to start", e);
+				logger.error("The FDM server has failed to start on port " + getPort(), e);
 				
 				group.shutdownGracefully();
 				
-				throw new FDMServerException("The FDM server has failed to start", e);
+				throw new FDMServerException("The FDM server has failed to start on port " + getPort(), e);
 			}
 			
-			for(FDMDataServerEventListener serverDataListener: serverEventListeners){
-				serverDataListener.FDMDataServerStarted(this);
-			}
-			
-			logger.debug("The FDM server has started successfully");
+			logger.debug("The FDM server has started successfully on port " + getPort());
 		}else{
-			logger.debug("The FDM server is already running");	
+			logger.debug("The FDM server is already running on port " + getPort());	
 		}
 	}
 	
@@ -73,13 +66,9 @@ public abstract class BaseFDMServer implements FDMDataServer{
 		
 			group.shutdownGracefully();
 			
-			for(FDMDataServerEventListener serverDataListener: serverEventListeners){
-				serverDataListener.FDMDataServerShutdown(this);
-			}
-			
 			logger.debug("The FDM server has stopped");
 		}else{
-			logger.debug("The FDM server if not running");
+			logger.debug("The FDM server is not running");
 		}
 	}
 	
@@ -93,13 +82,11 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	
 	@Override
 	public void addFDMDataServerEventListener(FDMDataServerEventListener serverEventListener){
-		serverEventListeners.add(serverEventListener);
 		telemetryHandler.addFDMDataServerEventListener(serverEventListener);
 	}
 	
 	@Override
 	public void removeFDMDataServerEventListener(FDMDataServerEventListener serverEventListener){
-		serverEventListeners.remove(serverEventListener);
 		telemetryHandler.removeFDMDataServerEventListener(serverEventListener);
 	}
 }

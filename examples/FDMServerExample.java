@@ -2,7 +2,7 @@ import org.apache.log4j.BasicConfigurator;
 
 import com.matigakis.fgcontrol.fdm.FDMData;
 import com.matigakis.fgcontrol.network.FDMDataServer;
-import com.matigakis.fgcontrol.network.FDMDataServerEventListenerAdapter;
+import com.matigakis.fgcontrol.network.FDMDataServerEventListener;
 import com.matigakis.fgcontrol.network.UDPFDMServer;
 
 public class FDMServerExample{
@@ -13,7 +13,7 @@ public class FDMServerExample{
 		
 		final FDMDataServer fdmDataServer = new UDPFDMServer(telemetryPort);
 		
-		fdmDataServer.addFDMDataServerEventListener(new FDMDataServerEventListenerAdapter() {
+		fdmDataServer.addFDMDataServerEventListener(new FDMDataServerEventListener() {
 			@Override
 			public void FDMDataReceived(FDMDataServer fdmDataServer, FDMData fdmData) {
 				System.out.println(
@@ -21,15 +21,21 @@ public class FDMServerExample{
 						"Heading: " + fdmData.getOrientation().getHeading() + "\t" +
 						"Airspeed: " + fdmData.getVelocities().getCalibratedAirspeed());	
 			}
+
+			@Override
+			public void FDMDataServerStarted(FDMDataServer fdmDataServer) {
+				System.out.println("The FDM data server has started");
+				
+			}
+
+			@Override
+			public void FDMDataServerShutdown(FDMDataServer fdmDataServer) {
+				System.out.println("The FDM data server is shutting down");
+			}
 		});
 		
 		fdmDataServer.startServer();
-		
-		Runtime.getRuntime().addShutdownHook(new Thread(){
-			@Override
-			public void run() {
-				fdmDataServer.stopServer();
-			}
-		});
+		Thread.sleep(5000);
+		fdmDataServer.stopServer();
 	}
 }

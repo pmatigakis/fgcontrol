@@ -22,14 +22,28 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 	private static final Logger logger = LoggerFactory.getLogger(FDMDataHandler.class);
 
 	private FDMDataServer fdmDataServer;
-	private List<FDMDataServerEventListener> fdmDataListeners;
+	private List<FDMDataServerEventListener> fdmDataServerEventListeners;
 	
 	public FDMDataHandler(FDMDataServer fdmDataServer){
 		super();
 	
 		
 		this.fdmDataServer = fdmDataServer;
-		fdmDataListeners = new LinkedList<FDMDataServerEventListener>();
+		fdmDataServerEventListeners = new LinkedList<FDMDataServerEventListener>();
+	}
+	
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		for(FDMDataServerEventListener listener: fdmDataServerEventListeners){
+			listener.FDMDataServerStarted(fdmDataServer);
+		}
+	}
+	
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		for(FDMDataServerEventListener listener: fdmDataServerEventListeners){
+			listener.FDMDataServerShutdown(fdmDataServer);
+		}
 	}
 	
 	/**
@@ -65,7 +79,7 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 	 * @param FDMDataServerEventListener
 	 */
 	public void addFDMDataServerEventListener(FDMDataServerEventListener serverDataListener){
-		fdmDataListeners.add(serverDataListener);
+		fdmDataServerEventListeners.add(serverDataListener);
 	}
 	
 	/**
@@ -74,11 +88,11 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 	 * @param FDMDataServerEventListener
 	 */
 	public void removeFDMDataServerEventListener(FDMDataServerEventListener serverDataListener){
-		fdmDataListeners.remove(serverDataListener);
+		fdmDataServerEventListeners.remove(serverDataListener);
 	}
 	
 	private void sendFDMDataToListeners(FDMData fdmData){
-		for(FDMDataServerEventListener fdmDataListener: fdmDataListeners){
+		for(FDMDataServerEventListener fdmDataListener: fdmDataServerEventListeners){
 			fdmDataListener.FDMDataReceived(fdmDataServer, fdmData);
 		}
 	}
