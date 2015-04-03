@@ -26,9 +26,12 @@ public class ControlsClient {
 	private InetSocketAddress address;
 	private EventLoopGroup group;
 	private Channel channel;
+	private ControlsHandler controlsHandler;
 	
 	public ControlsClient(String host, int port){
 		address = new InetSocketAddress(host, port);
+		
+		controlsHandler = new ControlsHandler(this);
 	}
 	
 	public String getHost(){
@@ -55,7 +58,7 @@ public class ControlsClient {
 			bootstrap.group(group)
 			.channel(NioDatagramChannel.class)
 			.option(ChannelOption.SO_BROADCAST, true)
-			.handler(new ControlsHandler());
+			.handler(controlsHandler);
 			
 			try{
 				channel = bootstrap.bind(0).sync().channel();
@@ -77,9 +80,12 @@ public class ControlsClient {
 	public void disconnect(){
 		LOGGER.debug("Closing connection to controls server");
 		
-		group.shutdownGracefully();
-		
-		LOGGER.debug("Disconnected from controls server");
+		if(isConnected()){
+			group.shutdownGracefully();
+			LOGGER.debug("Disconnected from controls server");
+		}else{
+			LOGGER.debug("Not connected to the controls server");
+		}
 	}
 	
 	/**
@@ -106,5 +112,13 @@ public class ControlsClient {
 		}else{
 			return channel.isActive();
 		}
+	}
+	
+	public void addControlsClientEventListener(ControlsClientEventListener listener){
+		controlsHandler.addControlsClientEventListener(listener);
+	}
+	
+	public void removeControlsClientEventListener(ControlsClientEventListener listener){
+		controlsHandler.removeControlsClientEventListener(listener);
 	}
 }
