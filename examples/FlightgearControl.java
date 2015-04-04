@@ -12,6 +12,8 @@ import java.net.InetSocketAddress;
 import org.apache.log4j.BasicConfigurator;
 
 import com.matigakis.fgcontrol.FGControl;
+import com.matigakis.fgcontrol.console.ConsoleClient;
+import com.matigakis.fgcontrol.console.ConsoleClientEventListener;
 import com.matigakis.fgcontrol.console.ConsoleConnectionException;
 
 public class FlightgearControl extends JFrame{
@@ -72,6 +74,18 @@ public class FlightgearControl extends JFrame{
 		InetSocketAddress address = new InetSocketAddress("localhost", 10503);
 		
 		final FGControl fgControl = new FGControl(address);
+		
+		fgControl.addConsoleClientEventListener(new ConsoleClientEventListener() {
+			@Override
+			public void disconnectedFromConsole(ConsoleClient consoleClient) {
+				System.out.println("Disconnected from flightgear's console");
+			}
+			
+			@Override
+			public void connectedToConsole(ConsoleClient consoleClient) {
+				System.out.println("Connected to flightgear's console");
+			}
+		});
 		
 		try{
 			fgControl.connect();

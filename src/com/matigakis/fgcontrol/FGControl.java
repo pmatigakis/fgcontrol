@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.matigakis.fgcontrol.console.ConsoleClient;
+import com.matigakis.fgcontrol.console.ConsoleClientEventListener;
 import com.matigakis.fgcontrol.console.ConsoleConnectionException;
 
 /**
@@ -42,11 +43,15 @@ public class FGControl {
 	 * Disconnect from Flightgear
 	 */
 	public void disconnect(){
-		LOGGER.debug("Disconnecting from Flightgear's console");
-		
-		consoleClient.disconnect();
+		if(isConnected()){
+			LOGGER.debug("Disconnecting from Flightgear's console");
 			
-		LOGGER.debug("Disconnected from Flightgear's console");
+			consoleClient.disconnect();
+			
+			LOGGER.debug("Disconnected from Flightgear's console");
+		}else{
+			LOGGER.debug("Not connected to Flightgear's console");	
+		}
 	}
 	
 	/**
@@ -69,5 +74,13 @@ public class FGControl {
 	
 	public boolean isConnected(){
 		return consoleClient.isConnected();
+	}
+	
+	public void addConsoleClientEventListener(ConsoleClientEventListener listener){
+		consoleClient.addConsoleClientEventListener(listener);
+	}
+	
+	public void removeConsoleClientEventListener(ConsoleClientEventListener listener){
+		consoleClient.removeConsoleClientEventListener(listener);
 	}
 }

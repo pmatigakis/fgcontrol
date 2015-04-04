@@ -23,9 +23,11 @@ public class ConsoleClient {
 	private InetSocketAddress address;
 	private Channel channel;
 	private EventLoopGroup group;
+	private ConsoleClientHandler consoleClientHandler;
 	
 	public ConsoleClient(InetSocketAddress address){
 		this.address = address;
+		consoleClientHandler = new ConsoleClientHandler(this);
 	}
 	
 	/**
@@ -43,7 +45,7 @@ public class ConsoleClient {
 			
 			bootstrap.group(group)
 				.channel(NioSocketChannel.class)
-				.handler(new ConsoleClientInitializer());
+				.handler(new ConsoleClientInitializer(consoleClientHandler));
 			
 			try{	
 				channel = bootstrap.connect(address).sync().channel();
@@ -111,5 +113,13 @@ public class ConsoleClient {
 		}else{
 			return channel.isActive();
 		}
+	}
+	
+	public void addConsoleClientEventListener(ConsoleClientEventListener listener){
+		consoleClientHandler.addConsoleClientEventListener(listener);
+	}
+	
+	public void removeConsoleClientEventListener(ConsoleClientEventListener listener){
+		consoleClientHandler.removeConsoleClientEventListener(listener);
 	}
 }
