@@ -13,7 +13,7 @@ public interface FDMDataServer {
 	/**
 	 * Stop the server
 	 */
-	void stopServer();
+	void stopServer() throws FDMServerException;
 	
 	/**
 	 * Add an object that will be notified when an event from the
@@ -29,4 +29,11 @@ public interface FDMDataServer {
 	 * @param serverEventListener
 	 */
 	void removeFDMDataServerEventListener(FDMDataServerEventListener serverEventListener);
+	
+	/**
+	 * Checks if the fdm server is running
+	 * 
+	 * @return true if the server is running
+	 */
+	public boolean isRunning();
 }

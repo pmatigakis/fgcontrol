@@ -27,20 +27,17 @@ public class FDMDataHandler extends ChannelInboundHandlerAdapter{
 	public FDMDataHandler(FDMDataServer fdmDataServer){
 		super();
 	
-		
 		this.fdmDataServer = fdmDataServer;
 		fdmDataServerEventListeners = new LinkedList<FDMDataServerEventListener>();
 	}
 	
-	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+	public void notifyListenersThatServerHasStarted(){
 		for(FDMDataServerEventListener listener: fdmDataServerEventListeners){
 			listener.FDMDataServerStarted(fdmDataServer);
 		}
 	}
 	
-	@Override
-	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+	public void notifyListenersThatServerHasStopped(){
 		for(FDMDataServerEventListener listener: fdmDataServerEventListeners){
 			listener.FDMDataServerShutdown(fdmDataServer);
 		}
