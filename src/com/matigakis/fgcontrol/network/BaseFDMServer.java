@@ -19,7 +19,6 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	private boolean running;
 	private int port;
 	private EventLoopGroup group;
-	private Channel channel;
 	
 	private FDMDataHandler fdmDataHandler;
 	
@@ -47,7 +46,7 @@ public abstract class BaseFDMServer implements FDMDataServer{
 			Bootstrap bootstrap = createBootstrap(group, fdmDataHandler);
 			
 			try {
-				channel = bootstrap.bind(port).sync().channel();
+				Channel channel = bootstrap.bind(port).sync().channel();
 			} catch (InterruptedException e) {
 				logger.error("The FDM server has failed to start on port " + getPort(), e);
 				
@@ -86,11 +85,7 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	}
 	
 	public boolean isRunning(){
-		if(channel == null){
-			return false;
-		}else{
-			return running;
-		}
+		return running;
 	}
 	
 	@Override
