@@ -5,7 +5,6 @@ package com.matigakis.fgcontrol.network;
  * that was received from flightgear into a GenericProtocolData object.
  */
 public class GenericProtocolDataFactory {
-	
 	/**
 	 * Create a GenericProtocolData object from a generic protocol String.
 	 * 
@@ -18,49 +17,49 @@ public class GenericProtocolDataFactory {
 		GenericProtocolData genericProtocolData = new GenericProtocolData();
 		
 		//simulation
-		genericProtocolData.simulationTime = Double.parseDouble(values[0]);
+		genericProtocolData.set(GenericProtocolData.SIMULATION_TIME, Double.parseDouble(values[GenericProtocolData.SIMULATION_TIME]));
 				
 		//position data
-		genericProtocolData.latitude = Double.parseDouble(values[1]);
-		genericProtocolData.longitude = Double.parseDouble(values[2]);
-		genericProtocolData.altitude = Double.parseDouble(values[3]);
-		genericProtocolData.altitudeAgl = Double.parseDouble(values[4]);
+		genericProtocolData.set(GenericProtocolData.LATITUDE, Double.parseDouble(values[GenericProtocolData.LATITUDE]));
+		genericProtocolData.set(GenericProtocolData.LONGITUDE, Double.parseDouble(values[GenericProtocolData.LONGITUDE]));
+		genericProtocolData.set(GenericProtocolData.ALTITUDE, Double.parseDouble(values[GenericProtocolData.ALTITUDE]));
+		genericProtocolData.set(GenericProtocolData.ALTITUDE_AGL, Double.parseDouble(values[GenericProtocolData.ALTITUDE_AGL]));
 		
 		//orientation
-		genericProtocolData.roll = Double.parseDouble(values[5]);
-		genericProtocolData.pitch = Double.parseDouble(values[6]);
-		genericProtocolData.heading = Double.parseDouble(values[7]);
-		genericProtocolData.angleOfAttack = Double.parseDouble(values[8]);
-		genericProtocolData.sideSlipAngle = Double.parseDouble(values[9]);
+		genericProtocolData.set(GenericProtocolData.ROLL, Double.parseDouble(values[GenericProtocolData.ROLL]));
+		genericProtocolData.set(GenericProtocolData.PITCH, Double.parseDouble(values[GenericProtocolData.PITCH]));
+		genericProtocolData.set(GenericProtocolData.HEADING, Double.parseDouble(values[GenericProtocolData.HEADING]));
+		genericProtocolData.set(GenericProtocolData.ANGLE_OF_ATTACK, Double.parseDouble(values[GenericProtocolData.ANGLE_OF_ATTACK]));
+		genericProtocolData.set(GenericProtocolData.SIDESLIP_ANGLE, Double.parseDouble(values[GenericProtocolData.SIDESLIP_ANGLE]));
 		
 		//velocities
-		genericProtocolData.rollRate = Double.parseDouble(values[10]);
-		genericProtocolData.pitchRate = Double.parseDouble(values[11]);
-		genericProtocolData.yawRate = Double.parseDouble(values[12]);
-		genericProtocolData.airspeed = Double.parseDouble(values[13]);
-		genericProtocolData.climbRate = Double.parseDouble(values[14]);
-		genericProtocolData.northVelocity = Double.parseDouble(values[15]);
-		genericProtocolData.eastVelocity = Double.parseDouble(values[16]);
-		genericProtocolData.verticalVelocity = Double.parseDouble(values[17]);
-		genericProtocolData.u = Double.parseDouble(values[18]);
-		genericProtocolData.v = Double.parseDouble(values[19]);
-		genericProtocolData.w = Double.parseDouble(values[20]);
+		genericProtocolData.set(GenericProtocolData.ROLL_RATE, Double.parseDouble(values[GenericProtocolData.ROLL_RATE]));
+		genericProtocolData.set(GenericProtocolData.PITCH_RATE, Double.parseDouble(values[GenericProtocolData.PITCH_RATE]));
+		genericProtocolData.set(GenericProtocolData.YAW_RATE, Double.parseDouble(values[GenericProtocolData.YAW_RATE]));
+		genericProtocolData.set(GenericProtocolData.AIRSPEED, Double.parseDouble(values[GenericProtocolData.AIRSPEED]));
+		genericProtocolData.set(GenericProtocolData.CLIMB_RATE, Double.parseDouble(values[GenericProtocolData.CLIMB_RATE]));
+		genericProtocolData.set(GenericProtocolData.NORTH_VELOCITY, Double.parseDouble(values[GenericProtocolData.NORTH_VELOCITY]));
+		genericProtocolData.set(GenericProtocolData.EAST_VELOCITY, Double.parseDouble(values[GenericProtocolData.EAST_VELOCITY]));
+		genericProtocolData.set(GenericProtocolData.VERTICAL_VELOCITY, Double.parseDouble(values[GenericProtocolData.VERTICAL_VELOCITY]));
+		genericProtocolData.set(GenericProtocolData.U, Double.parseDouble(values[GenericProtocolData.U]));
+		genericProtocolData.set(GenericProtocolData.V, Double.parseDouble(values[GenericProtocolData.V]));
+		genericProtocolData.set(GenericProtocolData.W, Double.parseDouble(values[GenericProtocolData.W]));
 		
 		//Accelerations
-		genericProtocolData.xAcceleration = Double.parseDouble(values[21]);
-		genericProtocolData.yAcceleration = Double.parseDouble(values[22]);
-		genericProtocolData.zAcceleration = Double.parseDouble(values[23]);
+		genericProtocolData.set(GenericProtocolData.X_ACCELERATION, Double.parseDouble(values[GenericProtocolData.X_ACCELERATION]));
+		genericProtocolData.set(GenericProtocolData.Y_ACCELERATION, Double.parseDouble(values[GenericProtocolData.Y_ACCELERATION]));
+		genericProtocolData.set(GenericProtocolData.Z_ACCELERATION, Double.parseDouble(values[GenericProtocolData.Z_ACCELERATION]));
 		
 		//Atmospheric data
-		genericProtocolData.staticPressure = Double.parseDouble(values[24]);
-		genericProtocolData.totalPressure = Double.parseDouble(values[25]);
-		genericProtocolData.temperature = Double.parseDouble(values[26]);
+		genericProtocolData.set(GenericProtocolData.STATIC_PRESSURE, Double.parseDouble(values[GenericProtocolData.STATIC_PRESSURE]));
+		genericProtocolData.set(GenericProtocolData.TOTAL_PRESSURE, Double.parseDouble(values[GenericProtocolData.TOTAL_PRESSURE]));
+		genericProtocolData.set(GenericProtocolData.TEMPERATURE, Double.parseDouble(values[GenericProtocolData.TEMPERATURE]));
 		
 		//controls
-		genericProtocolData.elevator = Double.parseDouble(values[27]);
-		genericProtocolData.aileron= Double.parseDouble(values[28]);
-		genericProtocolData.rudder = Double.parseDouble(values[29]);
-		genericProtocolData.throttle = Double.parseDouble(values[30]);
+		genericProtocolData.set(GenericProtocolData.ELEVATOR, Double.parseDouble(values[GenericProtocolData.ELEVATOR]));
+		genericProtocolData.set(GenericProtocolData.AILERON, Double.parseDouble(values[GenericProtocolData.AILERON]));
+		genericProtocolData.set(GenericProtocolData.RUDDER, Double.parseDouble(values[GenericProtocolData.RUDDER]));
+		genericProtocolData.set(GenericProtocolData.THROTTLE, Double.parseDouble(values[GenericProtocolData.THROTTLE]));
 		
 		return genericProtocolData;
 	}

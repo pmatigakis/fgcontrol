@@ -5,42 +5,43 @@ import com.matigakis.fgcontrol.network.GenericProtocolData;
 public class DummyGenericProtocolData extends GenericProtocolData{
 	public DummyGenericProtocolData(){
 		super();
-		simulationTime = 120.67;
+		
+		set(SIMULATION_TIME, 120.67);
 
-		latitude = 37.937056;
-		longitude = 23.94667;
-		altitude = 1000.0;
-		altitudeAgl = 800.0;
+		set(LATITUDE, 37.937056);
+		set(LONGITUDE, 23.94667);
+		set(ALTITUDE, 1000.0);
+		set(ALTITUDE_AGL, 800.0);
 		
-		roll = 10.5;
-		pitch = 12.5;
-		heading = 172.1;
-		angleOfAttack = 5.5;
-		sideSlipAngle = 0.1;
+		set(ROLL, 10.5);
+		set(PITCH, 12.5);
+		set(HEADING, 172.1);
+		set(ANGLE_OF_ATTACK, 5.5);
+		set(SIDESLIP_ANGLE, 0.1);
 		
-		rollRate = 2.0;
-		pitchRate = 1.5;
-		yawRate = 1.0;
-		airspeed = 65.4;
-		climbRate = 10.4;
-		northVelocity = 37.6;
-		eastVelocity = 12.2;
-		verticalVelocity = -3.6;
-		u = 9.6;
-		v = 3.6;
-		w = 7.8;
+		set(ROLL_RATE, 2.0);
+		set(PITCH_RATE, 1.5);
+		set(YAW_RATE, 1.0);
+		set(AIRSPEED, 65.4);
+		set(CLIMB_RATE, 10.4);
+		set(NORTH_VELOCITY, 37.6);
+		set(EAST_VELOCITY, 12.2);
+		set(VERTICAL_VELOCITY, 3.6);
+		set(U, 9.6);
+		set(V, 3.6);
+		set(W, 7.8);
 		
-		xAcceleration = 0.5; 
-		yAcceleration = 0.3;
-		zAcceleration = 30.0;
+		set(X_ACCELERATION, 0.5); 
+		set(Y_ACCELERATION, 0.3);
+		set(Z_ACCELERATION, 30.0);
 		
-		staticPressure = 29.8;
-		totalPressure = 31.5;
-		temperature = 26.5;
+		set(STATIC_PRESSURE, 29.8);
+		set(TOTAL_PRESSURE, 31.5);
+		set(TEMPERATURE, 26.5);
 		
-		elevator = 0.6;
-		aileron = 0.3;
-		rudder = 0.01;
-		throttle = 0.9;
+		set(ELEVATOR, 0.6);
+		set(AILERON, 0.3);
+		set(RUDDER, 0.01);
+		set(THROTTLE, 0.9);
 	}
 }

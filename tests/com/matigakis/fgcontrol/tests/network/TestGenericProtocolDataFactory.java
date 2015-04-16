@@ -19,42 +19,128 @@ public class TestGenericProtocolDataFactory {
 		
 		GenericProtocolData sensorData = GenericProtocolDataFactory.fromString(telemetryString);
 		
-		assertEquals(dummyGenericProtocolData.simulationTime, sensorData.simulationTime, 0.0);
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.SIMULATION_TIME), 
+				sensorData.get(GenericProtocolData.SIMULATION_TIME), 
+				0.0);
 		
-		assertEquals(dummyGenericProtocolData.latitude, sensorData.latitude, 0.0);
-		assertEquals(dummyGenericProtocolData.longitude, sensorData.longitude, 0.0);
-		assertEquals(dummyGenericProtocolData.altitude, sensorData.altitude, 0.0);
-		assertEquals(dummyGenericProtocolData.altitudeAgl, sensorData.altitudeAgl, 0.0);
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.LATITUDE), 
+				sensorData.get(GenericProtocolData.LATITUDE), 
+				0.0);
 		
-		assertEquals(dummyGenericProtocolData.roll, sensorData.roll, 0.0);
-		assertEquals(dummyGenericProtocolData.pitch, sensorData.pitch, 0.0);
-		assertEquals(dummyGenericProtocolData.heading, sensorData.heading, 0.0);
-		assertEquals(dummyGenericProtocolData.angleOfAttack, sensorData.angleOfAttack, 0.0);
-		assertEquals(dummyGenericProtocolData.sideSlipAngle, sensorData.sideSlipAngle, 0.0);
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.LONGITUDE),
+				sensorData.get(GenericProtocolData.LONGITUDE),
+				0.0);
 		
-		assertEquals(dummyGenericProtocolData.rollRate, sensorData.rollRate, 0.0);
-		assertEquals(dummyGenericProtocolData.pitchRate, sensorData.pitchRate, 0.0);
-		assertEquals(dummyGenericProtocolData.yawRate, sensorData.yawRate, 0.0);
-		assertEquals(dummyGenericProtocolData.airspeed, sensorData.airspeed, 0.0);
-		assertEquals(dummyGenericProtocolData.climbRate, sensorData.climbRate, 0.0);
-		assertEquals(dummyGenericProtocolData.northVelocity, sensorData.northVelocity, 0.0);
-		assertEquals(dummyGenericProtocolData.eastVelocity, sensorData.eastVelocity, 0.0);
-		assertEquals(dummyGenericProtocolData.verticalVelocity, sensorData.verticalVelocity, 0.0);
-		assertEquals(dummyGenericProtocolData.u, sensorData.u, 0.0);
-		assertEquals(dummyGenericProtocolData.v, sensorData.v, 0.0);
-		assertEquals(dummyGenericProtocolData.w, sensorData.w, 0.0);
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.ALTITUDE),
+				sensorData.get(GenericProtocolData.ALTITUDE),
+				0.0);
 		
-		assertEquals(dummyGenericProtocolData.xAcceleration, sensorData.xAcceleration, 0.0);
-		assertEquals(dummyGenericProtocolData.yAcceleration, sensorData.yAcceleration, 0.0);
-		assertEquals(dummyGenericProtocolData.zAcceleration, sensorData.zAcceleration, 0.0);
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.ALTITUDE_AGL),
+				sensorData.get(GenericProtocolData.ALTITUDE_AGL),
+				0.0);
 		
-		assertEquals(dummyGenericProtocolData.staticPressure, sensorData.staticPressure, 0.0);
-		assertEquals(dummyGenericProtocolData.totalPressure, sensorData.totalPressure, 0.0);
-		assertEquals(dummyGenericProtocolData.temperature, sensorData.temperature, 0.0);
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.ROLL),
+				sensorData.get(GenericProtocolData.ROLL),
+				0.0);
 		
-		assertEquals(dummyGenericProtocolData.elevator, sensorData.elevator, 0.0);
-		assertEquals(dummyGenericProtocolData.aileron, sensorData.aileron, 0.0);
-		assertEquals(dummyGenericProtocolData.rudder, sensorData.rudder, 0.0);
-		assertEquals(dummyGenericProtocolData.throttle, sensorData.throttle, 0.0);
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.PITCH),
+				sensorData.get(GenericProtocolData.PITCH),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.HEADING),
+				sensorData.get(GenericProtocolData.HEADING),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.ANGLE_OF_ATTACK),
+				sensorData.get(GenericProtocolData.ANGLE_OF_ATTACK),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.SIDESLIP_ANGLE),
+				sensorData.get(GenericProtocolData.SIDESLIP_ANGLE),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.ROLL_RATE),
+				sensorData.get(GenericProtocolData.ROLL_RATE),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.PITCH_RATE),
+				sensorData.get(GenericProtocolData.PITCH_RATE),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.YAW_RATE),
+				sensorData.get(GenericProtocolData.YAW_RATE),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.AIRSPEED),
+				sensorData.get(GenericProtocolData.AIRSPEED),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.CLIMB_RATE),
+				sensorData.get(GenericProtocolData.CLIMB_RATE),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.NORTH_VELOCITY),
+				sensorData.get(GenericProtocolData.NORTH_VELOCITY),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.EAST_VELOCITY),
+				sensorData.get(GenericProtocolData.EAST_VELOCITY),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.VERTICAL_VELOCITY),
+				sensorData.get(GenericProtocolData.VERTICAL_VELOCITY),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.U),
+				sensorData.get(GenericProtocolData.U),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.V),
+				sensorData.get(GenericProtocolData.V),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.W),
+				sensorData.get(GenericProtocolData.W),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.X_ACCELERATION),
+				sensorData.get(GenericProtocolData.X_ACCELERATION),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.Y_ACCELERATION),
+				sensorData.get(GenericProtocolData.Y_ACCELERATION),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.Z_ACCELERATION),
+				sensorData.get(GenericProtocolData.Z_ACCELERATION),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.STATIC_PRESSURE),
+				sensorData.get(GenericProtocolData.STATIC_PRESSURE),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.TOTAL_PRESSURE),
+				sensorData.get(GenericProtocolData.TOTAL_PRESSURE),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.TEMPERATURE),
+				sensorData.get(GenericProtocolData.TEMPERATURE),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.ELEVATOR),
+				sensorData.get(GenericProtocolData.ELEVATOR),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.AILERON),
+				sensorData.get(GenericProtocolData.AILERON),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.RUDDER),
+				sensorData.get(GenericProtocolData.RUDDER),
+				0.0);
+		
+		assertEquals(dummyGenericProtocolData.get(GenericProtocolData.THROTTLE),
+				sensorData.get(GenericProtocolData.THROTTLE),
+				0.0);
 	}
 }

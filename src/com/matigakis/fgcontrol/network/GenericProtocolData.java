@@ -7,160 +7,71 @@ import org.apache.commons.lang3.StringUtils;
  * flight dynamics model.
  */
 public class GenericProtocolData {
-	public double simulationTime;
+	public static final int PROTOCOL_DATA_SIZE = 31;
 	
-	public double longitude;
-	public double latitude;
-	public double altitude;
-	public double altitudeAgl;
+	public static final int SIMULATION_TIME = 0;
+	public static final int LATITUDE = 1;
+	public static final int LONGITUDE = 2;
+	public static final int ALTITUDE = 3;
+	public static final int ALTITUDE_AGL = 4;
+	public static final int ROLL = 5;
+	public static final int PITCH = 6;
+	public static final int HEADING = 7;
+	public static final int ANGLE_OF_ATTACK = 8;
+	public static final int SIDESLIP_ANGLE = 9;
+	public static final int ROLL_RATE = 10;
+	public static final int PITCH_RATE = 11;
+	public static final int YAW_RATE = 12;
+	public static final int AIRSPEED = 13;
+	public static final int CLIMB_RATE = 14;
+	public static final int NORTH_VELOCITY = 15;
+	public static final int EAST_VELOCITY = 16;
+	public static final int VERTICAL_VELOCITY = 17;
+	public static final int U = 18;
+	public static final int V = 19;
+	public static final int W = 20;
+	public static final int X_ACCELERATION = 21;
+	public static final int Y_ACCELERATION = 22;
+	public static final int Z_ACCELERATION = 23;
+	public static final int STATIC_PRESSURE = 24;
+	public static final int TOTAL_PRESSURE = 25;
+	public static final int TEMPERATURE = 26;
+	public static final int ELEVATOR = 27;
+	public static final int AILERON = 28;
+	public static final int RUDDER = 29;
+	public static final int THROTTLE = 30;
 	
-	public double roll;
-	public double pitch;
-	public double heading;
-	public double angleOfAttack;
-	public double sideSlipAngle;
-	
-	public double rollRate;
-	public double pitchRate;
-	public double yawRate;
-	public double airspeed; 
-	public double climbRate;
-	public double northVelocity;
-	public double eastVelocity;
-	public double verticalVelocity;
-	public double u;
-	public double v;
-	public double w;
-	
-	public double xAcceleration;
-	public double yAcceleration;
-	public double zAcceleration;
-	
-	public double staticPressure;
-	public double totalPressure;
-	public double temperature;
-	
-	public double elevator;
-	public double aileron;
-	public double rudder;
-	public double throttle;
+	private double[] protocolData;
 	
 	public GenericProtocolData(){
-		simulationTime = 0.0;
-		
-		latitude = 0.0;
-		longitude = 0.0;
-		altitude = 0.0;
-		altitudeAgl = 0.0;
-		
-		roll = 0.0;
-		pitch = 0.0;
-		heading = 0.0;
-		angleOfAttack = 0.0;
-		sideSlipAngle = 0.0;
-		
-		rollRate = 0.0;
-		pitchRate = 0.0;
-		yawRate = 0.0;
-		airspeed = 0.0; 
-		climbRate = 0.0;
-		northVelocity = 0.0;
-		eastVelocity = 0.0;
-		verticalVelocity = 0.0;
-		u = 0.0;
-		v = 0.0;
-		w = 0.0;
-		
-		xAcceleration = 0.0;
-		yAcceleration = 0.0;
-		zAcceleration = 0.0;
-		
-		staticPressure = 0.0;
-		totalPressure = 0.0;
-		temperature = 0.0;
-		
-		elevator = 0.0;
-		aileron = 0.0;
-		rudder = 0.0;
-		throttle = 0.0;
+		protocolData = new double[PROTOCOL_DATA_SIZE];
+	}
+	
+	public double get(int protocolDataIndex){
+		return protocolData[protocolDataIndex];
+	}
+	
+	public void set(int protocolDataIndex, double value){
+		protocolData[protocolDataIndex] = value;
 	}
 	
 	public void copyTo(GenericProtocolData genericProtocolData){
-		genericProtocolData.simulationTime = simulationTime;
-		
-		genericProtocolData.latitude = latitude;
-		genericProtocolData.longitude = longitude;
-		genericProtocolData.altitude = altitude;
-		genericProtocolData.altitudeAgl = altitudeAgl;
-		
-		genericProtocolData.roll = roll;
-		genericProtocolData.pitch = pitch;
-		genericProtocolData.heading = heading;
-		genericProtocolData.angleOfAttack = angleOfAttack;
-		genericProtocolData.sideSlipAngle = sideSlipAngle;
-		
-		genericProtocolData.rollRate = rollRate;
-		genericProtocolData.pitchRate = pitchRate;
-		genericProtocolData.yawRate = yawRate;
-		genericProtocolData.airspeed = airspeed; 
-		genericProtocolData.climbRate = climbRate;
-		genericProtocolData.northVelocity = northVelocity;
-		genericProtocolData.eastVelocity = eastVelocity;
-		genericProtocolData.verticalVelocity = verticalVelocity;
-		genericProtocolData.u = u;
-		genericProtocolData.v = v;
-		genericProtocolData.w = w;
-		
-		genericProtocolData.xAcceleration = xAcceleration;
-		genericProtocolData.yAcceleration = yAcceleration;
-		genericProtocolData.zAcceleration = zAcceleration;
-		
-		genericProtocolData.staticPressure = staticPressure;
-		genericProtocolData.totalPressure = totalPressure;
-		genericProtocolData.temperature = temperature;
+		for (int i = 0; i < PROTOCOL_DATA_SIZE; i++){
+			genericProtocolData.set(i, get(i));
+		}
 	}
 	
 	public double[] toArray(){
-		double[] fdmData = {
-				simulationTime,
-				latitude,
-				longitude,
-				altitude,
-				altitudeAgl,
-				roll,
-				pitch,
-				heading,
-				angleOfAttack,
-				sideSlipAngle,
-				rollRate,
-				pitchRate,
-				yawRate,
-				airspeed, 
-				climbRate,
-				northVelocity,
-				eastVelocity,
-				verticalVelocity,
-				u,
-				v,
-				w,
-				xAcceleration,
-				yAcceleration,
-				zAcceleration,
-				staticPressure,
-				totalPressure,
-				temperature,
-				elevator,
-				aileron,
-				rudder,
-				throttle
-		};
+		double[] fdmData = new double[PROTOCOL_DATA_SIZE];
+		
+		for (int i = 0; i < PROTOCOL_DATA_SIZE; i++){
+			fdmData[i] = get(i);
+		}
 		
 		return fdmData;
 	}
 	
 	public String toString() {
-		double[] fdmData = toArray();
-		
-		return StringUtils.join(fdmData, '\t');
+		return StringUtils.join(protocolData, '\t');
 	}
 }

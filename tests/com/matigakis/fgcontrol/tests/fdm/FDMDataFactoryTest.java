@@ -30,72 +30,72 @@ public class FDMDataFactoryTest {
 	public void testUpdateAccelerationsFromTelemetry() {
 		Accelerations accelerations = fdmData.getAccelerations();
 		
-		assertEquals(genericProtocolData.xAcceleration, accelerations.getXAcceleration(), 0.0);
-		assertEquals(genericProtocolData.yAcceleration, accelerations.getYAcceleration(), 0.0);
-		assertEquals(genericProtocolData.zAcceleration, accelerations.getZAcceleration(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.X_ACCELERATION), accelerations.getXAcceleration(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.Y_ACCELERATION), accelerations.getYAcceleration(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.Z_ACCELERATION), accelerations.getZAcceleration(), 0.0);
 	}
 	
 	@Test 
 	public void testUpdateAtmosphereFromTelemetry(){
 		Atmosphere atmosphere = fdmData.getAtmosphere();
 		
-		assertEquals(genericProtocolData.temperature, atmosphere.getTemperature(), 0.0);
-		assertEquals(genericProtocolData.totalPressure, atmosphere.getTotalPressure(), 0.0);
-		assertEquals(genericProtocolData.staticPressure, atmosphere.getStaticPressure(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.TEMPERATURE), atmosphere.getTemperature(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.TOTAL_PRESSURE), atmosphere.getTotalPressure(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.STATIC_PRESSURE), atmosphere.getStaticPressure(), 0.0);
 	}
 	
 	@Test
 	public void testUpdateControlsFromTelemetry(){
 		Controls controls = fdmData.getControls();
 		
-		assertEquals(genericProtocolData.aileron, controls.getAileron(), 0.0);
-		assertEquals(genericProtocolData.elevator, controls.getElevator(), 0.0);
-		assertEquals(genericProtocolData.rudder, controls.getRudder(), 0.0);
-		assertEquals(genericProtocolData.throttle, controls.getThrottle(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.AILERON), controls.getAileron(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.ELEVATOR), controls.getElevator(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.RUDDER), controls.getRudder(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.THROTTLE), controls.getThrottle(), 0.0);
 	}
 	
 	@Test
 	public void testUpdateOrientationFromTelemetry(){
 		Orientation orientation = fdmData.getOrientation();
 		
-		assertEquals(genericProtocolData.angleOfAttack, orientation.getAngleOfAttack(), 0.0);
-		assertEquals(genericProtocolData.heading, orientation.getHeading(), 0.0);
-		assertEquals(genericProtocolData.pitch, orientation.getPitch(), 0.0);
-		assertEquals(genericProtocolData.roll, orientation.getRoll(), 0.0);
-		assertEquals(genericProtocolData.sideSlipAngle, orientation.getSideSlipAngle(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.ANGLE_OF_ATTACK), orientation.getAngleOfAttack(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.HEADING), orientation.getHeading(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.PITCH), orientation.getPitch(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.ROLL), orientation.getRoll(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.SIDESLIP_ANGLE), orientation.getSideSlipAngle(), 0.0);
 	}
 	
 	@Test
 	public void testUpdatePositionFromTelemetry(){
 		Position position = fdmData.getPosition();
 		
-		assertEquals(genericProtocolData.altitudeAgl, position.getAGL(), 0.0);
-		assertEquals(genericProtocolData.altitude, position.getAltitude(), 0.0);
-		assertEquals(genericProtocolData.latitude, position.getLatitude(), 0.0);
-		assertEquals(genericProtocolData.longitude, position.getLongitude(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.ALTITUDE_AGL), position.getAGL(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.ALTITUDE), position.getAltitude(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.LATITUDE), position.getLatitude(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.LONGITUDE), position.getLongitude(), 0.0);
 	}
 	
 	@Test
 	public void testUpdateVelocitiesFromTelemetry(){
 		Velocities velocities = fdmData.getVelocities();
 		
-		assertEquals(genericProtocolData.airspeed, velocities.getCalibratedAirspeed(), 0.0);
-		assertEquals(genericProtocolData.climbRate, velocities.getClimbRate(), 0.0);
-		assertEquals(genericProtocolData.eastVelocity, velocities.getEastVelocity(), 0.0);
-		assertEquals(genericProtocolData.northVelocity, velocities.getNorthVelocity(), 0.0);
-		assertEquals(genericProtocolData.pitchRate, velocities.getPitchRate(), 0.0);
-		assertEquals(genericProtocolData.rollRate, velocities.getRollRate(), 0.0);
-		assertEquals(genericProtocolData.u, velocities.getU(), 0.0);
-		assertEquals(genericProtocolData.v, velocities.getV(), 0.0);
-		assertEquals(genericProtocolData.w, velocities.getW(), 0.0);
-		assertEquals(genericProtocolData.verticalVelocity, velocities.getVerticalVelocity(), 0.0);
-		assertEquals(genericProtocolData.yawRate, velocities.getYawRate(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.AIRSPEED), velocities.getCalibratedAirspeed(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.CLIMB_RATE), velocities.getClimbRate(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.EAST_VELOCITY), velocities.getEastVelocity(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.NORTH_VELOCITY), velocities.getNorthVelocity(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.PITCH_RATE), velocities.getPitchRate(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.ROLL_RATE), velocities.getRollRate(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.U), velocities.getU(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.V), velocities.getV(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.W), velocities.getW(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.VERTICAL_VELOCITY), velocities.getVerticalVelocity(), 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.YAW_RATE), velocities.getYawRate(), 0.0);
 	}
 	
 	@Test
 	public void testUpdate(){
 		double simulationTime = fdmData.getSimulationTime();
 		
-		assertEquals(genericProtocolData.simulationTime, simulationTime, 0.0);
+		assertEquals(genericProtocolData.get(GenericProtocolData.SIMULATION_TIME), simulationTime, 0.0);
 	}
 }
