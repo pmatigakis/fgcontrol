@@ -2,6 +2,8 @@ package com.matigakis.fgcontrol.console;
 
 import java.net.InetSocketAddress;
 
+import com.matigakis.fgcontrol.console.commands.Command;
+import com.matigakis.fgcontrol.console.commands.SetPropertyCommand;
 import com.matigakis.fgcontrol.flightgear.Property;
 
 import org.slf4j.Logger;
@@ -78,19 +80,15 @@ public class ConsoleClient {
 		}
 	}
 	
-	protected String createSetPropertyMessage(Property property){
-		return "set " + property.getName() + " " + property.getValue() + "\r\n";
-	}
-	
 	/**
 	 * Set the value of a property on Flightgear's property tree
 	 * 
 	 * @param property
 	 */
 	public void setProperty(Property property){
-		String setPropertyMessage = createSetPropertyMessage(property);
+		SetPropertyCommand command = new SetPropertyCommand(property);
 		
-		channel.writeAndFlush(setPropertyMessage);
+		channel.writeAndFlush(command.asCommandString());
 	}
 	
 	/**
@@ -98,8 +96,8 @@ public class ConsoleClient {
 	 * 
 	 * @param command
 	 */
-	public void run(String command){
-		channel.writeAndFlush("run " + command + "\r\n");
+	public void run(Command command){
+		channel.writeAndFlush(command.asCommandString());
 	}
 	
 	/**

@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import com.matigakis.fgcontrol.console.ConsoleClient;
 import com.matigakis.fgcontrol.console.ConsoleClientEventListener;
 import com.matigakis.fgcontrol.console.ConsoleConnectionException;
+import com.matigakis.fgcontrol.console.commands.Pause;
+import com.matigakis.fgcontrol.console.commands.Reset;
 
 /**
  * The FGControl class is used to control Flightgear remotely.
@@ -60,7 +62,7 @@ public class FGControl {
 	public void pause(){
 		LOGGER.debug("Pausing/unpausing Flightgear");
 		
-		consoleClient.run("pause");
+		consoleClient.run(new Pause());
 	}
 	
 	/**
@@ -69,7 +71,7 @@ public class FGControl {
 	public void reset(){
 		LOGGER.debug("Reseting Flightgear");
 		
-		consoleClient.run("reset");
+		consoleClient.run(new Reset());
 	}
 	
 	public boolean isConnected(){
