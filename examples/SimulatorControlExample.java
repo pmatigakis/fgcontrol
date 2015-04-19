@@ -11,20 +11,21 @@ import java.net.InetSocketAddress;
 
 import org.apache.log4j.BasicConfigurator;
 
-import com.matigakis.fgcontrol.FGControl;
+import com.matigakis.fgcontrol.SimulatorControl;
 import com.matigakis.fgcontrol.console.ConsoleClient;
+import com.matigakis.fgcontrol.console.TelnetConsoleClient;
 import com.matigakis.fgcontrol.console.ConsoleClientEventListener;
 import com.matigakis.fgcontrol.console.ConsoleConnectionException;
 
-public class FlightgearControl extends JFrame{
+public class SimulatorControlExample extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
-	protected FGControl fgControl;
+	protected SimulatorControl simulatorControl;
 	
-	public FlightgearControl(FGControl fgControl){
+	public SimulatorControlExample(SimulatorControl simulatorControl){
 		super("Flightgear control example");
 		
-		this.fgControl = fgControl;
+		this.simulatorControl = simulatorControl;
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -61,11 +62,11 @@ public class FlightgearControl extends JFrame{
 	}
 	
 	protected void pause(){
-		fgControl.pause();
+		simulatorControl.pause();
 	}
 	
 	private void reset(){
-		fgControl.reset();
+		simulatorControl.reset();
 	}
 	
 	public static void main(String[] args) {
@@ -73,9 +74,9 @@ public class FlightgearControl extends JFrame{
 		
 		InetSocketAddress address = new InetSocketAddress("localhost", 10503);
 		
-		final FGControl fgControl = new FGControl(address);
+		ConsoleClient consoleClient = new TelnetConsoleClient(address);
 		
-		fgControl.addConsoleClientEventListener(new ConsoleClientEventListener() {
+		consoleClient.addConsoleClientEventListener(new ConsoleClientEventListener() {
 			@Override
 			public void disconnectedFromConsole(ConsoleClient consoleClient) {
 				System.out.println("Disconnected from flightgear's console");
@@ -87,6 +88,8 @@ public class FlightgearControl extends JFrame{
 			}
 		});
 		
+		final SimulatorControl fgControl = new SimulatorControl(consoleClient);
+		
 		try{
 			fgControl.connect();
 		}catch(ConsoleConnectionException e){
@@ -94,7 +97,7 @@ public class FlightgearControl extends JFrame{
 			return;
 		}
 			
-		FlightgearControl app = new FlightgearControl(fgControl);
+		SimulatorControlExample app = new SimulatorControlExample(fgControl);
 		
 		app.run();
 		
