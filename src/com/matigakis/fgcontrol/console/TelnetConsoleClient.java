@@ -32,8 +32,8 @@ public class TelnetConsoleClient implements ConsoleClient {
 		consoleClientHandler = new ConsoleClientHandler(this);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.matigakis.fgcontrol.console.ConsoleClient#connect()
+	/**
+	 * Connect via telnet to Flightgear's console
 	 */
 	@Override
 	public void connect() throws ConsoleConnectionException{
@@ -66,8 +66,8 @@ public class TelnetConsoleClient implements ConsoleClient {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.matigakis.fgcontrol.console.ConsoleClient#disconnect()
+	/**
+	 * Disconnect from Flightgear's telnet console
 	 */
 	@Override
 	public void disconnect(){
@@ -82,8 +82,10 @@ public class TelnetConsoleClient implements ConsoleClient {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.matigakis.fgcontrol.console.ConsoleClient#setProperty(com.matigakis.fgcontrol.flightgear.Property)
+	/**
+	 * Set a property usin Flightgear's telnet console.
+	 * 
+	 * @param property the property to set
 	 */
 	@Override
 	public void setProperty(Property property){
@@ -92,16 +94,18 @@ public class TelnetConsoleClient implements ConsoleClient {
 		channel.writeAndFlush(command.asCommandString());
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.matigakis.fgcontrol.console.ConsoleClient#run(com.matigakis.fgcontrol.console.commands.Command)
+	/**
+	 * Run a command on the console.
+	 * 
+	 * @param command the command to run
 	 */
 	@Override
 	public void run(Command command){
 		channel.writeAndFlush(command.asCommandString());
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.matigakis.fgcontrol.console.ConsoleClient#isConnected()
+	/**
+	 * Check if we are connected to Flightgear's telnet console
 	 */
 	@Override
 	public boolean isConnected(){
@@ -112,16 +116,20 @@ public class TelnetConsoleClient implements ConsoleClient {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.matigakis.fgcontrol.console.ConsoleClient#addConsoleClientEventListener(com.matigakis.fgcontrol.console.ConsoleClientEventListener)
+	/**
+	 * Add an event listener for the events raised by the ConsoleCLient.
+	 * 
+	 * @param listener the event listener to add
 	 */
 	@Override
 	public void addConsoleClientEventListener(ConsoleClientEventListener listener){
 		consoleClientHandler.addConsoleClientEventListener(listener);
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.matigakis.fgcontrol.console.ConsoleClient#removeConsoleClientEventListener(com.matigakis.fgcontrol.console.ConsoleClientEventListener)
+	/**
+	 * Remove an event listener.
+	 * 
+	 * @param listener the event listener to remove
 	 */
 	@Override
 	public void removeConsoleClientEventListener(ConsoleClientEventListener listener){
