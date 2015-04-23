@@ -12,10 +12,10 @@ import java.net.InetSocketAddress;
 import org.apache.log4j.BasicConfigurator;
 
 import com.matigakis.fgcontrol.SimulatorControl;
+import com.matigakis.fgcontrol.SimulatorControlConnectionException;
 import com.matigakis.fgcontrol.console.ConsoleClient;
 import com.matigakis.fgcontrol.console.TelnetConsoleClient;
 import com.matigakis.fgcontrol.console.ConsoleClientEventListener;
-import com.matigakis.fgcontrol.console.ConsoleConnectionException;
 
 public class SimulatorControlExample extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -92,7 +92,7 @@ public class SimulatorControlExample extends JFrame{
 		
 		try{
 			fgControl.connect();
-		}catch(ConsoleConnectionException e){
+		}catch(SimulatorControlConnectionException e){
 			JOptionPane.showMessageDialog(null, "Failed to connect to Flightgear's console", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}

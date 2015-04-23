@@ -4,16 +4,13 @@ import java.net.InetSocketAddress;
 
 import com.matigakis.fgcontrol.console.commands.Command;
 import com.matigakis.fgcontrol.console.commands.SetPropertyCommand;
+import com.matigakis.fgcontrol.console.network.ConsoleChannel;
+import com.matigakis.fgcontrol.console.network.ConsoleChannelConnectionException;
+import com.matigakis.fgcontrol.console.network.TelnetConsoleChannel;
 import com.matigakis.fgcontrol.flightgear.Property;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioSocketChannel;
 
 /**
  * The ConsoleClient class is used to execute commands on Flightgear's
@@ -22,14 +19,12 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class TelnetConsoleClient implements ConsoleClient {
 	private static Logger LOGGER = LoggerFactory.getLogger(TelnetConsoleClient.class);
 	
-	private InetSocketAddress address;
-	private Channel channel;
-	private EventLoopGroup group;
 	private ConsoleClientHandler consoleClientHandler;
+	private ConsoleChannel consoleChannel;
 	
 	public TelnetConsoleClient(InetSocketAddress address){
-		this.address = address;
 		consoleClientHandler = new ConsoleClientHandler(this);
+		consoleChannel = new TelnetConsoleChannel(address, consoleClientHandler);
 	}
 	
 	/**
@@ -37,32 +32,15 @@ public class TelnetConsoleClient implements ConsoleClient {
 	 */
 	@Override
 	public void connect() throws ConsoleConnectionException{
-		if(!isConnected()){
-			LOGGER.debug("Connecting to Flightgear's console");
+		LOGGER.debug("Connection to Flightgear's console");
+		
+		try{
+			consoleChannel.connect();
 			
-			group = new NioEventLoopGroup();
-			
-			Bootstrap bootstrap = new Bootstrap();
-			
-			bootstrap.group(group)
-				.channel(NioSocketChannel.class)
-				.handler(new ConsoleClientInitializer(consoleClientHandler));
-			
-			try{	
-				channel = bootstrap.connect(address).sync().channel();
-				
-				LOGGER.debug("Connected to Flightgear's console");
-			} catch (Exception e) {
-				LOGGER.error("Failed to connect to Flightgear's console", e);
-				
-				group.shutdownGracefully();
-				
-				throw new ConsoleConnectionException("Failed to connect to Flightgear's console", e);
-			}
-		}else{
-			LOGGER.error("Already connected to Flightgear's console");
-			
-			throw new ConsoleConnectionException("Already connected to Flightgear's console");
+			LOGGER.debug("Connected to Flightgear's console");
+		}catch(ConsoleChannelConnectionException e){
+			LOGGER.error("Failed to connect to Flightgear's console", e);
+			throw new ConsoleConnectionException("Failed to connect to Flightgear's console", e);
 		}
 	}
 	
@@ -71,15 +49,11 @@ public class TelnetConsoleClient implements ConsoleClient {
 	 */
 	@Override
 	public void disconnect(){
-		if(isConnected()){
-			LOGGER.debug("Disconnecting from Flightgear's console");
+		LOGGER.debug("Disconnecting from Flightgear's console");
 		
-			group.shutdownGracefully();
+		consoleChannel.disconnect();
 		
-			LOGGER.debug("Disconnected from Flightgear's console");
-		}else{
-			LOGGER.debug("Not connected to Flightgear's console");
-		}
+		LOGGER.debug("Disconnected from Flightgear's console");
 	}
 	
 	/**
@@ -91,7 +65,7 @@ public class TelnetConsoleClient implements ConsoleClient {
 	public void setProperty(Property property){
 		SetPropertyCommand command = new SetPropertyCommand(property);
 		
-		channel.writeAndFlush(command.asCommandString());
+		consoleChannel.send(command.asCommandString());
 	}
 	
 	/**
@@ -101,7 +75,7 @@ public class TelnetConsoleClient implements ConsoleClient {
 	 */
 	@Override
 	public void run(Command command){
-		channel.writeAndFlush(command.asCommandString());
+		consoleChannel.send(command.asCommandString());
 	}
 	
 	/**
@@ -109,11 +83,7 @@ public class TelnetConsoleClient implements ConsoleClient {
 	 */
 	@Override
 	public boolean isConnected(){
-		if(channel == null){
-			return false;
-		}else{
-			return channel.isActive();
-		}
+		return consoleChannel.isConnected();
 	}
 	
 	/**

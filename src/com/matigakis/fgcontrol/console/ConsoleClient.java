@@ -38,8 +38,18 @@ public interface ConsoleClient {
 	 */
 	public abstract boolean isConnected();
 
+	/**
+	 * Add a console event listener
+	 * 
+	 * @param listener the listener to add
+	 */
 	public void addConsoleClientEventListener(ConsoleClientEventListener listener);
 
+	/**
+	 * Remove a console event listener
+	 * 
+	 * @param listener the event listener
+	 */
 	public void removeConsoleClientEventListener(ConsoleClientEventListener listener);
 
 }
