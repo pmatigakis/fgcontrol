@@ -1,5 +1,3 @@
-
-
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -14,8 +12,9 @@ import org.apache.log4j.BasicConfigurator;
 import com.matigakis.fgcontrol.SimulatorControl;
 import com.matigakis.fgcontrol.SimulatorControlConnectionException;
 import com.matigakis.fgcontrol.console.ConsoleClient;
-import com.matigakis.fgcontrol.console.TelnetConsoleClient;
-import com.matigakis.fgcontrol.console.ConsoleClientEventListener;
+import com.matigakis.fgcontrol.console.network.ConsoleConnection;
+import com.matigakis.fgcontrol.console.network.ConsoleConnectionEventListener;
+import com.matigakis.fgcontrol.console.network.TelnetConsoleConnection;
 
 public class SimulatorControlExample extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -74,19 +73,21 @@ public class SimulatorControlExample extends JFrame{
 		
 		InetSocketAddress address = new InetSocketAddress("localhost", 10503);
 		
-		ConsoleClient consoleClient = new TelnetConsoleClient(address);
+		TelnetConsoleConnection consoleConnection = new TelnetConsoleConnection(address);
 		
-		consoleClient.addConsoleClientEventListener(new ConsoleClientEventListener() {
+		consoleConnection.addConsoleConnectionEventListener(new ConsoleConnectionEventListener() {
 			@Override
-			public void disconnectedFromConsole(ConsoleClient consoleClient) {
+			public void disconnectedFromConsole(ConsoleConnection consoleConnection) {
 				System.out.println("Disconnected from flightgear's console");
 			}
 			
 			@Override
-			public void connectedToConsole(ConsoleClient consoleClient) {
+			public void connectedToConsole(ConsoleConnection consoleConnection) {
 				System.out.println("Connected to flightgear's console");
 			}
 		});
+		
+		ConsoleClient consoleClient = new ConsoleClient(consoleConnection);
 		
 		final SimulatorControl fgControl = new SimulatorControl(consoleClient);
 		

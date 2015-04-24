@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.matigakis.fgcontrol.console.ConsoleClient;
-import com.matigakis.fgcontrol.console.ConsoleConnectionException;
+import com.matigakis.fgcontrol.console.ConsoleClientConnectionException;
 import com.matigakis.fgcontrol.console.commands.Pause;
 import com.matigakis.fgcontrol.console.commands.Reset;
 
@@ -25,7 +25,7 @@ public class SimulatorControl {
 	/**
 	 * Connect to Flightgear
 	 * 
-	 * @throws ConsoleConnectionException
+	 * @throws ConsoleClientConnectionException
 	 */
 	public void connect() throws SimulatorControlConnectionException{
 		LOGGER.debug("Connecting to Flightgear's console");
@@ -34,7 +34,7 @@ public class SimulatorControl {
 		consoleClient.connect();
 		
 		LOGGER.debug("Connected to Flightgear's console");
-		}catch(ConsoleConnectionException e){
+		}catch(ConsoleClientConnectionException e){
 			LOGGER.error("Failled to connect to Flightgear's console", e);
 			throw new SimulatorControlConnectionException("Failled to connect to Flightgear's console", e);
 		}

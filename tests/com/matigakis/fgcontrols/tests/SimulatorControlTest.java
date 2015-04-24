@@ -11,22 +11,22 @@ import org.junit.runner.RunWith;
 
 import com.matigakis.fgcontrol.SimulatorControl;
 import com.matigakis.fgcontrol.console.ConsoleClient;
-import com.matigakis.fgcontrol.console.commands.Command;
-import com.matigakis.fgcontrol.console.commands.Pause;
-import com.matigakis.fgcontrol.console.commands.Reset;
+
+import com.matigakis.fgcontrol.console.network.ConsoleConnection;
 
 @RunWith(JMock.class)
 public class SimulatorControlTest {
 	public Mockery context = new JUnit4Mockery();
 	
-	public ConsoleClient consoleClient = context.mock(ConsoleClient.class);
+	public ConsoleConnection consoleConnection = context.mock(ConsoleConnection.class);
+	public ConsoleClient consoleClient = new ConsoleClient(consoleConnection);
 	
 	@Test
 	public void resetSimulatorCommand() {
 		SimulatorControl simulatorControl = new SimulatorControl(consoleClient);
 		
 		context.checking(new Expectations(){{
-			oneOf(consoleClient).run((Command) with(a(Reset.class)));
+			oneOf(consoleConnection).send("run reset\r\n");
 		}});
 		
 		simulatorControl.reset();
@@ -37,7 +37,7 @@ public class SimulatorControlTest {
 		SimulatorControl simulatorControl = new SimulatorControl(consoleClient);
 		
 		context.checking(new Expectations(){{
-			oneOf(consoleClient).run((Command) with(a(Pause.class)));
+			oneOf(consoleConnection).send("run pause\r\n");
 		}});
 		
 		simulatorControl.pause();
@@ -48,9 +48,9 @@ public class SimulatorControlTest {
 		SimulatorControl simulatorControl = new SimulatorControl(consoleClient);
 		
 		context.checking(new Expectations(){{
-			ignoring(consoleClient).isConnected();
+			ignoring(consoleConnection).isConnected();
 			
-			oneOf(consoleClient).connect();
+			oneOf(consoleConnection).connect();
 		}});
 		
 		simulatorControl.connect();
@@ -61,7 +61,7 @@ public class SimulatorControlTest {
 		SimulatorControl simulatorControl = new SimulatorControl(consoleClient);
 		
 		context.checking(new Expectations(){{
-			oneOf(consoleClient).disconnect();
+			oneOf(consoleConnection).disconnect();
 		}});
 		
 		simulatorControl.disconnect();
