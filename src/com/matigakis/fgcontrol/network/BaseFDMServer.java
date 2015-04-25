@@ -3,8 +3,6 @@ package com.matigakis.fgcontrol.network;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.bootstrap.Bootstrap;
@@ -19,15 +17,14 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	private boolean running;
 	private int port;
 	private EventLoopGroup group;
-	
 	private FDMDataHandler fdmDataHandler;
 	
-	protected abstract Bootstrap createBootstrap(EventLoopGroup group, ChannelHandler channelHandler);
+	protected abstract Bootstrap createBootstrap(EventLoopGroup group, FDMDataHandler fdmDataHandler);
 	
 	public BaseFDMServer(int port){
 		this.port = port;
 		
-		fdmDataHandler = new FDMDataHandler(this);
+		this.fdmDataHandler = new FDMDataHandler(this);
 		
 		running = false;
 	}
@@ -46,7 +43,7 @@ public abstract class BaseFDMServer implements FDMDataServer{
 			Bootstrap bootstrap = createBootstrap(group, fdmDataHandler);
 			
 			try {
-				Channel channel = bootstrap.bind(port).sync().channel();
+				bootstrap.bind(port).sync();
 			} catch (InterruptedException e) {
 				logger.error("The FDM server has failed to start on port " + getPort(), e);
 				
