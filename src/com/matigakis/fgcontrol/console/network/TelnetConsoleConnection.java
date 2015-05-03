@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The TelnetConsoleConnection is used to make to aconnections to Flightgear's
+ * The TelnetConsoleConnection is used to make to a connection to Flightgear's
  * telnet console.
  */
 public class TelnetConsoleConnection implements ConsoleConnection{
@@ -35,6 +35,8 @@ public class TelnetConsoleConnection implements ConsoleConnection{
 	 */
 	@Override
 	public void connect() throws ConsoleConnectionException {
+		LOGGER.debug("Connecting to flightgears' console");
+		
 		group = new NioEventLoopGroup();
 		
 		Bootstrap bootstrap = new Bootstrap();
@@ -45,8 +47,6 @@ public class TelnetConsoleConnection implements ConsoleConnection{
 		
 		try{	
 			channel = bootstrap.connect(address).sync().channel();
-			
-			LOGGER.debug("Connected to Flightgear's console");
 		} catch (Exception e) {
 			LOGGER.error("Failed to connect to Flightgear's console", e);
 			
@@ -55,15 +55,19 @@ public class TelnetConsoleConnection implements ConsoleConnection{
 			throw new ConsoleConnectionException("Failed to connect to Flightgear's console", e);
 		}
 		
+		LOGGER.debug("Connected to Flightgear's console");
 	}
 
 	/**
-	 * Disconecto from Flightgear's telnet console
+	 * Disconnect from Flightgear's telnet console
 	 */
 	@Override
 	public void disconnect() {
+		LOGGER.debug("Disconnecting from flightgear's console");
+		
 		group.shutdownGracefully();
 		
+		LOGGER.debug("Disconnected from flightgear's console");
 	}
 
 	/**
