@@ -21,7 +21,7 @@ public class UDPFDMServer extends BaseFDMServer{
 		bootstrap.group(group)
 			.channel(NioDatagramChannel.class)
 			.option(ChannelOption.SO_BROADCAST, true)
-			.handler(new FDMDataChannelInitializer(fdmDataHandler));
+			.handler(new UDPFDMDataChannelInitializer(fdmDataHandler));
 			
 		return bootstrap;
 	}

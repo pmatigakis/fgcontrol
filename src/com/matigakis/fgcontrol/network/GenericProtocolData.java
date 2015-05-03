@@ -47,10 +47,22 @@ public class GenericProtocolData {
 		protocolData = new double[PROTOCOL_DATA_SIZE];
 	}
 	
+	/**
+	 * Get the value of the item at the given index
+	 * 
+	 * @param protocolDataIndex the index of the item
+	 * @return the value of the item
+	 */
 	public double get(int protocolDataIndex){
 		return protocolData[protocolDataIndex];
 	}
 	
+	/**
+	 * Set the value of the item at the given index
+	 * 
+	 * @param protocolDataIndex the index of the item
+	 * @param value the value of the item
+	 */
 	public void set(int protocolDataIndex, double value){
 		protocolData[protocolDataIndex] = value;
 	}
