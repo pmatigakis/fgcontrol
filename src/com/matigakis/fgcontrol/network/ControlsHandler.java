@@ -7,55 +7,36 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class ControlsHandler extends ChannelInboundHandlerAdapter{
-	private List<ControlsClientEventListener> controlsClientEventListeners;
-	private ControlsClient controlsClient;
+	private List<ControlsConnentionEventListener> controlsConnectionEventListeners;
+	private ControlsConnection controlsConnection;
 	
-	public ControlsHandler(ControlsClient controlsClient) {
+	public ControlsHandler(ControlsConnection controlsConnection) {
 		super();
 		
-		this.controlsClient = controlsClient;
+		this.controlsConnection = controlsConnection;
 		
-		controlsClientEventListeners = new LinkedList<ControlsClientEventListener>();
+		controlsConnectionEventListeners = new LinkedList<ControlsConnentionEventListener>();
 	}
 	
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		for(ControlsClientEventListener listener: controlsClientEventListeners){
-			listener.connected(controlsClient);
+		for(ControlsConnentionEventListener listener: controlsConnectionEventListeners){
+			listener.connected(controlsConnection);
 		}
 	}
 	
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		for(ControlsClientEventListener listener: controlsClientEventListeners){
-			listener.disconnected(controlsClient);
+		for(ControlsConnentionEventListener listener: controlsConnectionEventListeners){
+			listener.disconnected(controlsConnection);
 		}
 	}
 	
-	/*
-	@Override
-	public void connect(ChannelHandlerContext ctx, SocketAddress remoteAddress,
-			SocketAddress localAddress, ChannelPromise promise)
-			throws Exception {
-		for(ControlsClientEventListener listener: controlsClientEventListeners){
-			listener.connected(controlsClient);
-		}
+	public void addControlsClientEventListener(ControlsConnentionEventListener listener){
+		controlsConnectionEventListeners.add(listener);
 	}
 	
-	@Override
-	public void disconnect(ChannelHandlerContext ctx, ChannelPromise promise)
-			throws Exception {
-		for(ControlsClientEventListener listener: controlsClientEventListeners){
-			listener.disconnected(controlsClient);
-		}
-	}
-	*/
-	
-	public void addControlsClientEventListener(ControlsClientEventListener listener){
-		controlsClientEventListeners.add(listener);
-	}
-	
-	public void removeControlsClientEventListener(ControlsClientEventListener listener){
-		controlsClientEventListeners.remove(listener);
+	public void removeControlsClientEventListener(ControlsConnentionEventListener listener){
+		controlsConnectionEventListeners.remove(listener);
 	}
 }
