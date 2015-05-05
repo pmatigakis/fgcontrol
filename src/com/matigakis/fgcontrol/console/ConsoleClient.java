@@ -28,13 +28,17 @@ public class ConsoleClient{
 	public void connect() throws ConsoleClientConnectionException{
 		LOGGER.debug("Connection to Flightgear's console");
 		
-		try{
-			consoleConnection.connect();
-			
-			LOGGER.debug("Connected to Flightgear's console");
-		}catch(ConsoleConnectionException e){
-			LOGGER.error("Failed to connect to Flightgear's console", e);
-			throw new ConsoleClientConnectionException("Failed to connect to Flightgear's console", e);
+		if(!isConnected()){
+			try{
+				consoleConnection.connect();
+				
+				LOGGER.debug("Connected to Flightgear's console");
+			}catch(ConsoleConnectionException e){
+				LOGGER.error("Failed to connect to Flightgear's console", e);
+				throw new ConsoleClientConnectionException("Failed to connect to Flightgear's console", e);
+			}
+		}else{
+			LOGGER.debug("Already connected to flightgear's console");
 		}
 	}
 	
@@ -44,9 +48,13 @@ public class ConsoleClient{
 	public void disconnect(){
 		LOGGER.debug("Disconnecting from Flightgear's console");
 		
-		consoleConnection.disconnect();
-		
-		LOGGER.debug("Disconnected from Flightgear's console");
+		if(isConnected()){
+			consoleConnection.disconnect();
+			
+			LOGGER.debug("Disconnected from Flightgear's console");
+		}else{
+			LOGGER.debug("Already disconnected from Flightgear's console");
+		}
 	}
 	
 	/**
