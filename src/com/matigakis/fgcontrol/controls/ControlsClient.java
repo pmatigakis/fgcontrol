@@ -1,9 +1,11 @@
-package com.matigakis.fgcontrol.network;
+package com.matigakis.fgcontrol.controls;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.matigakis.fgcontrol.fdm.Controls;
+import com.matigakis.fgcontrol.network.ControlsConnection;
+import com.matigakis.fgcontrol.network.ControlsConnectionException;
 
 /**
  * The ControlsClient class is responsible to transmit the state of an aircraft's

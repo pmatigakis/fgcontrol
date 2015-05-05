@@ -2,8 +2,8 @@ import java.net.InetSocketAddress;
 
 import org.apache.log4j.BasicConfigurator;
 
+import com.matigakis.fgcontrol.controls.ControlsClient;
 import com.matigakis.fgcontrol.fdm.Controls;
-import com.matigakis.fgcontrol.network.ControlsClient;
 import com.matigakis.fgcontrol.network.ControlsConnection;
 import com.matigakis.fgcontrol.network.ControlsConnentionEventListener;
 import com.matigakis.fgcontrol.network.UDPControlsConnection;

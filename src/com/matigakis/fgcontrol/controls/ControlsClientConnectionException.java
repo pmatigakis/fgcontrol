@@ -1,4 +1,4 @@
-package com.matigakis.fgcontrol.network;
+package com.matigakis.fgcontrol.controls;
 
 public class ControlsClientConnectionException extends Exception{
 	private static final long serialVersionUID = 1L;

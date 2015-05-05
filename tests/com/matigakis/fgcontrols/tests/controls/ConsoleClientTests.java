@@ -1,4 +1,4 @@
-package com.matigakis.fgcontrol.tests.network;
+package com.matigakis.fgcontrols.tests.controls;
 
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -7,7 +7,7 @@ import org.jmock.Expectations;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.matigakis.fgcontrol.network.ControlsClient;
+import com.matigakis.fgcontrol.controls.ControlsClient;
 import com.matigakis.fgcontrol.network.ControlsConnection;
 
 @RunWith(JMock.class)
