@@ -30,15 +30,18 @@ public class SimulatorControl {
 	public void connect() throws SimulatorControlConnectionException{
 		LOGGER.debug("Connecting to Flightgear's console");
 		
-		try{
-		consoleClient.connect();
-		
-		LOGGER.debug("Connected to Flightgear's console");
-		}catch(ConsoleClientConnectionException e){
-			LOGGER.error("Failled to connect to Flightgear's console", e);
-			throw new SimulatorControlConnectionException("Failled to connect to Flightgear's console", e);
+		if(!isConnected()){
+			try{
+			consoleClient.connect();
+			
+			LOGGER.debug("Connected to Flightgear's console");
+			}catch(ConsoleClientConnectionException e){
+				LOGGER.error("Failled to connect to Flightgear's console", e);
+				throw new SimulatorControlConnectionException("Failled to connect to Flightgear's console", e);
+			}
+		}else{
+			LOGGER.debug("Already connected to FLightgear's console");
 		}
-		
 	}
 	
 	/**
@@ -46,10 +49,14 @@ public class SimulatorControl {
 	 */
 	public void disconnect(){
 		LOGGER.debug("Disconnecting from Flightgear's console");
+		
+		if(isConnected()){
+			consoleClient.disconnect();
 			
-		consoleClient.disconnect();
-			
-		LOGGER.debug("Disconnected from Flightgear's console");
+			LOGGER.debug("Disconnected from Flightgear's console");
+		}else{
+			LOGGER.debug("Not connected to Flightgear's console");
+		}
 	}
 	
 	/**

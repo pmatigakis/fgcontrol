@@ -1,7 +1,5 @@
 package com.matigakis.fgcontrols.tests;
 
-import static org.junit.Assert.*;
-
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.Expectations;
@@ -48,20 +46,52 @@ public class SimulatorControlTest {
 		SimulatorControl simulatorControl = new SimulatorControl(consoleClient);
 		
 		context.checking(new Expectations(){{
-			ignoring(consoleConnection).isConnected();
+			allowing(consoleConnection).isConnected();
+			    with(returnValue(false));
 			
 			oneOf(consoleConnection).connect();
 		}});
 		
 		simulatorControl.connect();
 	}
-	
+
+	@Test
+	public void doNotconnectTwiceToConsoleClient() throws Exception {
+		SimulatorControl simulatorControl = new SimulatorControl(consoleClient);
+		
+		context.checking(new Expectations(){{
+			allowing(consoleConnection).isConnected();
+		        will(returnValue(true));
+			
+			never(consoleConnection).connect();
+		}});
+		
+		simulatorControl.connect();
+	}
+
 	@Test
 	public void disconnectFromConsoleClient() throws Exception {
 		SimulatorControl simulatorControl = new SimulatorControl(consoleClient);
 		
 		context.checking(new Expectations(){{
+			allowing(consoleConnection).isConnected();
+			    will(returnValue(true));
+			
 			oneOf(consoleConnection).disconnect();
+		}});
+		
+		simulatorControl.disconnect();
+	}
+	
+	@Test
+	public void doNotdisconnectTwiceFromConsoleClient() throws Exception {
+		SimulatorControl simulatorControl = new SimulatorControl(consoleClient);
+		
+		context.checking(new Expectations(){{
+			allowing(consoleConnection).isConnected();
+			    will(returnValue(false));
+			    
+			never(consoleConnection).disconnect();
 		}});
 		
 		simulatorControl.disconnect();

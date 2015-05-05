@@ -11,7 +11,7 @@ import com.matigakis.fgcontrol.controls.ControlsClient;
 import com.matigakis.fgcontrol.network.ControlsConnection;
 
 @RunWith(JMock.class)
-public class ConsoleClientTests {
+public class ControlsClientTests {
 	public Mockery context = new JUnit4Mockery();
 	public ControlsConnection controlsConnection = context.mock(ControlsConnection.class);
 	
