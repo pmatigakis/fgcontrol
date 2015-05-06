@@ -1,9 +1,9 @@
 package com.matigakis.fgcontrols.tests.console;
 
 import com.matigakis.fgcontrol.console.ConsoleClient;
+import com.matigakis.fgcontrol.console.commands.Reset;
 import com.matigakis.fgcontrol.console.network.ConsoleConnection;
-
-import static org.junit.Assert.*;
+import com.matigakis.fgcontrol.flightgear.Property;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,5 +72,31 @@ public class ConsoleClientTests {
 		}});
 		
 		consoleClient.disconnect();
+	}
+	
+	@Test
+	public void runCommand(){
+		ConsoleClient consoleClient = new ConsoleClient(consoleConnection);
+		
+		context.checking(new Expectations(){{
+			oneOf(consoleConnection).send("run reset\r\n");
+		}});
+		
+		Reset reset = new Reset();
+		
+		consoleClient.run(reset);
+	}
+	
+	@Test
+	public void setProperty(){
+		ConsoleClient consoleClient = new ConsoleClient(consoleConnection);
+		
+		context.checking(new Expectations(){{
+			oneOf(consoleConnection).send("set test/value 12.3\r\n");
+		}});
+		
+		Property property = new Property("test/value", 12.3);
+		
+		consoleClient.setProperty(property);
 	}
 }
