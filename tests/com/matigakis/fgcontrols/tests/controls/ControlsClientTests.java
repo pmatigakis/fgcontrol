@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.matigakis.fgcontrol.controls.ControlsClient;
+import com.matigakis.fgcontrol.fdm.Controls;
 import com.matigakis.fgcontrol.network.ControlsConnection;
 
 @RunWith(JMock.class)
@@ -69,5 +70,18 @@ public class ControlsClientTests {
 		}});
 		
 		controlsClient.disconnect();
+	}
+	
+	@Test
+	public void transmitControls(){
+		ControlsClient controlsClients = new ControlsClient(controlsConnection);
+		
+		context.checking(new Expectations(){{
+			oneOf(controlsConnection).writeControls("0.2\t0.5\t0.1\t0.8\r\n");
+		}});
+		
+		Controls controls = new Controls(0.5, 0.2, 0.1, 0.8);
+		
+		controlsClients.transmitControls(controls);
 	}
 }

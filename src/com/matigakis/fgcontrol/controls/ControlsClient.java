@@ -63,7 +63,7 @@ public class ControlsClient {
 	 * @param controls the aircraft controls
 	 */
 	public void transmitControls(Controls controls){
-		String controlsString = controls.getElevator() + "\t" + controls.getAileron() + "\t" + controls.getRudder() + "\t" + controls.getThrottle() + "\n";
+		String controlsString = controls.getElevator() + "\t" + controls.getAileron() + "\t" + controls.getRudder() + "\t" + controls.getThrottle() + "\r\n";
 		
 		controlsConnection.writeControls(controlsString);
 	}
