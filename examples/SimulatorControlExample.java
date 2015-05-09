@@ -14,7 +14,7 @@ import com.matigakis.fgcontrol.SimulatorControlConnectionException;
 import com.matigakis.fgcontrol.console.ConsoleClient;
 import com.matigakis.fgcontrol.console.network.ConsoleConnection;
 import com.matigakis.fgcontrol.console.network.ConsoleConnectionEventListener;
-import com.matigakis.fgcontrol.console.network.TelnetConsoleConnection;
+import com.matigakis.fgcontrol.console.network.TCPConsoleConnection;
 
 public class SimulatorControlExample extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -73,7 +73,7 @@ public class SimulatorControlExample extends JFrame{
 		
 		InetSocketAddress address = new InetSocketAddress("localhost", 10503);
 		
-		TelnetConsoleConnection consoleConnection = new TelnetConsoleConnection(address);
+		TCPConsoleConnection consoleConnection = new TCPConsoleConnection(address);
 		
 		consoleConnection.addConsoleConnectionEventListener(new ConsoleConnectionEventListener() {
 			@Override

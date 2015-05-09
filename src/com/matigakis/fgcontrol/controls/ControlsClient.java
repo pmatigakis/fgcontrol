@@ -26,9 +26,9 @@ public class ControlsClient {
 	 * @throws ControlsClientConnectionException
 	 */
 	public void connect() throws ControlsClientConnectionException{
+		LOGGER.debug("Opening connection to controls server");
+		
 		if(!isConnected()){
-			LOGGER.debug("Opening connection to controls server");
-			
 			try{
 				controlsConnection.connect();
 			}catch(ControlsConnectionException e){
@@ -51,6 +51,7 @@ public class ControlsClient {
 		
 		if(isConnected()){
 			controlsConnection.disconnect();
+			
 			LOGGER.debug("Disconnected from controls server");
 		}else{
 			LOGGER.debug("Not connected to the controls server");

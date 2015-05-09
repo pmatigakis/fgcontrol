@@ -25,7 +25,7 @@ public class SimulatorControl {
 	/**
 	 * Connect to Flightgear
 	 * 
-	 * @throws ConsoleClientConnectionException
+	 * @throws SimulatorControlConnectionException
 	 */
 	public void connect() throws SimulatorControlConnectionException{
 		LOGGER.debug("Connecting to Flightgear's console");

@@ -38,7 +38,7 @@ public class UDPControlsConnection implements ControlsConnection{
 	
 	@Override
 	public void connect() throws ControlsConnectionException {
-		LOGGER.debug("Connecting to FLightgear's controls port");
+		LOGGER.debug("Connecting to Flightgear's controls port");
 		
 		group = new NioEventLoopGroup();
 		
@@ -59,7 +59,7 @@ public class UDPControlsConnection implements ControlsConnection{
 	
 		connected = true;
 		
-		LOGGER.debug("Connected to FLightgear's controls port");
+		LOGGER.debug("Connected to Flightgear's controls port");
 	}
 
 	@Override

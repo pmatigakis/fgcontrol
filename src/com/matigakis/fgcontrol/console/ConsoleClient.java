@@ -24,9 +24,11 @@ public class ConsoleClient{
 	
 	/**
 	 * Connect to Flightgear's console
+	 * 
+	 * @throws ConsoleClientConnectionException
 	 */
 	public void connect() throws ConsoleClientConnectionException{
-		LOGGER.debug("Connection to Flightgear's console");
+		LOGGER.debug("Connecting to Flightgear's console");
 		
 		if(!isConnected()){
 			try{

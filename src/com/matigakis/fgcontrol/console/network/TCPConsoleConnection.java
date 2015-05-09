@@ -12,18 +12,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The TelnetConsoleConnection is used to make to a connection to Flightgear's
+ * The TCPConsoleConnection is used to make to a connection to Flightgear's
  * telnet console.
  */
-public class TelnetConsoleConnection implements ConsoleConnection{
-	private static Logger LOGGER = LoggerFactory.getLogger(TelnetConsoleConnection.class);
+public class TCPConsoleConnection implements ConsoleConnection{
+	private static Logger LOGGER = LoggerFactory.getLogger(TCPConsoleConnection.class);
 	
 	private InetSocketAddress address;
 	private ConsoleConnectionHandler consoleConnectionHandler;
 	private Channel channel;
 	private EventLoopGroup group;
 	
-	public TelnetConsoleConnection(InetSocketAddress address){
+	public TCPConsoleConnection(InetSocketAddress address){
 		this.address = address;
 		this.consoleConnectionHandler = new ConsoleConnectionHandler(this);
 	}
@@ -109,7 +109,6 @@ public class TelnetConsoleConnection implements ConsoleConnection{
 	 * 
 	 * @param listener the listener to remove
 	 */
-
 	@Override
 	public void removeConsoleConnectionEventListener(ConsoleConnectionEventListener listener) {
 		consoleConnectionHandler.removeConsoleConnectionEventListener(listener);
