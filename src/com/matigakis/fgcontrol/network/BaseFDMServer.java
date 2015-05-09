@@ -21,7 +21,7 @@ public abstract class BaseFDMServer implements FDMDataServer{
 	
 	protected abstract Bootstrap createBootstrap(EventLoopGroup group, FDMDataHandler fdmDataHandler);
 	
-	public BaseFDMServer(int port){
+	protected BaseFDMServer(int port){
 		this.port = port;
 		
 		this.fdmDataHandler = new FDMDataHandler(this);
