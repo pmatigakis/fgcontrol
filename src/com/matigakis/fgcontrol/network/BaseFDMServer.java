@@ -59,12 +59,11 @@ public abstract class BaseFDMServer implements FDMDataServer{
 			logger.debug("The FDM server has started successfully on port " + getPort());
 		}else{
 			logger.error("The FDM server is already running on port " + getPort());
-			throw new FDMServerException("The FDM server is already running on port " + getPort());
 		}
 	}
 	
 	@Override
-	public void stopServer() throws FDMServerException{
+	public void stopServer(){
 		logger.debug("Shutting down the FDM server");
 		
 		if (isRunning()){
@@ -77,10 +76,10 @@ public abstract class BaseFDMServer implements FDMDataServer{
 			logger.debug("The FDM server has stopped");
 		}else{
 			logger.error("The FDM server is not running");
-			throw new FDMServerException("The FDM server is not running");
 		}
 	}
 	
+	@Override
 	public boolean isRunning(){
 		return running;
 	}

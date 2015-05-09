@@ -1,5 +1,8 @@
 package com.matigakis.fgcontrol.tests.network;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+
 import org.apache.log4j.BasicConfigurator;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.Mockery;
@@ -33,23 +36,8 @@ public class UDPFDMServerTests {
 	@After
 	public void tearDown(){
 		if(fdmDataServer.isRunning()){
-			try {
-				fdmDataServer.stopServer();
-			} catch (FDMServerException e) {
-				e.printStackTrace();
-			}
+			fdmDataServer.stopServer();
 		}
-	}
-	
-	@Test(expected=FDMServerException.class)
-	public void raiseExceptionWhenTheServerIsStartedMoreThanOnce() throws FDMServerException {
-		fdmDataServer.startServer();
-		fdmDataServer.startServer();
-	}
-	
-	@Test(expected=FDMServerException.class)
-	public void raiseExceptionWhenTheServerIsStoppedWhenNotRunning() throws FDMServerException {
-		fdmDataServer.stopServer();
 	}
 	
 	@Test
@@ -90,5 +78,23 @@ public class UDPFDMServerTests {
 		fdmDataServer.startServer();
 		
 		fdmDataServer.stopServer();
+	}
+	
+	@Test
+	public void startFDMDataServer() throws Exception{
+		fdmDataServer.startServer();
+		
+		assertTrue(fdmDataServer.isRunning());
+	}
+	
+	@Test
+	public void stopFDMDataServer() throws Exception{
+		fdmDataServer.startServer();
+		
+		assertTrue(fdmDataServer.isRunning());
+		
+		fdmDataServer.stopServer();
+		
+		assertFalse(fdmDataServer.isRunning());
 	}
 }

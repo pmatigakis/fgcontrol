@@ -13,7 +13,7 @@ public interface FDMDataServer {
 	/**
 	 * Stop the server
 	 */
-	void stopServer() throws FDMServerException;
+	void stopServer();
 	
 	/**
 	 * Add an object that will be notified when an event from the
