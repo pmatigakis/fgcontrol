@@ -1,4 +1,4 @@
-package com.matigakis.fgcontrols.tests.console.commands;
+package com.matigakis.fgcontrol.tests.console.commands;
 
 import static org.junit.Assert.*;
 
@@ -10,9 +10,9 @@ public class PauseTest {
 	@Test
 	public void test() {
 		Pause pause = new Pause();
-		
+
 		String commandString = pause.asCommandString();
-		
+
 		assertTrue(commandString.equals("run pause\r\n"));
 	}
 }

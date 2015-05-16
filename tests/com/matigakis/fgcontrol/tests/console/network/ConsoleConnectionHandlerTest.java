@@ -1,4 +1,4 @@
-package com.matigakis.fgcontrols.tests.console.network;
+package com.matigakis.fgcontrol.tests.console.network;
 
 import static org.junit.Assert.*;
 
@@ -18,25 +18,25 @@ import com.matigakis.fgcontrol.console.network.ConsoleConnectionHandler;
 @RunWith(JMock.class)
 public class ConsoleConnectionHandlerTest {
 	public Mockery context = new JUnit4Mockery();
-	
+
 	public ConsoleConnection consoleConnection = context.mock(ConsoleConnection.class);
-	
+
 	public ConsoleConnectionHandler consoleClienHandler = new ConsoleConnectionHandler(consoleConnection);
-	
+
 	@Test
 	public void notiftEventListenersWhenConnected() throws Exception {
 		final ConsoleConnectionEventListener listener1 = context.mock(ConsoleConnectionEventListener.class, "listener1");
 		final ConsoleConnectionEventListener listener2 = context.mock(ConsoleConnectionEventListener.class, "listener2");
 		final ChannelHandlerContext ctx = context.mock(ChannelHandlerContext.class, "ctx");
-		
+
 		consoleClienHandler.addConsoleConnectionEventListener(listener1);
 		consoleClienHandler.addConsoleConnectionEventListener(listener2);
-		
+
 		context.checking(new Expectations(){{
 			oneOf(listener1).connectedToConsole(consoleConnection);
 			oneOf(listener2).connectedToConsole(consoleConnection);
 		}});
-		
+
 		consoleClienHandler.channelActive(ctx);;
 	}
 
@@ -45,15 +45,15 @@ public class ConsoleConnectionHandlerTest {
 		final ConsoleConnectionEventListener listener1 = context.mock(ConsoleConnectionEventListener.class, "listener1");
 		final ConsoleConnectionEventListener listener2 = context.mock(ConsoleConnectionEventListener.class, "listener2");
 		final ChannelHandlerContext ctx = context.mock(ChannelHandlerContext.class, "ctx");
-		
+
 		consoleClienHandler.addConsoleConnectionEventListener(listener1);
 		consoleClienHandler.addConsoleConnectionEventListener(listener2);
-		
+
 		context.checking(new Expectations(){{
 			oneOf(listener1).disconnectedFromConsole(consoleConnection);
 			oneOf(listener2).disconnectedFromConsole(consoleConnection);
 		}});
-		
+
 		consoleClienHandler.channelInactive(ctx);;
 	}
 }
