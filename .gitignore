@@ -1,11 +1,9 @@
 bin
-dist
 build
-javadoc
-reports
-*.class
+.gradle
 .project
 .classpath
 .settings
 *.*~
 *~
+*.class
